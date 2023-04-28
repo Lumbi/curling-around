@@ -34,6 +34,15 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<Index> indices)
         (void*) offsetof(Vertex, normal) // offset
     );
 
+    glEnableVertexAttribArray(VERTEX_ATTRIB_TEXCOORD0);
+    glVertexAttribPointer(
+        VERTEX_ATTRIB_TEXCOORD0,
+        2, GL_FLOAT, // vec2
+        GL_FALSE, // normalize
+        sizeof(Vertex), // stride
+        (void*) offsetof(Vertex, texCoord0) // offset
+    );
+
     glBindVertexArray(0);
 }
 

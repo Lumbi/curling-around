@@ -5,18 +5,21 @@ const char *DEFAULT_VERTEX_SHADER_SOURCE = R"(
 
     layout (location = 0) in vec3 attribPosition;
     layout (location = 1) in vec3 attribNormal;
+    layout (location = 2) in vec2 attribTexCoord0;
 
     uniform mat4 projection;
     uniform mat4 view;
 
     out vec3 position;
     out vec3 normal;
+    out vec2 textCoord0;
 
     void main() {
         gl_Position = projection * view * vec4(attribPosition, 1.0f);
 
         position = attribPosition;
         normal = attribNormal;
+        textCoord0 = attribTexCoord0;
     }
 )";
 
@@ -25,25 +28,31 @@ const char *DEFAULT_FRAGMENT_SHADER_SOURCE = R"(
 
     in vec3 position;
     in vec3 normal;
+    in vec2 textCoord0;
 
     uniform vec3 globalLightPosition;
+    uniform sampler2D texture0;
 
     out vec4 fragmentColor;
 
     void main() {
-        vec3 color = vec3(0.1f, 0.3f, 0.6f);
+        // Texture color
+        vec4 textureColor0 = texture(texture0, textCoord0);
 
         // Ambient light
         vec3 ambientLightColor = vec3(1.0f, 1.0f, 1.0f);
         float ambientLightStrength = 0.5f;
         vec3 ambientLight = ambientLightStrength * ambientLightColor;
 
-        // Global light diffuse
+        // Global diffuse light
         vec3 globalLightDirection = normalize(globalLightPosition - position);
         float globalLightDiffuse = max(dot(normal, globalLightDirection), 0.0);
 
-        color *= (ambientLight + globalLightDiffuse);
-        fragmentColor = vec4(color, 1.0f);
+        // Apply lighting
+        vec3 litColor = textureColor0.rgb;
+        litColor *= (ambientLight + globalLightDiffuse);
+
+        fragmentColor = vec4(litColor, textureColor0.a); // Restore opacity
     }
 )";
 

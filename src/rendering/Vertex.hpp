@@ -7,6 +7,7 @@ struct Vertex
 {
     Vector3f position;
     Vector3f normal;
+    Vector2f texCoord0;
 };
 
 #endif

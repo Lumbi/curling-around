@@ -1,12 +1,10 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#define GL_GLEXT_PROTOTYPES
-#include <SDL.h>
-#include <SDL_opengl.h>
-#include <SDL_opengl_glext.h>
+#include "OpenGL.h"
 
 class Matrix4f;
+class Texture;
 
 class Shader
 {
@@ -20,6 +18,7 @@ class Shader
 
         void setProjectionUniform(const Matrix4f &);
         void setViewUniform(const Matrix4f &);
+        void setTexture0(const Texture &);
 
         void use();
 

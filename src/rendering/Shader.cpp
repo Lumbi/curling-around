@@ -2,6 +2,9 @@
 
 #include "math/Vector.hpp"
 #include "math/Matrix.hpp"
+#include "Texture.hpp"
+
+#include <cstdio>
 
 Shader::Shader(const char *vertexShaderSource, const char *fragmentShaderSource)
 {
@@ -42,6 +45,11 @@ Shader::Shader(const char *vertexShaderSource, const char *fragmentShaderSource)
         glGetProgramInfoLog(shaderProgram, 512, NULL, shaderProgramLinkLog);
         printf("Shader program link error: %s\n", shaderProgramLinkLog);
     }
+
+    // Setup texture locations
+    // TODO: Allow each shader to specify texture location
+    use();
+    glUniform1i(glGetUniformLocation(shaderProgram, "texture0"), 0);
 }
 
 Shader::~Shader()
@@ -62,6 +70,12 @@ void Shader::setViewUniform(const Matrix4f &view)
 {
     GLint viewUniform = glGetUniformLocation(shaderProgram, "view");
     glProgramUniformMatrix4fv(shaderProgram, viewUniform, 1, GL_FALSE, view.data);
+}
+
+void Shader::setTexture0(const Texture &texture)
+{
+    glActiveTexture(GL_TEXTURE0);
+    texture.bind();
 }
 
 void Shader::use()

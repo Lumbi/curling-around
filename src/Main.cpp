@@ -14,12 +14,14 @@
 #include "math/Vector.hpp"
 #include "rendering/Vertex.hpp"
 #include "rendering/Shader.hpp"
+#include "rendering/Texture.hpp"
 #include "rendering/Mesh.hpp"
 #include "rendering/Camera.hpp"
 #include "rendering/Model.hpp"
 #include "rendering/ModelRenderer.hpp"
 #include "language/Index.hpp"
 #include "input/Keyboard.hpp"
+#include "asset/TextureLoader.hpp"
 #include "asset/ModelLoader.hpp"
 #include "asset/ShaderLibrary.hpp"
 
@@ -70,7 +72,11 @@ int main()
 
     // Test model
     ModelLoader modelLoader;
-    std::unique_ptr<Model> teapot = modelLoader.load("asset/teapot.fbx");
+    std::unique_ptr<Model> teapotModel = modelLoader.load("asset/teapot-020.fbx");
+
+    // Test texture
+    TextureLoader textureLoader;
+    std::unique_ptr<Texture> wallTexture = textureLoader.load("asset/wall.jpeg");
 
     ModelRenderer modelRenderer;
 
@@ -113,8 +119,10 @@ int main()
         Shader &shader = shaderLibrary.defaultShader;
         shader.setProjectionUniform(camera.getProjection());
         shader.setViewUniform(camera.getView());
+        shader.setTexture0(*wallTexture);
         shader.use();
-        modelRenderer.render(teapot.get());
+
+        modelRenderer.render(teapotModel.get());
 
         SDL_GL_SwapWindow(window);
 

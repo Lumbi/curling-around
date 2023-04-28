@@ -18,10 +18,12 @@ add_executable(
     src/rendering/Camera.cpp
     src/rendering/Vertex.cpp
     src/rendering/Shader.cpp
+    src/rendering/Texture.cpp
     src/rendering/Mesh.cpp
     src/rendering/Model.cpp
     src/rendering/ModelRenderer.cpp
     src/input/Keyboard.cpp
+    src/asset/TextureLoader.cpp
     src/asset/ModelLoader.cpp
     src/asset/ShaderLibrary.cpp
 )
@@ -30,6 +32,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE src)
 
 add_library(assimp SHARED IMPORTED)
 
+target_include_directories(${PROJECT_NAME} PRIVATE include)
 target_include_directories(${PROJECT_NAME} PRIVATE lib)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIR})

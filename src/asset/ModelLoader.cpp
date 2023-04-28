@@ -30,6 +30,14 @@ std::unique_ptr<Model> ModelLoader::load(const char *file)
             vertex.position = { positionData.x, positionData.y, positionData.z };
             aiVector3D normalData = meshData->mNormals[vertexIndex];
             vertex.normal = { normalData.x, normalData.y, normalData.z };
+            // TODO: Support multiple texture coordinates per vertex
+            aiVector3D *texCoords0 = meshData->mTextureCoords[0];
+            if (texCoords0 != nullptr) {
+                aiVector3D texCoordData0 = texCoords0[vertexIndex];
+                vertex.texCoord0 = { texCoordData0.x, texCoordData0.y };
+            } else {
+                vertex.texCoord0 = { 0, 0 };
+            }
             vertices.push_back(vertex);
         }
 

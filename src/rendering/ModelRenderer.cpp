@@ -2,10 +2,7 @@
 
 #include "rendering/Model.hpp"
 
-#define GL_GLEXT_PROTOTYPES
-#include <SDL.h>
-#include <SDL_opengl.h>
-#include <SDL_opengl_glext.h>
+#include "OpenGL.h"
 
 #include "rendering/Mesh.hpp"
 

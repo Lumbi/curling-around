@@ -3,16 +3,14 @@
 
 #include <vector>
 
-#define GL_GLEXT_PROTOTYPES
-#include <SDL.h>
-#include <SDL_opengl.h>
-#include <SDL_opengl_glext.h>
-
 #include "rendering/Vertex.hpp"
 #include "language/Index.hpp"
 
+#include "OpenGL.h"
+
 static const GLuint VERTEX_ATTRIB_POSITION = 0;
 static const GLuint VERTEX_ATTRIB_NORMAL = 1;
+static const GLuint VERTEX_ATTRIB_TEXCOORD0 = 2;
 
 class Mesh
 {
