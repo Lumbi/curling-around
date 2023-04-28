@@ -42,6 +42,7 @@ int main()
     // Set OpenGL attributes
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
 
     // Create OpenGL context
     SDL_GLContext glContext = SDL_GL_CreateContext(window);
@@ -62,6 +63,9 @@ int main()
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
     glEnable(GL_CULL_FACE);
+
+    // Enable depth buffer
+    glEnable(GL_DEPTH_TEST);
 
     // Camera
     float aspectRatio = (float) WINDOW_WIDTH / (float) WINDOW_HEIGHT;
