@@ -10,10 +10,6 @@
 #include <SDL_opengl.h>
 #include <SDL_opengl_glext.h>
 
-#include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
-#include <assimp/scene.h>
-
 #include "math/Matrix.hpp"
 #include "math/Vector.hpp"
 #include "rendering/Vertex.hpp"
