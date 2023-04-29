@@ -42,7 +42,7 @@ const char *DEFAULT_FRAGMENT_SHADER_SOURCE = R"(
 
         // Ambient light
         vec3 ambientLightColor = vec3(1.0f, 1.0f, 1.0f);
-        float ambientLightStrength = 0.5f;
+        float ambientLightStrength = 0.2f;
         vec3 ambientLight = ambientLightStrength * ambientLightColor;
 
         // Global diffuse light
