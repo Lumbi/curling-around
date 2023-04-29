@@ -6,12 +6,15 @@
 class ShaderLibrary
 {
     public:
-        ShaderLibrary();
+        static ShaderLibrary & instance();
 
         ShaderLibrary(ShaderLibrary &) = delete;
         ShaderLibrary& operator=(ShaderLibrary &) = delete;
 
         Shader defaultShader;
+
+    private:
+        ShaderLibrary();
 };
 
 #endif

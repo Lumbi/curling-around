@@ -24,6 +24,10 @@
 #include "asset/TextureLoader.hpp"
 #include "asset/ModelLoader.hpp"
 #include "asset/ShaderLibrary.hpp"
+#include "game/Scene.hpp"
+#include "game/Actor.hpp"
+#include "game/Component.hpp"
+#include "game/components/ModelComponent.hpp"
 
 int main()
 {
@@ -72,8 +76,6 @@ int main()
     Camera camera(aspectRatio);
     camera.transform.setPosition({ 0, 0, 10});
 
-    ShaderLibrary shaderLibrary;
-
     // Test model
     ModelLoader modelLoader;
     std::unique_ptr<Model> teapotModel = modelLoader.load("asset/teapot-020.fbx");
@@ -82,7 +84,14 @@ int main()
     TextureLoader textureLoader;
     std::unique_ptr<Texture> wallTexture = textureLoader.load("asset/wall.jpeg");
 
-    ModelRenderer modelRenderer;
+    auto scene = std::make_unique<Scene>();
+
+    {
+        auto teapot = std::make_unique<Actor>();
+        teapot->attachComponent(std::make_unique<ModelComponent>(teapotModel.get()));
+        teapot->getTransform().translateBy({ 0, -5, 0 });
+        scene->getRoot()->addChild(std::move(teapot));
+    }
 
     bool running = true;
 
@@ -120,13 +129,15 @@ int main()
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        Shader &shader = shaderLibrary.defaultShader;
+        // TODO: Move shader to 'Material' but link camera somehow
+        Shader &shader = ShaderLibrary::instance().defaultShader;
         shader.setProjectionUniform(camera.getProjection());
         shader.setViewUniform(camera.getView());
         shader.setTexture0(*wallTexture);
         shader.use();
 
-        modelRenderer.render(teapotModel.get());
+        scene->getRoot()->update();
+        scene->getRoot()->draw();
 
         SDL_GL_SwapWindow(window);
 

@@ -9,15 +9,16 @@ const char *DEFAULT_VERTEX_SHADER_SOURCE = R"(
 
     uniform mat4 projection;
     uniform mat4 view;
+    uniform mat4 model;
 
     out vec3 position;
     out vec3 normal;
     out vec2 textCoord0;
 
     void main() {
-        gl_Position = projection * view * vec4(attribPosition, 1.0f);
+        gl_Position = projection * view * model * vec4(attribPosition, 1.0f);
 
-        position = attribPosition;
+        position = (model * vec4(attribPosition, 1.0)).xyz;
         normal = attribNormal;
         textCoord0 = attribTexCoord0;
     }
@@ -55,6 +56,12 @@ const char *DEFAULT_FRAGMENT_SHADER_SOURCE = R"(
         fragmentColor = vec4(litColor, textureColor0.a); // Restore opacity
     }
 )";
+
+ShaderLibrary & ShaderLibrary::instance()
+{
+    static ShaderLibrary instance;
+    return instance;
+}
 
 ShaderLibrary::ShaderLibrary()
     : defaultShader(DEFAULT_VERTEX_SHADER_SOURCE, DEFAULT_FRAGMENT_SHADER_SOURCE)

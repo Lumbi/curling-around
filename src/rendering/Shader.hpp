@@ -18,6 +18,7 @@ class Shader
 
         void setProjectionUniform(const Matrix4f &);
         void setViewUniform(const Matrix4f &);
+        void setModelUniform(const Matrix4f &);
         void setTexture0(const Texture &);
 
         void use();

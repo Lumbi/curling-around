@@ -72,6 +72,12 @@ void Shader::setViewUniform(const Matrix4f &view)
     glProgramUniformMatrix4fv(shaderProgram, viewUniform, 1, GL_FALSE, view.data);
 }
 
+void Shader::setModelUniform(const Matrix4f &model)
+{
+    GLint modelUniform  = glGetUniformLocation(shaderProgram, "model");
+    glProgramUniformMatrix4fv(shaderProgram, modelUniform, 1, GL_FALSE, model.data);
+}
+
 void Shader::setTexture0(const Texture &texture)
 {
     glActiveTexture(GL_TEXTURE0);

@@ -4,6 +4,8 @@
 #include <vector>
 #include <memory>
 
+#include "math/Transform.hpp"
+
 class Mesh;
 
 class Model

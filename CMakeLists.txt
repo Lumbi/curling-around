@@ -26,6 +26,10 @@ add_executable(
     src/asset/TextureLoader.cpp
     src/asset/ModelLoader.cpp
     src/asset/ShaderLibrary.cpp
+    src/game/Component.cpp
+    src/game/Actor.cpp
+    src/game/Scene.cpp
+    src/game/components/ModelComponent.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)
