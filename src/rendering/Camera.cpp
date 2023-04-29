@@ -4,7 +4,7 @@
 
 Camera::Camera(float aspectRatio)
 {
-    projection = Matrix4f::fov_perspective(1.0f, 1000.f, M_PI_2, aspectRatio);
+    projection = Matrix4f::fov_perspective(1.0f, 1000.f, 60.f * M_PI / 180.f, aspectRatio);
 }
 
 Matrix4f Camera::getProjection() const
