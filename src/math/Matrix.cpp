@@ -114,6 +114,15 @@ Matrix4f& Matrix4f::operator*=(const Matrix4f& rhs)
     return *this;
 }
 
+Vector3f operator*(const Matrix4f &lhs, const Vector3f &rhs)
+{
+    return {
+        lhs[0] * rhs.x + lhs[1] * rhs.y + lhs[2] * rhs.z + lhs[3],
+        lhs[4] * rhs.x + lhs[5] * rhs.y + lhs[6] * rhs.z + lhs[7],
+        lhs[8] * rhs.x + lhs[9] * rhs.y + lhs[10] * rhs.z + lhs[11]
+    };
+}
+
 Matrix4f Matrix4f::inverse() const
 {
     Matrix4f inv;

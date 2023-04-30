@@ -2,6 +2,7 @@
 #define MATRIX_H
 
 #include "language/Index.hpp"
+#include "math/Vector.hpp"
 
 struct Matrix4f
 {
@@ -25,6 +26,7 @@ struct Matrix4f
     Matrix4f inverse() const;
 };
 
-Matrix4f operator*(const Matrix4f& , const Matrix4f&);
+Matrix4f operator*(const Matrix4f &, const Matrix4f &);
+Vector3f operator*(const Matrix4f &, const Vector3f &);
 
 #endif

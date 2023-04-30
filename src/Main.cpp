@@ -129,14 +129,8 @@ int main()
         if (keyboard.isPressed(SDLK_w)) { cameraMovement.z -= cameraSpeed; }
         if (keyboard.isPressed(SDLK_s)) { cameraMovement.z += cameraSpeed; }
         if (cameraMovement.x != 0 || cameraMovement.y != 0 || cameraMovement.z != 0) {
-            Matrix4f transform = camera.transform.getMatrix().inverse();
-            // TODO: Clean up
-            Vector3f dt = {
-                transform[0] * cameraMovement.x + transform[1] * cameraMovement.y + transform[2] * cameraMovement.z + transform[3],
-                transform[4] * cameraMovement.x + transform[5] * cameraMovement.y + transform[6] * cameraMovement.z + transform[7],
-                transform[8] * cameraMovement.x + transform[9] * cameraMovement.y + transform[10] * cameraMovement.z + transform[11]
-            };
-            camera.transform.translateBy(dt);
+            cameraMovement = camera.transform.getMatrix().inverse() * cameraMovement;
+            camera.transform.translateBy(cameraMovement);
         }
 
         glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
