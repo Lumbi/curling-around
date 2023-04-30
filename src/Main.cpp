@@ -78,19 +78,19 @@ int main()
 
     // Test model
     ModelLoader modelLoader;
-    std::unique_ptr<Model> teapotModel = modelLoader.load("asset/teapot-020.fbx");
+    std::unique_ptr<Model> testModel = modelLoader.load("asset/tank.fbx");
 
     // Test texture
     TextureLoader textureLoader;
-    std::unique_ptr<Texture> wallTexture = textureLoader.load("asset/wall.jpeg");
+    std::unique_ptr<Texture> testTexture = textureLoader.load("asset/wall.jpeg");
 
     auto scene = std::make_unique<Scene>();
 
     {
-        auto teapot = std::make_unique<Actor>();
-        teapot->attachComponent(std::make_unique<ModelComponent>(teapotModel.get()));
-        teapot->getTransform().translateBy({ 0, -5, 0 });
-        scene->getRoot()->addChild(std::move(teapot));
+        auto testActor = std::make_unique<Actor>();
+        testActor->attachComponent(std::make_unique<ModelComponent>(testModel.get()));
+        testActor->getTransform().translateBy({ 0, -5, 0 });
+        scene->getRoot()->addChild(std::move(testActor));
     }
 
     bool running = true;
@@ -133,7 +133,7 @@ int main()
         Shader &shader = ShaderLibrary::instance().defaultShader;
         shader.setProjectionUniform(camera.getProjection());
         shader.setViewUniform(camera.getView());
-        shader.setTexture0(*wallTexture);
+        shader.setTexture0(*testTexture);
         shader.use();
 
         scene->getRoot()->update();
