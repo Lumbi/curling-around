@@ -88,7 +88,7 @@ void Shader::use()
 {
     // TODO: Move
     GLint globalLightPositionUniform = glGetUniformLocation(shaderProgram, "globalLightPosition");
-    Vector3f globalLightPosition = { 10, 10, 10 };
+    Vector3f globalLightPosition = { 100, 100, 100 };
     glProgramUniform3fv(shaderProgram, globalLightPositionUniform, 1, (float*) &globalLightPosition);
 
     glUseProgram(shaderProgram);
