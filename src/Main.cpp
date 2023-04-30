@@ -114,16 +114,30 @@ int main()
         }
 
         // Camera controls
-
-        if (keyboard.isPressed(SDLK_a)) { camera.transform.translateBy({ -0.1f, 0, 0 }); }
-        if (keyboard.isPressed(SDLK_d)) { camera.transform.translateBy({  0.1f, 0, 0 }); }
-        if (keyboard.isPressed(SDLK_w)) { camera.transform.translateBy({ 0, 0, -0.1f }); }
-        if (keyboard.isPressed(SDLK_s)) { camera.transform.translateBy({ 0, 0,  0.1f }); }
-
         if (keyboard.isPressed(SDLK_UP)) { camera.transform.rotateBy({ -0.1f, 0, 0 }); }
         if (keyboard.isPressed(SDLK_DOWN)) { camera.transform.rotateBy({ 0.1f, 0, 0 }); }
         if (keyboard.isPressed(SDLK_LEFT)) { camera.transform.rotateBy({ 0, -0.1f, 0 }); }
         if (keyboard.isPressed(SDLK_RIGHT)) { camera.transform.rotateBy({ 0, 0.1f, 0 }); }
+
+        float cameraSpeed = 1.0f;
+        if (keyboard.isPressed(SDLK_LSHIFT)) {
+            cameraSpeed *= 5;
+        }
+        Vector3f cameraMovement = Vector3f::zero;
+        if (keyboard.isPressed(SDLK_a)) { cameraMovement.x -= cameraSpeed; }
+        if (keyboard.isPressed(SDLK_d)) { cameraMovement.x += cameraSpeed; }
+        if (keyboard.isPressed(SDLK_w)) { cameraMovement.z -= cameraSpeed; }
+        if (keyboard.isPressed(SDLK_s)) { cameraMovement.z += cameraSpeed; }
+        if (cameraMovement.x != 0 || cameraMovement.y != 0 || cameraMovement.z != 0) {
+            Matrix4f transform = camera.transform.getMatrix().inverse();
+            // TODO: Clean up
+            Vector3f dt = {
+                transform[0] * cameraMovement.x + transform[1] * cameraMovement.y + transform[2] * cameraMovement.z + transform[3],
+                transform[4] * cameraMovement.x + transform[5] * cameraMovement.y + transform[6] * cameraMovement.z + transform[7],
+                transform[8] * cameraMovement.x + transform[9] * cameraMovement.y + transform[10] * cameraMovement.z + transform[11]
+            };
+            camera.transform.translateBy(dt);
+        }
 
         glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         glClearColor(0.f, 0.f, 0.f, 1.f);
