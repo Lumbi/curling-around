@@ -3,19 +3,36 @@
 
 #include <vector>
 #include <memory>
+#include <string>
 
-#include "math/Transform.hpp"
+#include "language/Index.hpp"
+#include "math/Matrix.hpp"
 
 class Mesh;
 
 class Model
 {
     public:
-        void addMesh(std::unique_ptr<Mesh>);
+        struct Node
+        {
+            std::string name;
+            std::vector<Index> meshes;
+            Matrix4f transform = Matrix4f::identity();
+            Node *parent = nullptr;
+            std::vector<std::unique_ptr<Node>> children;
 
+            Matrix4f getModelTransform() const;
+        };
+
+    public:
+        Node * getRoot() const;
+        void setRoot(std::unique_ptr<Node>);
+        void addMesh(std::unique_ptr<Mesh>);
         const std::vector<std::unique_ptr<Mesh>>& getMeshes() const;
+        Mesh * getMeshAt(Index) const;
 
     private:
+        std::unique_ptr<Node> root;
         std::vector<std::unique_ptr<Mesh>> meshes;
 };
 
