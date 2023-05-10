@@ -52,8 +52,3 @@ Mesh::~Mesh()
     glDeleteVertexArrays(1, &vertexArray);
     glDeleteBuffers(1, &elementBuffer);
 }
-
-void Mesh::draw()
-{
-
-}

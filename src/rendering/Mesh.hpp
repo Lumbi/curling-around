@@ -27,8 +27,6 @@ class Mesh
 
         ~Mesh();
 
-        void draw();
-
     private:
         GLuint vertexBuffer;
         GLuint vertexArray;
