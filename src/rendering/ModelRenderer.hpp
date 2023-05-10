@@ -3,12 +3,15 @@
 
 #include "math/Matrix.hpp"
 
-class Model;
+#include "Model.hpp"
 
 class ModelRenderer
 {
     public:
         void render(const Model &model, const Matrix4f &modelMatrix);
+
+    private:
+        void render(const Model &model, Model::Node &node);
 };
 
 #endif
