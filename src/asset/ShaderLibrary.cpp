@@ -19,7 +19,7 @@ const char *DEFAULT_VERTEX_SHADER_SOURCE = R"(
         gl_Position = projection * view * model * vec4(attribPosition, 1.0f);
 
         position = (model * vec4(attribPosition, 1.0)).xyz;
-        normal = attribNormal;
+        normal = normalize((model * vec4(attribNormal, 0.0f)).xyz);
         textCoord0 = attribTexCoord0;
     }
 )";
