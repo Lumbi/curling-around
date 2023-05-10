@@ -119,9 +119,9 @@ int main()
         if (keyboard.isPressed(SDLK_LEFT)) { camera.transform.rotateBy({ 0, -0.1f, 0 }); }
         if (keyboard.isPressed(SDLK_RIGHT)) { camera.transform.rotateBy({ 0, 0.1f, 0 }); }
 
-        float cameraSpeed = 1.0f;
+        float cameraSpeed = 10.0f;
         if (keyboard.isPressed(SDLK_LSHIFT)) {
-            cameraSpeed *= 5;
+            cameraSpeed = 3.0f;
         }
         Vector3f cameraMovement = Vector3f::zero;
         if (keyboard.isPressed(SDLK_a)) { cameraMovement.x -= cameraSpeed; }
@@ -132,6 +132,9 @@ int main()
             cameraMovement = camera.transform.getMatrix().inverse() * cameraMovement;
             camera.transform.translateBy(cameraMovement);
         }
+
+        if (keyboard.isPressed(SDLK_q)) { camera.transform.translateBy({ 0, -cameraSpeed, 0}); }
+        if (keyboard.isPressed(SDLK_e)) { camera.transform.translateBy({ 0, cameraSpeed, 0}); }
 
         glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         glClearColor(0.f, 0.f, 0.f, 1.f);
