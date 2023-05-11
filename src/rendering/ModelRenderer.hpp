@@ -11,7 +11,7 @@ class ModelRenderer
         void render(const Model &model, const Matrix4f &modelMatrix);
 
     private:
-        void render(const Model &model, Model::Node &node);
+        void render(const Model &model, const Matrix4f &modelMatrix, Model::Node &node);
 };
 
 #endif

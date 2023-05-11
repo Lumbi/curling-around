@@ -89,7 +89,7 @@ int main()
     {
         auto testActor = std::make_unique<Actor>();
         testActor->attachComponent(std::make_unique<ModelComponent>(testModel.get()));
-        testActor->getTransform().translateBy({ 0, -5, 0 });
+        testActor->getTransform().translateBy({ 0, -100, -1000 });
         scene->getRoot()->addChild(std::move(testActor));
     }
 

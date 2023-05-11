@@ -3,18 +3,18 @@
 #include "Actor.hpp"
 
 Component::Component()
-    : parent(nullptr)
+    : actor(nullptr)
 {}
 
 Component::~Component()
 {}
 
-void Component::setParent(Actor *actor)
+void Component::setActor(Actor *actor)
 {
-    parent = actor;
+    this->actor = actor;
 }
 
-Actor * const Component::getParent() const
+Actor * const Component::getActor() const
 {
-    return parent;
+    return actor;
 }

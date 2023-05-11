@@ -21,7 +21,7 @@ class Model
             Node *parent = nullptr;
             std::vector<std::unique_ptr<Node>> children;
 
-            Matrix4f getModelTransform() const;
+            Matrix4f getModelMatrix() const;
         };
 
     public:

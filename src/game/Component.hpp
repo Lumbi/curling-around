@@ -12,11 +12,11 @@ class Component
         virtual void update() = 0;
         virtual void draw() = 0;
 
-        void setParent(Actor *);
-        Actor * const getParent() const;
+        void setActor(Actor *);
+        Actor * const getActor() const;
 
     private:
-        Actor *parent;
+        Actor *actor;
 };
 
 #endif

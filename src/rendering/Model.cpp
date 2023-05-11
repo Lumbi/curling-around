@@ -27,13 +27,13 @@ Mesh * Model::getMeshAt(Index i) const
     return meshes[i].get();
 }
 
-Matrix4f Model::Node::getModelTransform() const
+Matrix4f Model::Node::getModelMatrix() const
 {
-    Matrix4f worldTransform = transform;
+    Matrix4f modelMatrix = transform;
     Model::Node *nextParent = parent;
     while (nextParent) {
-        worldTransform = worldTransform * nextParent->transform;
+        modelMatrix = modelMatrix * nextParent->transform;
         nextParent = nextParent->parent;
     }
-    return worldTransform;
+    return modelMatrix;
 }

@@ -14,7 +14,8 @@ void ModelComponent::update()
 
 void ModelComponent::draw()
 {
-    if (model) {
-        renderer.render(*model, getParent()->getTransform().getMatrix());
+    Actor *actor = getActor();
+    if (model && actor) {
+        renderer.render(*model, actor->getLocalToWorldMatrix());
     }
 }

@@ -1,6 +1,7 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
+#include "math/Matrix.hpp"
 #include "math/Transform.hpp"
 
 #include <memory>
@@ -11,7 +12,8 @@ class Component;
 class Actor
 {
     public:
-        Transform& getTransform();
+        Transform & getTransform();
+        Matrix4f getLocalToWorldMatrix();
 
         void update();
         void draw();
@@ -25,6 +27,7 @@ class Actor
 
     private:
         Transform transform;
+        Actor *parent;
         std::vector<std::unique_ptr<Actor>> children;
         std::vector<std::unique_ptr<Component>> components;
 };
