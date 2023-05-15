@@ -88,6 +88,7 @@ int main()
         scene->setCamera(std::move(camera));
     }
 
+    // Field
     {
         auto fieldActor = std::make_unique<Actor>();
         fieldActor->attachComponent(
@@ -97,6 +98,15 @@ int main()
             )
         );
         scene->getRoot()->addChild(std::move(fieldActor));
+
+        auto targetActor = std::make_unique<Actor>();
+        targetActor->attachComponent(
+            std::make_unique<ModelComponent>(
+                AssetLibrary::shared().getModel(AssetLibrary::ModelKey::target),
+                AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::defaultTarget)
+            )
+        );
+        scene->getRoot()->addChild(std::move(targetActor));
     }
 
     {

@@ -17,21 +17,24 @@ class AssetLibrary {
 
         enum class ModelKey {
             curlingStone,
-            field
+            field,
+            target
         };
 
         Model * getModel(ModelKey);
 
         enum class TextureKey {
             curlingStone,
-            ice
+            ice,
+            target
         };
 
         Texture * getTexture(TextureKey);
 
         enum class MaterialKey {
             defaultCurlingStone,
-            defaultIce
+            defaultIce,
+            defaultTarget
         };
 
         Material * getMaterial(MaterialKey);

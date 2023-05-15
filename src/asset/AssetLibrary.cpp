@@ -36,24 +36,20 @@ void AssetLibrary::load()
     ModelLoader modelLoader;
     models[ModelKey::curlingStone] = modelLoader.load("asset/curling_stone.fbx");
     models[ModelKey::field] = modelLoader.load("asset/field.fbx");
+    models[ModelKey::target] = modelLoader.load("asset/target.fbx");
 
     // Load textures
 
     TextureLoader textureLoader;
     textures[TextureKey::curlingStone] = textureLoader.load("asset/curling_stone_tex_diffuse.jpg");
     textures[TextureKey::ice] = textureLoader.load("asset/ice.jpg");
+    textures[TextureKey::target] = textureLoader.load("asset/target.jpg");
 
     // Load materials
-
-    materials[MaterialKey::defaultCurlingStone] = std::make_unique<Material>(
-        &ShaderLibrary::shared().defaultShader,
-        getTexture(TextureKey::curlingStone)
-    );
-
-    materials[MaterialKey::defaultIce] = std::make_unique<Material>(
-        &ShaderLibrary::shared().defaultShader,
-        getTexture(TextureKey::ice)
-    );
+    Shader *defaultShader = &ShaderLibrary::shared().defaultShader;
+    materials[MaterialKey::defaultCurlingStone] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::curlingStone));
+    materials[MaterialKey::defaultIce] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::ice));
+    materials[MaterialKey::defaultTarget] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::target));
 }
 
 AssetLibrary::AssetLibrary()
