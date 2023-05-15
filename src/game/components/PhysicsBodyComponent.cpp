@@ -6,12 +6,12 @@
 PhysicsBodyComponent::PhysicsBodyComponent(PhysicsBody physicsBody)
     : physicsBody(physicsBody)
 {
-    Physics::shared()->addPhysicsBody(&this->physicsBody);
+    Physics::shared().addPhysicsBody(&this->physicsBody);
 }
 
 PhysicsBodyComponent::~PhysicsBodyComponent()
 {
-    Physics::shared()->removePhysicsBody(&physicsBody);
+    Physics::shared().removePhysicsBody(&physicsBody);
 }
 
 void PhysicsBodyComponent::update()

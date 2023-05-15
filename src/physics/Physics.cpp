@@ -4,12 +4,8 @@
 
 #include <algorithm>
 
-Physics * Physics::instance = nullptr;
-
-Physics * Physics::shared() {
-    if (instance == nullptr) {
-        instance = new Physics();
-    }
+Physics & Physics::shared() {
+    static Physics instance;
     return instance;
 }
 

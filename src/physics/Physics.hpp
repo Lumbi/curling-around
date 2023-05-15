@@ -5,13 +5,12 @@
 
 class PhysicsBody;
 
-// WARNING: Not thread-safe singleton
 class Physics {
     public:
         Physics(Physics &) = delete;
         Physics & operator=(Physics &) = delete;
 
-        static Physics * shared();
+        static Physics & shared();
 
         void addPhysicsBody(PhysicsBody *);
         void removePhysicsBody(PhysicsBody *);
@@ -22,8 +21,6 @@ class Physics {
         Physics();
 
         std::vector<PhysicsBody *> physicsBodies;
-
-        static Physics *instance;
 };
 
 #endif

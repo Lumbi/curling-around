@@ -111,7 +111,7 @@ int main()
             }
         }
 
-        Physics::shared()->update();
+        Physics::shared().update();
 
         // Camera controls
         if (keyboard.isPressed(SDLK_UP)) { camera.transform.rotateBy({ -0.1f, 0, 0 }); }
