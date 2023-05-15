@@ -18,9 +18,11 @@ class PhysicsBodyComponent: public Component {
         virtual void draw() override;
 
         PhysicsBody& getBody();
+        void setFriction(float);
 
     private:
         PhysicsBody physicsBody;
+        float friction = 0.02f;
 };
 
 #endif

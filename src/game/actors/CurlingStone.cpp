@@ -11,7 +11,7 @@ CurlingStone::CurlingStone()
     );
 
     auto physicsBodyComponent = std::make_unique<PhysicsBodyComponent>(
-        PhysicsBody::makeSphere(1.0f, 1.0f)
+        PhysicsBody::makeSphere(1.0f, 100.0f)
     );
 
     attachComponent(std::move(modelComponent));

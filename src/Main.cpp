@@ -79,16 +79,21 @@ int main()
     // Camera
     float aspectRatio = (float) WINDOW_WIDTH / (float) WINDOW_HEIGHT;
     Camera camera(aspectRatio);
-    camera.transform.setPosition({ 0, 0, 10});
+    camera.transform.setPosition({ 0, 100, 500 });
 
     AssetLibrary::shared().load();
 
     auto scene = std::make_unique<Scene>();
 
     {
-        auto testActor = std::make_unique<CurlingStone>();
-        // testActor->getTransform().translateBy({ 0, -100, -1000 });
-        scene->getRoot()->addChild(std::move(testActor));
+        auto testActorA = std::make_unique<CurlingStone>();
+        testActorA->getBody()->position = { -200.0f, 0.0f, 0.0f };
+        testActorA->getBody()->acceleration = { 0.2f, 0.0f, 0.0f };
+        scene->getRoot()->addChild(std::move(testActorA));
+
+        auto testActorB = std::make_unique<CurlingStone>();
+        testActorB->getBody()->position = { 200.0f, 0.0f, 0.0f };
+        scene->getRoot()->addChild(std::move(testActorB));
     }
 
     bool running = true;

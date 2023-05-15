@@ -20,6 +20,9 @@ void PhysicsBodyComponent::update()
     if (actor) {
         actor->getTransform().setPosition(physicsBody.position);
     }
+
+    // Very simple linear friction
+    physicsBody.velocity *= (1.0f - friction);
 }
 
 void PhysicsBodyComponent::draw()
@@ -28,4 +31,9 @@ void PhysicsBodyComponent::draw()
 PhysicsBody & PhysicsBodyComponent::getBody()
 {
     return physicsBody;
+}
+
+void PhysicsBodyComponent::setFriction(float friction)
+{
+    this->friction = friction;
 }
