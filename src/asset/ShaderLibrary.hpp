@@ -6,7 +6,7 @@
 class ShaderLibrary
 {
     public:
-        static ShaderLibrary & instance();
+        static ShaderLibrary & shared();
 
         ShaderLibrary(ShaderLibrary &) = delete;
         ShaderLibrary& operator=(ShaderLibrary &) = delete;

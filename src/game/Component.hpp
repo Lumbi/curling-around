@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 class Actor;
+class Scene;
 
 class Component
 {
@@ -10,7 +11,7 @@ class Component
         virtual ~Component();
 
         virtual void update() = 0;
-        virtual void draw() = 0;
+        virtual void draw(Scene &) = 0;
 
         void setActor(Actor *);
         Actor * const getActor() const;

@@ -19,6 +19,7 @@ add_executable(
     src/rendering/Vertex.cpp
     src/rendering/Shader.cpp
     src/rendering/Texture.cpp
+    src/rendering/Material.cpp
     src/rendering/Mesh.cpp
     src/rendering/Model.cpp
     src/rendering/ModelRenderer.cpp

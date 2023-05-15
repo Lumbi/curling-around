@@ -2,9 +2,11 @@
 #define ASSET_LIBRARY_H
 
 #include <unordered_map>
+#include <memory>
 
 class Model;
 class Texture;
+class Material;
 
 class AssetLibrary {
     public:
@@ -14,17 +16,25 @@ class AssetLibrary {
         AssetLibrary& operator=(AssetLibrary &) = delete;
 
         enum class ModelKey {
-            curlingStone
+            curlingStone,
+            field
         };
 
         Model * getModel(ModelKey);
 
-
         enum class TextureKey {
-            curlingStone
+            curlingStone,
+            ice
         };
 
         Texture * getTexture(TextureKey);
+
+        enum class MaterialKey {
+            defaultCurlingStone,
+            defaultIce
+        };
+
+        Material * getMaterial(MaterialKey);
 
     public:
         void load();
@@ -34,6 +44,7 @@ class AssetLibrary {
 
         std::unordered_map<ModelKey, std::unique_ptr<Model>> models;
         std::unordered_map<TextureKey, std::unique_ptr<Texture>> textures;
+        std::unordered_map<MaterialKey, std::unique_ptr<Material>> materials;
 };
 
 #endif

@@ -14,7 +14,7 @@ static void loadNode(Model::Node *targetNode, aiNode *nodeData);
 std::unique_ptr<Model> ModelLoader::load(const char *file)
 {
     Assimp::Importer importer;
-    const aiScene *scene = importer.ReadFile(file, aiProcess_Triangulate | aiProcess_FixInfacingNormals);
+    const aiScene *scene = importer.ReadFile(file, aiProcess_Triangulate);
     if (!scene) {
         printf("Error: Failed to read model %s\n", importer.GetErrorString());
         return { nullptr };

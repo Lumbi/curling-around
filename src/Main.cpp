@@ -70,20 +70,34 @@ int main()
 
     // Face culling
     glCullFace(GL_BACK);
-    glFrontFace(GL_CW);
+    glFrontFace(GL_CCW);
     glEnable(GL_CULL_FACE);
 
     // Enable depth buffer
     glEnable(GL_DEPTH_TEST);
 
-    // Camera
-    float aspectRatio = (float) WINDOW_WIDTH / (float) WINDOW_HEIGHT;
-    Camera camera(aspectRatio);
-    camera.transform.setPosition({ 0, 100, 500 });
-
     AssetLibrary::shared().load();
 
     auto scene = std::make_unique<Scene>();
+
+    // Camera
+    {
+        float aspectRatio = (float) WINDOW_WIDTH / (float) WINDOW_HEIGHT;
+        auto camera = std::make_unique<Camera>(aspectRatio);
+        camera->transform.setPosition({ 0, 100, 500 });
+        scene->setCamera(std::move(camera));
+    }
+
+    {
+        auto fieldActor = std::make_unique<Actor>();
+        fieldActor->attachComponent(
+            std::make_unique<ModelComponent>(
+                AssetLibrary::shared().getModel(AssetLibrary::ModelKey::field),
+                AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::defaultIce)
+            )
+        );
+        scene->getRoot()->addChild(std::move(fieldActor));
+    }
 
     {
         auto testActorA = std::make_unique<CurlingStone>();
@@ -119,6 +133,7 @@ int main()
         Physics::shared().update();
 
         // Camera controls
+        Camera &camera = *scene->getCamera();
         if (keyboard.isPressed(SDLK_UP)) { camera.transform.rotateBy({ -0.1f, 0, 0 }); }
         if (keyboard.isPressed(SDLK_DOWN)) { camera.transform.rotateBy({ 0.1f, 0, 0 }); }
         if (keyboard.isPressed(SDLK_LEFT)) { camera.transform.rotateBy({ 0, -0.1f, 0 }); }
@@ -145,15 +160,8 @@ int main()
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // TODO: Move shader to 'Material' but link camera somehow
-        Shader &shader = ShaderLibrary::instance().defaultShader;
-        shader.setProjectionUniform(camera.getProjection());
-        shader.setViewUniform(camera.getView());
-        shader.setTexture0(*AssetLibrary::shared().getTexture(AssetLibrary::TextureKey::curlingStone));
-        shader.use();
-
         scene->getRoot()->update();
-        scene->getRoot()->draw();
+        scene->getRoot()->draw(*scene.get());
 
         SDL_GL_SwapWindow(window);
 

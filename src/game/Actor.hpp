@@ -8,6 +8,7 @@
 #include <vector>
 
 class Component;
+class Scene;
 
 class Actor
 {
@@ -19,7 +20,7 @@ class Actor
         Matrix4f getLocalToWorldMatrix();
 
         void update();
-        void draw();
+        void draw(Scene &);
 
         const std::vector<std::unique_ptr<Component>>& getComponents() const;
         void attachComponent(std::unique_ptr<Component>);

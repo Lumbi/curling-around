@@ -5,13 +5,28 @@
 
 #include "Model.hpp"
 
+class Material;
+
 class ModelRenderer
 {
     public:
-        void render(const Model &model, const Matrix4f &modelMatrix);
+        void render(
+            const Model &model,
+            const Material &material,
+            const Matrix4f &projectionMatrix,
+            const Matrix4f &viewMatrix,
+            const Matrix4f &modelMatrix
+        );
 
     private:
-        void render(const Model &model, const Matrix4f &modelMatrix, Model::Node &node);
+        void render(
+            const Model &model,
+            const Material &material,
+            const Matrix4f &projectionMatrix,
+            const Matrix4f &viewMatrix,
+            const Matrix4f &modelMatrix,
+            Model::Node &node
+        );
 };
 
 #endif

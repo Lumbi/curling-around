@@ -15,7 +15,7 @@ class PhysicsBodyComponent: public Component {
 
     public:
         virtual void update() override;
-        virtual void draw() override;
+        virtual void draw(Scene &) override;
 
         PhysicsBody& getBody();
         void setFriction(float);

@@ -7,7 +7,8 @@
 CurlingStone::CurlingStone()
 {
     auto modelComponent = std::make_unique<ModelComponent>(
-        AssetLibrary::shared().getModel(AssetLibrary::ModelKey::curlingStone)
+        AssetLibrary::shared().getModel(AssetLibrary::ModelKey::curlingStone),
+        AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::defaultCurlingStone)
     );
 
     auto physicsBodyComponent = std::make_unique<PhysicsBodyComponent>(

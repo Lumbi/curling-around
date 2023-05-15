@@ -6,16 +6,21 @@
 
 class Actor;
 class Component;
+class Camera;
 
 class Scene
 {
     public:
         Scene();
 
-        Actor * const getRoot();
+        Actor * getRoot();
+
+        Camera * getCamera();
+        void setCamera(std::unique_ptr<Camera>);
 
     private:
         std::unique_ptr<Actor> root;
+        std::unique_ptr<Camera> camera;
 };
 
 #endif

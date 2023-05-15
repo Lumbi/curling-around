@@ -42,7 +42,7 @@ const char *DEFAULT_FRAGMENT_SHADER_SOURCE = R"(
 
         // Ambient light
         vec3 ambientLightColor = vec3(1.0f, 1.0f, 1.0f);
-        float ambientLightStrength = 0.2f;
+        float ambientLightStrength = 0.1f;
         vec3 ambientLight = ambientLightStrength * ambientLightColor;
 
         // Global diffuse light
@@ -57,7 +57,7 @@ const char *DEFAULT_FRAGMENT_SHADER_SOURCE = R"(
     }
 )";
 
-ShaderLibrary & ShaderLibrary::instance()
+ShaderLibrary & ShaderLibrary::shared()
 {
     static ShaderLibrary instance;
     return instance;

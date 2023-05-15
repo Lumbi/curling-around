@@ -1,6 +1,7 @@
 #include "Actor.hpp"
 
 #include "Component.hpp"
+#include "Scene.hpp"
 
 Actor::Actor()
     : parent(nullptr)
@@ -35,13 +36,13 @@ void Actor::update()
     }
 }
 
-void Actor::draw()
+void Actor::draw(Scene &scene)
 {
     for (auto&& component : components) {
-        component->draw();
+        component->draw(scene);
     }
     for (auto&& child : children) {
-        child->draw();
+        child->draw(scene);
     }
 }
 
