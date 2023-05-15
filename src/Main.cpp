@@ -70,7 +70,7 @@ int main()
 
     // Face culling
     glCullFace(GL_BACK);
-    glFrontFace(GL_CCW);
+    glFrontFace(GL_CW);
     glEnable(GL_CULL_FACE);
 
     // Enable depth buffer
