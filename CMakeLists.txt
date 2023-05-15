@@ -29,6 +29,7 @@ add_executable(
     src/asset/TextureLoader.cpp
     src/asset/ModelLoader.cpp
     src/asset/ShaderLibrary.cpp
+    src/asset/AssetLibrary.cpp
     src/game/Component.cpp
     src/game/Actor.cpp
     src/game/Scene.cpp

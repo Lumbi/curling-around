@@ -26,6 +26,7 @@
 #include "asset/TextureLoader.hpp"
 #include "asset/ModelLoader.hpp"
 #include "asset/ShaderLibrary.hpp"
+#include "asset/AssetLibrary.hpp"
 #include "game/Scene.hpp"
 #include "game/Actor.hpp"
 #include "game/Component.hpp"
@@ -79,13 +80,7 @@ int main()
     Camera camera(aspectRatio);
     camera.transform.setPosition({ 0, 0, 10});
 
-    // Test model
-    ModelLoader modelLoader;
-    std::unique_ptr<Model> testModel = modelLoader.load("asset/curling_stone.fbx");
-
-    // Test texture
-    TextureLoader textureLoader;
-    std::unique_ptr<Texture> testTexture = textureLoader.load("asset/curling_stone_tex_diffuse.jpg");
+    AssetLibrary::shared().load();
 
     auto scene = std::make_unique<Scene>();
 
@@ -150,7 +145,7 @@ int main()
         Shader &shader = ShaderLibrary::instance().defaultShader;
         shader.setProjectionUniform(camera.getProjection());
         shader.setViewUniform(camera.getView());
-        shader.setTexture0(*testTexture);
+        shader.setTexture0(*AssetLibrary::shared().getTexture(AssetLibrary::TextureKey::curlingStone));
         shader.use();
 
         scene->getRoot()->update();
