@@ -21,4 +21,9 @@ struct Vector3f
 
 Vector3f operator+(const Vector3f &, const Vector3f &);
 
+Vector3f operator*(const Vector3f &, float);
+Vector3f operator*(float, const Vector3f &);
+
+float distance(const Vector3f &, const Vector3f &);
+
 #endif

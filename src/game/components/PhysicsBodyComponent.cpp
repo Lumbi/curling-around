@@ -24,3 +24,8 @@ void PhysicsBodyComponent::update()
 
 void PhysicsBodyComponent::draw()
 {}
+
+PhysicsBody & PhysicsBodyComponent::getBody()
+{
+    return physicsBody;
+}

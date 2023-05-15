@@ -1,6 +1,7 @@
 #include "Physics.hpp"
 
 #include "physics/PhysicsBody.hpp"
+#include "physics/Collisions.hpp"
 
 #include <algorithm>
 
@@ -34,8 +35,19 @@ void Physics::update()
 
     // Handle collisions
     for (auto&& firstBody : physicsBodies) {
+        if (!firstBody) continue;
         for (auto&& secondBody : physicsBodies) {
-
+            if (!secondBody) continue;
+            if (firstBody == secondBody) continue;
+            switch (firstBody->kind) {
+            case PhysicsBody::Kind::sphere:
+                switch (secondBody->kind) {
+                case PhysicsBody::Kind::sphere:
+                    handleSphereToSphereCollision(*firstBody, *secondBody);
+                    break;
+                }
+                break;
+            }
         }
     }
 }

@@ -3,6 +3,7 @@
 #include "Component.hpp"
 
 Actor::Actor()
+    : parent(nullptr)
 {}
 
 Actor::~Actor()

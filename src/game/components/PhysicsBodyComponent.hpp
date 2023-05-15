@@ -17,6 +17,8 @@ class PhysicsBodyComponent: public Component {
         virtual void update() override;
         virtual void draw() override;
 
+        PhysicsBody& getBody();
+
     private:
         PhysicsBody physicsBody;
 };

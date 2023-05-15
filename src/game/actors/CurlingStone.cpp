@@ -20,3 +20,25 @@ CurlingStone::CurlingStone()
 
 CurlingStone::~CurlingStone()
 {}
+
+PhysicsBodyComponent * CurlingStone::getPhysicsBodyComponent()
+{
+    // TODO: Avoid dynamic cast by keeping pointer
+    for (auto&& component : getComponents()) {
+        auto physicsBodyComponent = dynamic_cast<PhysicsBodyComponent*>(component.get());
+        if (physicsBodyComponent) {
+            return physicsBodyComponent;
+        }
+    }
+    return nullptr;
+}
+
+PhysicsBody * CurlingStone::getBody()
+{
+    auto physicsBodyComponent = getPhysicsBodyComponent();
+    if (physicsBodyComponent) {
+        return &physicsBodyComponent->getBody();
+    } else {
+        return nullptr;
+    }
+}

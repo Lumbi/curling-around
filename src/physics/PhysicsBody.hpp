@@ -1,10 +1,8 @@
-#ifndef PHYSICSBODY_H
-#define PHYSICSBODY_H
+#ifndef PHYSICS_BODY_H
+#define PHYSICS_BODY_H
 
 #include "math/Vector.hpp"
 #include "physics/Collider.hpp"
-
-#include <memory>
 
 struct PhysicsBody {
     enum class Kind {

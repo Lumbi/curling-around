@@ -26,6 +26,7 @@ add_executable(
     src/physics/Collider.cpp
     src/physics/PhysicsBody.cpp
     src/physics/Physics.cpp
+    src/physics/Collisions.cpp
     src/asset/TextureLoader.cpp
     src/asset/ModelLoader.cpp
     src/asset/ShaderLibrary.cpp
