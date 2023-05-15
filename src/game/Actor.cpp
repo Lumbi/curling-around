@@ -2,7 +2,13 @@
 
 #include "Component.hpp"
 
-Transform & Actor::getTransform()
+Actor::Actor()
+{}
+
+Actor::~Actor()
+{}
+
+Transform &Actor::getTransform()
 {
     return transform;
 }

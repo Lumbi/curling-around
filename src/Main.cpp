@@ -32,6 +32,7 @@
 #include "game/Component.hpp"
 #include "game/components/ModelComponent.hpp"
 #include "game/components/PhysicsBodyComponent.hpp"
+#include "game/actors/CurlingStone.hpp"
 
 int main()
 {
@@ -85,9 +86,7 @@ int main()
     auto scene = std::make_unique<Scene>();
 
     {
-        auto testActor = std::make_unique<Actor>();
-        testActor->attachComponent(std::make_unique<ModelComponent>(testModel.get()));
-        testActor->attachComponent(std::make_unique<PhysicsBodyComponent>(PhysicsBody::makeSphere(1.0f, 1.0f)));
+        auto testActor = std::make_unique<CurlingStone>();
         // testActor->getTransform().translateBy({ 0, -100, -1000 });
         scene->getRoot()->addChild(std::move(testActor));
     }

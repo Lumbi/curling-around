@@ -35,6 +35,7 @@ add_executable(
     src/game/Scene.cpp
     src/game/components/ModelComponent.cpp
     src/game/components/PhysicsBodyComponent.cpp
+    src/game/actors/CurlingStone.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)

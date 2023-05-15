@@ -12,6 +12,9 @@ class Component;
 class Actor
 {
     public:
+        Actor();
+        virtual ~Actor();
+
         Transform & getTransform();
         Matrix4f getLocalToWorldMatrix();
 
