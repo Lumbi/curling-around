@@ -23,6 +23,7 @@
 #include "physics/PhysicsBody.hpp"
 #include "language/Index.hpp"
 #include "input/Keyboard.hpp"
+#include "input/Input.hpp"
 #include "asset/TextureLoader.hpp"
 #include "asset/ModelLoader.hpp"
 #include "asset/ShaderLibrary.hpp"
@@ -33,6 +34,7 @@
 #include "game/components/ModelComponent.hpp"
 #include "game/components/PhysicsBodyComponent.hpp"
 #include "game/actors/CurlingStone.hpp"
+#include "game/PlayerController.hpp"
 
 int main()
 {
@@ -122,25 +124,21 @@ int main()
 
     bool running = true;
 
-    // Input state
-    Keyboard keyboard;
+    Keyboard &keyboard = Input::shared().keyboard;
 
-    SDL_Event event;
+    PlayerController playerController(scene.get());
+
     while (running)
     {
-        while(SDL_PollEvent(&event))
-        {
-            keyboard.handle(event);
+        Input::shared().update();
 
-            switch (event.type) {
-                 case SDL_QUIT: {
-                    running = false;
-                    break;
-                }
-            }
+        if (Input::shared().quit) {
+            running = false;
         }
 
         Physics::shared().update();
+
+        playerController.update();
 
         // Camera controls
         Camera &camera = *scene->getCamera();

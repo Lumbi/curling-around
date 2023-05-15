@@ -1,6 +1,7 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
+#include "math/Vector.hpp"
 #include "math/Matrix.hpp"
 #include "math/Transform.hpp"
 
@@ -18,6 +19,7 @@ class Actor
 
         Transform & getTransform();
         Matrix4f getLocalToWorldMatrix();
+        Vector3f getWorldPosition();
 
         void update();
         void draw(Scene &);

@@ -26,6 +26,11 @@ Matrix4f Actor::getLocalToWorldMatrix()
     return localToWorldMatrix;
 }
 
+Vector3f Actor::getWorldPosition()
+{
+    return getLocalToWorldMatrix() * transform.getPosition();
+}
+
 void Actor::update()
 {
     for (auto&& component : components) {

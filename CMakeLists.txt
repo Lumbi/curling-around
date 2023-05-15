@@ -24,6 +24,7 @@ add_executable(
     src/rendering/Model.cpp
     src/rendering/ModelRenderer.cpp
     src/input/Keyboard.cpp
+    src/input/Input.cpp
     src/physics/Collider.cpp
     src/physics/PhysicsBody.cpp
     src/physics/Physics.cpp
@@ -38,6 +39,7 @@ add_executable(
     src/game/components/ModelComponent.cpp
     src/game/components/PhysicsBodyComponent.cpp
     src/game/actors/CurlingStone.cpp
+    src/game/PlayerController.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)
