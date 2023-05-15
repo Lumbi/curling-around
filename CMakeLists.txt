@@ -23,6 +23,9 @@ add_executable(
     src/rendering/Model.cpp
     src/rendering/ModelRenderer.cpp
     src/input/Keyboard.cpp
+    src/physics/Collider.cpp
+    src/physics/PhysicsBody.cpp
+    src/physics/Physics.cpp
     src/asset/TextureLoader.cpp
     src/asset/ModelLoader.cpp
     src/asset/ShaderLibrary.cpp
@@ -30,6 +33,7 @@ add_executable(
     src/game/Actor.cpp
     src/game/Scene.cpp
     src/game/components/ModelComponent.cpp
+    src/game/components/PhysicsBodyComponent.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)

@@ -19,6 +19,8 @@
 #include "rendering/Camera.hpp"
 #include "rendering/Model.hpp"
 #include "rendering/ModelRenderer.hpp"
+#include "physics/Physics.hpp"
+#include "physics/PhysicsBody.hpp"
 #include "language/Index.hpp"
 #include "input/Keyboard.hpp"
 #include "asset/TextureLoader.hpp"
@@ -28,6 +30,7 @@
 #include "game/Actor.hpp"
 #include "game/Component.hpp"
 #include "game/components/ModelComponent.hpp"
+#include "game/components/PhysicsBodyComponent.hpp"
 
 int main()
 {
@@ -78,18 +81,19 @@ int main()
 
     // Test model
     ModelLoader modelLoader;
-    std::unique_ptr<Model> testModel = modelLoader.load("asset/tank.fbx");
+    std::unique_ptr<Model> testModel = modelLoader.load("asset/curling_stone.fbx");
 
     // Test texture
     TextureLoader textureLoader;
-    std::unique_ptr<Texture> testTexture = textureLoader.load("asset/wall.jpeg");
+    std::unique_ptr<Texture> testTexture = textureLoader.load("asset/curling_stone_tex_diffuse.jpg");
 
     auto scene = std::make_unique<Scene>();
 
     {
         auto testActor = std::make_unique<Actor>();
         testActor->attachComponent(std::make_unique<ModelComponent>(testModel.get()));
-        testActor->getTransform().translateBy({ 0, -100, -1000 });
+        testActor->attachComponent(std::make_unique<PhysicsBodyComponent>(PhysicsBody::makeSphere(1.0f, 1.0f)));
+        // testActor->getTransform().translateBy({ 0, -100, -1000 });
         scene->getRoot()->addChild(std::move(testActor));
     }
 
@@ -112,6 +116,8 @@ int main()
                 }
             }
         }
+
+        Physics::shared()->update();
 
         // Camera controls
         if (keyboard.isPressed(SDLK_UP)) { camera.transform.rotateBy({ -0.1f, 0, 0 }); }
