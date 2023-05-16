@@ -157,10 +157,12 @@ void PlayerController::moveCameraBehindStone(bool immediate)
     Vector3f displacementAbove = { 0.f, distanceAbove, 0.f };
     targetPosition += (displacementBehind + displacementAbove);
 
-    cameraTargetPosition = targetPosition;
-
-    if (immediate) {
-        camera->transform.setPosition(cameraTargetPosition);
+    // Avoid chasing the curling stone if it's too far
+    if (distance(spawnPosition, targetPosition) < spawnDistance) {
+        cameraTargetPosition = targetPosition;
+        if (immediate) {
+            camera->transform.setPosition(cameraTargetPosition);
+        }
     }
 }
 
@@ -179,7 +181,7 @@ void PlayerController::updateCamera()
 
     // Look at curling stone
     // TODO: Use LookAt matrix
-    Vector3f viewDirection = normalize(cameraTargetPosition - body->position);
+    Vector3f viewDirection = normalize(spawnPosition - fieldCenter);
     float yaw = atan2f(viewDirection.z, viewDirection.x) - M_PI_2;
     float pitch = 20.0f * (M_PI / 360.0f);
     camera->transform.setRotation({ pitch, yaw, 0.f });
