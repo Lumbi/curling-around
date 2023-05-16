@@ -21,8 +21,8 @@ class Actor
         Matrix4f getLocalToWorldMatrix();
         Vector3f getWorldPosition();
 
-        void update();
-        void draw(Scene &);
+        virtual void update();
+        virtual void draw(Scene &);
 
         const std::vector<std::unique_ptr<Component>>& getComponents() const;
         void attachComponent(std::unique_ptr<Component>);
