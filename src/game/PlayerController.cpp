@@ -150,8 +150,8 @@ void PlayerController::moveCameraBehindStone(bool immediate)
     Vector3f fieldCenterToStone = normalize(body->position - fieldCenter);
 
     // Follow behind
-    float distanceBehind = 700.f;
-    float distanceAbove = 500.f;
+    float distanceBehind = 900.f;
+    float distanceAbove = 800.f;
     Vector3f targetPosition = body->position;
     Vector3f displacementBehind = fieldCenterToStone * distanceBehind;
     Vector3f displacementAbove = { 0.f, distanceAbove, 0.f };
@@ -183,6 +183,6 @@ void PlayerController::updateCamera()
     // TODO: Use LookAt matrix
     Vector3f viewDirection = normalize(cameraTargetPosition - fieldCenter);
     float yaw = atan2f(viewDirection.z, viewDirection.x) - M_PI_2;
-    float pitch = 20.0f * (M_PI / 360.0f);
+    float pitch = 25.0f * (M_PI / 180.0f);
     camera->transform.setRotation({ pitch, yaw, 0.f });
 }
