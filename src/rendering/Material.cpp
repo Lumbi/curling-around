@@ -21,7 +21,7 @@ void Material::use(const Matrix4f& projection, const Matrix4f& view, const Matri
         }
 
         // TODO: Move
-        shader->setGlobalLightPosition({ 0, 100000, 0 });
+        shader->setGlobalLightPosition({ 10000, 20000, 0 });
 
         shader->use();
     }
