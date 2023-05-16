@@ -46,7 +46,7 @@ class PlayerController {
         float shotPower = 0.0f;
         float shotPowerDelta = 0.0f;
         const float minShotSpeed = 10.0f;
-        const float maxShotSpeed = 50.0f;
+        const float maxShotSpeed = 100.0f;
 };
 
 #endif
