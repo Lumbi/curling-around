@@ -49,7 +49,7 @@ void PlayerController::update()
         case State::sliding: {
             if (!curlingStone) state = State::waiting;
             moveCameraBehindStone();
-            if (curlingStone->getBody()->velocity.length() < 0.2f) {
+            if (curlingStone->getBody()->velocity.length() < 0.5f) {
                 curlingStone = nullptr;
                 state = State::waiting;
             }
