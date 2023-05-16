@@ -11,6 +11,8 @@
 #include <math.h>
 
 static const SDL_KeyCode SHOOT_KEY = SDLK_SPACE;
+static const SDL_KeyCode AIM_LEFT_KEY = SDLK_LEFT;
+static const SDL_KeyCode AIM_RIGHT_KEY = SDLK_RIGHT;
 
 PlayerController::PlayerController(Scene *scene)
     : scene(scene), state(State::aiming), curlingStone(nullptr)
@@ -21,6 +23,8 @@ void PlayerController::update()
     switch (state) {
         case State::aiming: {
             if (!curlingStone) spawnStone();
+
+            aimShot();
 
             if (Input::shared().keyboard.isPressed(SHOOT_KEY)) { // Holding down on shoot key
                 chargingShot = true;
@@ -64,12 +68,33 @@ void PlayerController::spawnStone()
 {
     auto newCurlingStone = std::make_unique<CurlingStone>();
     PhysicsBody *body = newCurlingStone->getBody();
-    if (body) {
-        body->position = spawnPosition;
-    }
+    if (body) { body->position = spawnPosition; }
     curlingStone = newCurlingStone.get();
     scene->getRoot()->addChild(std::move(newCurlingStone));
     moveCameraBehindStone();
+}
+
+void PlayerController::aimShot()
+{
+    if (!curlingStone) { return; }
+    PhysicsBody *body = curlingStone->getBody();
+    if (!body) { return; }
+
+    if (Input::shared().keyboard.isPressed(AIM_LEFT_KEY)) {
+        aimAngle += aimSpeed;
+    }
+
+    if (Input::shared().keyboard.isPressed(AIM_RIGHT_KEY)) {
+        aimAngle -= aimSpeed;
+    }
+
+    spawnPosition = { cosf(aimAngle) * spawnDistance, 0.f, sinf(aimAngle) * spawnDistance };
+    body->position = spawnPosition;
+
+    // Align the stone with the center
+    curlingStone->getTransform().setRotation({ 0.f, aimAngle, 0.f });
+
+    moveCameraBehindStone(true); // immediate
 }
 
 void PlayerController::chargeShot()
@@ -100,7 +125,7 @@ void PlayerController::shootStone()
     body->velocity = throwSpeed * direction;
 }
 
-void PlayerController::moveCameraBehindStone()
+void PlayerController::moveCameraBehindStone(bool immediate)
 {
     if (!curlingStone) { return; }
     Camera *camera = scene->getCamera();
@@ -118,6 +143,10 @@ void PlayerController::moveCameraBehindStone()
     targetPosition += (displacementBehind + displacementAbove);
 
     cameraTargetPosition = targetPosition;
+
+    if (immediate) {
+        camera->transform.setPosition(cameraTargetPosition);
+    }
 }
 
 void PlayerController::updateCamera()

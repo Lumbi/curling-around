@@ -21,9 +21,11 @@ class PlayerController {
 
     private:
         void spawnStone();
+        void aimShot();
         void chargeShot();
         void shootStone();
-        void moveCameraBehindStone();
+
+        void moveCameraBehindStone(bool immediate = false);
         void updateCamera();
 
     private:
@@ -33,12 +35,17 @@ class PlayerController {
 
         // Positions
         Vector3f fieldCenter = { 0, 0, 0 };
+        const float spawnDistance = 1700;
         Vector3f spawnPosition = { 0, 0, 1700 };
 
         // Camera
         Vector3f cameraTargetPosition = Vector3f::zero;
 
-        // Stone shooting
+        // Aiming
+        float aimAngle = 0.f;
+        float aimSpeed = 0.1f; // in radians per frame
+
+        // Shooting
         bool chargingShot = false;
         float chargeTime = 0.0f;
         float chargeSpeed = 0.1f;
