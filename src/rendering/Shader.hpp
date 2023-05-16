@@ -3,6 +3,7 @@
 
 #include "OpenGL.h"
 
+class Vector3f;
 class Matrix4f;
 class Texture;
 
@@ -20,6 +21,7 @@ class Shader
         void setViewUniform(const Matrix4f &);
         void setModelUniform(const Matrix4f &);
         void setTexture0(const Texture &);
+        void setGlobalLightPosition(const Vector3f &);
 
         void use();
 

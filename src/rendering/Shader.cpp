@@ -63,7 +63,6 @@ void Shader::setProjectionUniform(const Matrix4f &projection)
 {
     GLint projectionUniform = glGetUniformLocation(shaderProgram, "projection");
     glProgramUniformMatrix4fv(shaderProgram, projectionUniform, 1, GL_FALSE, projection.data);
-
 }
 
 void Shader::setViewUniform(const Matrix4f &view)
@@ -84,12 +83,13 @@ void Shader::setTexture0(const Texture &texture)
     texture.bind();
 }
 
+void Shader::setGlobalLightPosition(const Vector3f &globalLightPosition)
+{
+    GLint globalLightPositionUniform = glGetUniformLocation(shaderProgram, "globalLightPosition");
+    glProgramUniform3fv(shaderProgram, globalLightPositionUniform, 1, (float*) &globalLightPosition);
+}
+
 void Shader::use()
 {
-    // TODO: Move
-    GLint globalLightPositionUniform = glGetUniformLocation(shaderProgram, "globalLightPosition");
-    Vector3f globalLightPosition = { 0, 100000, 0 };
-    glProgramUniform3fv(shaderProgram, globalLightPositionUniform, 1, (float*) &globalLightPosition);
-
     glUseProgram(shaderProgram);
 }

@@ -15,7 +15,14 @@ void Material::use(const Matrix4f& projection, const Matrix4f& view, const Matri
         shader->setModelUniform(model);
         shader->setProjectionUniform(projection);
         shader->setViewUniform(view);
-        shader->setTexture0(*texture);
+
+        if (texture) {
+            shader->setTexture0(*texture);
+        }
+
+        // TODO: Move
+        shader->setGlobalLightPosition({ 0, 100000, 0 });
+
         shader->use();
     }
 }
