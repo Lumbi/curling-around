@@ -147,9 +147,9 @@ int main()
         if (keyboard.isPressed(SDLK_LEFT)) { camera.transform.rotateBy({ 0, -0.1f, 0 }); }
         if (keyboard.isPressed(SDLK_RIGHT)) { camera.transform.rotateBy({ 0, 0.1f, 0 }); }
 
-        float cameraSpeed = 10.0f;
+        float cameraSpeed = 30.0f;
         if (keyboard.isPressed(SDLK_LSHIFT)) {
-            cameraSpeed = 3.0f;
+            cameraSpeed = 10.0f;
         }
         Vector3f cameraMovement = Vector3f::zero;
         if (keyboard.isPressed(SDLK_a)) { cameraMovement.x -= cameraSpeed; }
