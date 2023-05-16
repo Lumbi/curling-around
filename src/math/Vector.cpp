@@ -57,3 +57,8 @@ float distance(const Vector3f &first, const Vector3f &second)
         (second.z - first.z) * (second.z - first.z)
     );
 }
+
+Vector3f lerp(const Vector3f &a, const Vector3f &b, float t)
+{
+    return a + (b - a) * t;
+}

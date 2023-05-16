@@ -27,10 +27,16 @@ void PlayerController::update()
                 chargeShot();
 
             } else if (chargingShot) { // Released shoot key and was charging
+                if (shotPowerDelta > 0.0f) {
+                    shootStone();
+                    state = State::sliding;
+                } else { // Cancel if swinging backwards
+                    curlingStone->getBody()->position = spawnPosition;
+                    state = State::aiming;
+                }
                 chargingShot = false;
-                chargeTime = 0;
-                shootStone();
-                state = State::sliding;
+                chargeTime = 0.f;
+                shotPowerDelta = 0.f;
             }
 
             break;
@@ -50,15 +56,16 @@ void PlayerController::update()
             break;
         }
     }
+
+    updateCamera();
 }
 
 void PlayerController::spawnStone()
 {
-    Vector3f spawnLocation = { 0, 0, 1700 };
     auto newCurlingStone = std::make_unique<CurlingStone>();
     PhysicsBody *body = newCurlingStone->getBody();
     if (body) {
-        body->position = spawnLocation;
+        body->position = spawnPosition;
     }
     curlingStone = newCurlingStone.get();
     scene->getRoot()->addChild(std::move(newCurlingStone));
@@ -67,8 +74,16 @@ void PlayerController::spawnStone()
 
 void PlayerController::chargeShot()
 {
+    if (!curlingStone) { return; }
+    float previousShotPower = shotPower;
     shotPower = (sinf(chargeTime) * sinf(chargeTime));
-    chargeTime += 0.01f; // TODO: Use delta time
+    chargeTime += chargeSpeed;
+    shotPowerDelta = shotPower - previousShotPower;
+
+    PhysicsBody *body = curlingStone->getBody();
+    Vector3f direction = normalize(fieldCenter - body->position);
+    Vector3f swingLocation = spawnPosition + (direction * shotPower * swingDistance);
+    body->position = swingLocation;
 }
 
 void PlayerController::shootStone()
@@ -78,7 +93,7 @@ void PlayerController::shootStone()
     if (!body) { return; }
 
     Vector3f direction = fieldCenter - body->position;
-    direction.y = 0;
+    direction.y = 0.f;
     direction = normalize(direction);
 
     float throwSpeed = minShotSpeed + shotPower * maxShotSpeed;
@@ -92,21 +107,36 @@ void PlayerController::moveCameraBehindStone()
     if (!camera) { return; }
     PhysicsBody *body = curlingStone->getBody();
     if (!body) { return; }
-
     Vector3f fieldCenterToStone = normalize(body->position - fieldCenter);
 
     // Follow behind
-    float distanceBehind = 700.0f;
-    float distanceAbove = 500.0f;
+    float distanceBehind = 700.f;
+    float distanceAbove = 500.f;
     Vector3f targetPosition = body->position;
     Vector3f displacementBehind = fieldCenterToStone * distanceBehind;
-    Vector3f displacementAbove = { 0, distanceAbove, 0 };
+    Vector3f displacementAbove = { 0.f, distanceAbove, 0.f };
     targetPosition += (displacementBehind + displacementAbove);
-    camera->transform.setPosition(targetPosition);
+
+    cameraTargetPosition = targetPosition;
+}
+
+void PlayerController::updateCamera()
+{
+    if (!curlingStone) { return; }
+    Camera *camera = scene->getCamera();
+    if (!camera) { return; }
+    PhysicsBody *body = curlingStone->getBody();
+    if (!body) { return; }
+
+    Vector3f fieldCenterToStone = normalize(body->position - fieldCenter);
+
+    camera->transform.setPosition(
+        lerp(camera->transform.getPosition(), cameraTargetPosition, 0.1f)
+    );
 
     // Look at
     // TODO: Use LookAt matrix
     float rotationY = atan2f(fieldCenterToStone.z, fieldCenterToStone.x) - M_PI_2;
     float rotationX = 20.0f * (M_PI / 360.0f);
-    camera->transform.setRotation({ rotationX, rotationY, 0 });
+    camera->transform.setRotation({ rotationX, rotationY, 0.f });
 }

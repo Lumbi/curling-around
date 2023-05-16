@@ -31,5 +31,6 @@ Vector3f operator*(float, const Vector3f &);
 
 Vector3f normalize(const Vector3f &);
 float distance(const Vector3f &, const Vector3f &);
+Vector3f lerp(const Vector3f &, const Vector3f &, float);
 
 #endif
