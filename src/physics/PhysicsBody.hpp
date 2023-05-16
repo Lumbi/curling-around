@@ -17,8 +17,6 @@ struct PhysicsBody {
     Collider collider;
 
     static PhysicsBody makeSphere(float mass, float radius);
-
-    bool isResting() const;
 };
 
 #endif

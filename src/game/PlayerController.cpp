@@ -47,16 +47,21 @@ void PlayerController::update()
         }
 
         case State::sliding: {
-            if (!curlingStone) state = State::aiming; // TODO: Replace with waiting
+            if (!curlingStone) state = State::waiting;
             moveCameraBehindStone();
-            if (curlingStone->getBody()->isResting()) {
+            if (curlingStone->getBody()->velocity.length() < 0.2f) {
                 curlingStone = nullptr;
-                state = State::aiming; // TODO: Replace with waiting
+                state = State::waiting;
             }
             break;
         }
 
         case State::waiting: {
+            waitTime += 1.f / 60.f; // TODO: Use delta time
+            if (waitTime >= waitDelay) {
+                state = State::aiming;
+                waitTime = 0.f;
+            }
             break;
         }
     }

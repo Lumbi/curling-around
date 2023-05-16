@@ -46,7 +46,7 @@ class PlayerController {
         float aimAngle = 0.f;
         float aimSpeed = 0.04f; // in radians per frame
 
-        // Shooting
+        // Charging
         float chargeTime = 0.0f;
         float chargeSpeed = 0.1f;
         float swingDistance = 150.0f;
@@ -54,6 +54,10 @@ class PlayerController {
         float shotPowerDelta = 0.0f;
         const float minShotSpeed = 10.0f;
         const float maxShotSpeed = 100.0f;
+
+        // Waiting
+        const float waitDelay = 0.8f;
+        float waitTime = 0.f;
 };
 
 #endif

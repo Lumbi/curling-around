@@ -11,9 +11,3 @@ PhysicsBody PhysicsBody::makeSphere(float mass, float radius)
         SphereCollider { radius }
     };
 }
-
-bool PhysicsBody::isResting() const
-{
-    const float epslion = 0.1f;
-    return velocity.length() < epslion; // TODO: Optimize using length squared
-}
