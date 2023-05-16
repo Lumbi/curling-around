@@ -112,12 +112,12 @@ int main()
     }
 
     {
-        auto testActorA = std::make_unique<CurlingStone>();
+        auto testActorA = std::make_unique<CurlingStone>(0);
         testActorA->getBody()->position = { -200.0f, 0.0f, 0.0f };
         testActorA->getBody()->acceleration = { 0.2f, 0.0f, 0.0f };
         scene->getRoot()->addChild(std::move(testActorA));
 
-        auto testActorB = std::make_unique<CurlingStone>();
+        auto testActorB = std::make_unique<CurlingStone>(1);
         testActorB->getBody()->position = { 200.0f, 0.0f, 0.0f };
         scene->getRoot()->addChild(std::move(testActorB));
     }

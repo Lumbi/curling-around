@@ -59,6 +59,7 @@ void PlayerController::update()
         case State::waiting: {
             waitTime += 1.f / 60.f; // TODO: Use delta time
             if (waitTime >= waitDelay) {
+                endTurn();
                 state = State::aiming;
                 waitTime = 0.f;
             }
@@ -71,7 +72,7 @@ void PlayerController::update()
 
 void PlayerController::spawnStone()
 {
-    auto newCurlingStone = std::make_unique<CurlingStone>();
+    auto newCurlingStone = std::make_unique<CurlingStone>(currentPlayerID);
     PhysicsBody *body = newCurlingStone->getBody();
     if (body) { body->position = spawnPosition; }
     curlingStone = newCurlingStone.get();
@@ -128,6 +129,15 @@ void PlayerController::shootStone()
 
     float throwSpeed = minShotSpeed + shotPower * maxShotSpeed;
     body->velocity = throwSpeed * direction;
+}
+
+void PlayerController::endTurn()
+{
+    if (currentPlayerID == 0) {
+        currentPlayerID = 1;
+    } else {
+        currentPlayerID = 0;
+    }
 }
 
 void PlayerController::moveCameraBehindStone(bool immediate)

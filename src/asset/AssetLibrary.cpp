@@ -41,13 +41,15 @@ void AssetLibrary::load()
     // Load textures
 
     TextureLoader textureLoader;
-    textures[TextureKey::curlingStone] = textureLoader.load("asset/curling_stone_tex_diffuse.jpg");
+    textures[TextureKey::curlingStoneRed] = textureLoader.load("asset/curling_stone_red.jpg");
+    textures[TextureKey::curlingStoneBlue] = textureLoader.load("asset/curling_stone_blue.jpg");
     textures[TextureKey::ice] = textureLoader.load("asset/ice.jpg");
     textures[TextureKey::target] = textureLoader.load("asset/target.jpg");
 
     // Load materials
     Shader *defaultShader = &ShaderLibrary::shared().defaultShader;
-    materials[MaterialKey::defaultCurlingStone] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::curlingStone));
+    materials[MaterialKey::defaultCurlingStoneRed] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::curlingStoneRed));
+    materials[MaterialKey::defaultCurlingStoneBlue] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::curlingStoneBlue));
     materials[MaterialKey::defaultIce] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::ice));
     materials[MaterialKey::defaultTarget] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::target));
 }

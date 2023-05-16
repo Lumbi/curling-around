@@ -4,11 +4,13 @@
 #include "game/components/ModelComponent.hpp"
 #include "game/components/PhysicsBodyComponent.hpp"
 
-CurlingStone::CurlingStone()
+CurlingStone::CurlingStone(int playerID)
 {
     auto modelComponent = std::make_unique<ModelComponent>(
         AssetLibrary::shared().getModel(AssetLibrary::ModelKey::curlingStone),
-        AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::defaultCurlingStone)
+        playerID % 2 == 0
+            ? AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::defaultCurlingStoneRed)
+            : AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::defaultCurlingStoneBlue)
     );
 
     auto physicsBodyComponent = std::make_unique<PhysicsBodyComponent>(

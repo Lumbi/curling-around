@@ -25,6 +25,7 @@ class PlayerController {
         void aimShot();
         void chargeShot();
         void shootStone();
+        void endTurn();
 
         void moveCameraBehindStone(bool immediate = false);
         void updateCamera();
@@ -41,6 +42,9 @@ class PlayerController {
 
         // Camera
         Vector3f cameraTargetPosition = Vector3f::zero;
+
+        // Game state
+        int currentPlayerID = 0;
 
         // Aiming
         float aimAngle = 0.f;

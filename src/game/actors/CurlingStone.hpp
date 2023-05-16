@@ -8,7 +8,7 @@ class PhysicsBody;
 
 class CurlingStone: public Actor {
     public:
-        CurlingStone();
+        explicit CurlingStone(int playerID);
 
         virtual ~CurlingStone();
 

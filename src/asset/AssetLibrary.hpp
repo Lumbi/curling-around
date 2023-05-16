@@ -24,7 +24,8 @@ class AssetLibrary {
         Model * getModel(ModelKey);
 
         enum class TextureKey {
-            curlingStone,
+            curlingStoneRed,
+            curlingStoneBlue,
             ice,
             target
         };
@@ -32,7 +33,8 @@ class AssetLibrary {
         Texture * getTexture(TextureKey);
 
         enum class MaterialKey {
-            defaultCurlingStone,
+            defaultCurlingStoneRed,
+            defaultCurlingStoneBlue,
             defaultIce,
             defaultTarget
         };
