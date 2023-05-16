@@ -23,14 +23,16 @@ void PlayerController::update()
     switch (state) {
         case State::aiming: {
             if (!curlingStone) spawnStone();
-
             aimShot();
+            if (Input::shared().keyboard.isPressed(SHOOT_KEY)) {
+                state = State::charging;
+            }
+            break;
+        }
 
-            if (Input::shared().keyboard.isPressed(SHOOT_KEY)) { // Holding down on shoot key
-                chargingShot = true;
-                chargeShot();
-
-            } else if (chargingShot) { // Released shoot key and was charging
+        case State::charging: {
+            chargeShot();
+            if (!Input::shared().keyboard.isPressed(SHOOT_KEY)) { // Released shoot key and was charging
                 if (shotPowerDelta > 0.0f) {
                     shootStone();
                     state = State::sliding;
@@ -38,11 +40,9 @@ void PlayerController::update()
                     curlingStone->getBody()->position = spawnPosition;
                     state = State::aiming;
                 }
-                chargingShot = false;
                 chargeTime = 0.f;
                 shotPowerDelta = 0.f;
             }
-
             break;
         }
 

@@ -10,6 +10,7 @@ class PlayerController {
     public:
         enum class State {
             aiming,
+            charging,
             sliding,
             waiting
         };
@@ -43,10 +44,9 @@ class PlayerController {
 
         // Aiming
         float aimAngle = 0.f;
-        float aimSpeed = 0.1f; // in radians per frame
+        float aimSpeed = 0.04f; // in radians per frame
 
         // Shooting
-        bool chargingShot = false;
         float chargeTime = 0.0f;
         float chargeSpeed = 0.1f;
         float swingDistance = 150.0f;
