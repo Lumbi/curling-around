@@ -21,7 +21,8 @@ class PlayerController {
 
     private:
         void spawnStone();
-        void throwStone();
+        void chargeShot();
+        void shootStone();
         void moveCameraBehindStone();
 
     private:
@@ -29,6 +30,12 @@ class PlayerController {
         Scene *scene;
         CurlingStone *curlingStone;
         Vector3f fieldCenter = { 0, 0, 0 };
+
+        bool chargingShot = false;
+        float chargeTime = 0.0f;
+        float shotPower = 0.0f;
+        const float minShotSpeed = 10.0f;
+        const float maxShotSpeed = 50.0f;
 };
 
 #endif

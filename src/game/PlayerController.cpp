@@ -10,6 +10,8 @@
 #include <memory>
 #include <math.h>
 
+static const SDL_KeyCode SHOOT_KEY = SDLK_SPACE;
+
 PlayerController::PlayerController(Scene *scene)
     : scene(scene), state(State::aiming), curlingStone(nullptr)
 {}
@@ -19,10 +21,18 @@ void PlayerController::update()
     switch (state) {
         case State::aiming: {
             if (!curlingStone) spawnStone();
-            if (Input::shared().keyboard.isPressed(SDLK_SPACE)) {
-                throwStone();
+
+            if (Input::shared().keyboard.isPressed(SHOOT_KEY)) { // Holding down on shoot key
+                chargingShot = true;
+                chargeShot();
+
+            } else if (chargingShot) { // Released shoot key and was charging
+                chargingShot = false;
+                chargeTime = 0;
+                shootStone();
                 state = State::sliding;
             }
+
             break;
         }
 
@@ -55,7 +65,13 @@ void PlayerController::spawnStone()
     moveCameraBehindStone();
 }
 
-void PlayerController::throwStone()
+void PlayerController::chargeShot()
+{
+    shotPower = (sinf(chargeTime) * sinf(chargeTime));
+    chargeTime += 0.01f; // TODO: Use delta time
+}
+
+void PlayerController::shootStone()
 {
     if (!curlingStone) { return; }
     PhysicsBody *body = curlingStone->getBody();
@@ -65,7 +81,7 @@ void PlayerController::throwStone()
     direction.y = 0;
     direction = normalize(direction);
 
-    float throwSpeed = 50.0f;
+    float throwSpeed = minShotSpeed + shotPower * maxShotSpeed;
     body->velocity = throwSpeed * direction;
 }
 
