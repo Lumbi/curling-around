@@ -13,6 +13,7 @@
 static const SDL_KeyCode SHOOT_KEY = SDLK_SPACE;
 static const SDL_KeyCode AIM_LEFT_KEY = SDLK_LEFT;
 static const SDL_KeyCode AIM_RIGHT_KEY = SDLK_RIGHT;
+static const SDL_KeyCode VIEW_BIRDSEYE_KEY = SDLK_UP;
 
 PlayerController::PlayerController(Scene *scene)
     : scene(scene), state(State::aiming), curlingStone(nullptr)
@@ -23,9 +24,14 @@ void PlayerController::update()
     switch (state) {
         case State::aiming: {
             if (!curlingStone) spawnStone();
-            aimShot();
-            if (Input::shared().keyboard.isPressed(SHOOT_KEY)) {
-                state = State::charging;
+
+            if (Input::shared().keyboard.isPressed(VIEW_BIRDSEYE_KEY)) {
+                moveCameraBirdseye();
+            } else {
+                aimShot();
+                if (Input::shared().keyboard.isPressed(SHOOT_KEY)) {
+                    state = State::charging;
+                }
             }
             break;
         }
@@ -86,12 +92,15 @@ void PlayerController::aimShot()
     PhysicsBody *body = curlingStone->getBody();
     if (!body) { return; }
 
+    bool didMove = false;
     if (Input::shared().keyboard.isPressed(AIM_LEFT_KEY)) {
         aimAngle += aimSpeed;
+        didMove = true;
     }
 
     if (Input::shared().keyboard.isPressed(AIM_RIGHT_KEY)) {
         aimAngle -= aimSpeed;
+        didMove = true;
     }
 
     spawnPosition = { cosf(aimAngle) * spawnDistance, 0.f, sinf(aimAngle) * spawnDistance };
@@ -100,7 +109,7 @@ void PlayerController::aimShot()
     // Align the stone with the center
     curlingStone->getTransform().setRotation({ 0.f, aimAngle, 0.f });
 
-    moveCameraBehindStone(true); // immediate
+    moveCameraBehindStone(didMove); // Move camera immediately when moving the aim angle
 }
 
 void PlayerController::chargeShot()
@@ -147,13 +156,13 @@ void PlayerController::moveCameraBehindStone(bool immediate)
     if (!camera) { return; }
     PhysicsBody *body = curlingStone->getBody();
     if (!body) { return; }
-    Vector3f fieldCenterToStone = normalize(body->position - fieldCenter);
 
     // Follow behind
     float distanceBehind = 900.f;
     float distanceAbove = 800.f;
     Vector3f targetPosition = body->position;
-    Vector3f displacementBehind = fieldCenterToStone * distanceBehind;
+    Vector3f backward = normalize(body->position - fieldCenter);
+    Vector3f displacementBehind = backward * distanceBehind;
     Vector3f displacementAbove = { 0.f, distanceAbove, 0.f };
     targetPosition += (displacementBehind + displacementAbove);
 
@@ -164,6 +173,39 @@ void PlayerController::moveCameraBehindStone(bool immediate)
             camera->transform.setPosition(cameraTargetPosition);
         }
     }
+
+    // Look at curling stone
+    // TODO: Use LookAt matrix
+    Vector3f viewDirection = normalize(cameraTargetPosition - fieldCenter);
+    float yaw = atan2f(viewDirection.z, viewDirection.x) - M_PI_2;
+    float pitch = 25.0f * (M_PI / 180.0f);
+    cameraTargetRotation = { pitch, yaw, 0.f };
+    if (immediate) {
+        camera->transform.setRotation(cameraTargetRotation);
+    }
+}
+
+void PlayerController::moveCameraBirdseye()
+{
+    Camera *camera = scene->getCamera();
+    if (!camera) { return; }
+
+    Vector3f backward = normalize(spawnPosition - fieldCenter);
+    float distanceBehind = 400.f;
+    float distanceAbove = 2500.f;
+    Vector3f targetPosition = spawnPosition;
+    Vector3f displacementBehind = backward * distanceBehind;
+    Vector3f displacementAbove = { 0.f, distanceAbove, 0.f };
+    targetPosition += (displacementBehind + displacementAbove);
+
+    cameraTargetPosition = targetPosition;
+
+    // Look at field center
+    // TODO: Use LookAt matrix
+    Vector3f viewDirection = normalize(cameraTargetPosition - fieldCenter);
+    float yaw = atan2f(viewDirection.z, viewDirection.x) - M_PI_2;
+    float pitch = 60.0f * (M_PI / 180.0f);
+    cameraTargetRotation = { pitch, yaw, 0.f };
 }
 
 void PlayerController::updateCamera()
@@ -179,10 +221,8 @@ void PlayerController::updateCamera()
         lerp(camera->transform.getPosition(), cameraTargetPosition, 0.1f)
     );
 
-    // Look at curling stone
-    // TODO: Use LookAt matrix
-    Vector3f viewDirection = normalize(cameraTargetPosition - fieldCenter);
-    float yaw = atan2f(viewDirection.z, viewDirection.x) - M_PI_2;
-    float pitch = 25.0f * (M_PI / 180.0f);
-    camera->transform.setRotation({ pitch, yaw, 0.f });
+    // Amimate rotation
+    camera->transform.setRotation(
+        lerp(camera->transform.getRotation(), cameraTargetRotation, 0.1f)
+    );
 }

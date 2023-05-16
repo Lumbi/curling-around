@@ -28,6 +28,7 @@ class PlayerController {
         void endTurn();
 
         void moveCameraBehindStone(bool immediate = false);
+        void moveCameraBirdseye();
         void updateCamera();
 
     private:
@@ -42,6 +43,7 @@ class PlayerController {
 
         // Camera
         Vector3f cameraTargetPosition = Vector3f::zero;
+        Vector3f cameraTargetRotation = Vector3f::zero;
 
         // Game state
         int currentPlayerID = 0;
