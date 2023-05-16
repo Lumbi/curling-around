@@ -181,7 +181,7 @@ void PlayerController::updateCamera()
 
     // Look at curling stone
     // TODO: Use LookAt matrix
-    Vector3f viewDirection = normalize(spawnPosition - fieldCenter);
+    Vector3f viewDirection = normalize(cameraTargetPosition - fieldCenter);
     float yaw = atan2f(viewDirection.z, viewDirection.x) - M_PI_2;
     float pitch = 20.0f * (M_PI / 360.0f);
     camera->transform.setRotation({ pitch, yaw, 0.f });
