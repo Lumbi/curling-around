@@ -162,15 +162,15 @@ void PlayerController::updateCamera()
     PhysicsBody *body = curlingStone->getBody();
     if (!body) { return; }
 
-    Vector3f fieldCenterToStone = normalize(body->position - fieldCenter);
-
+    // Animate position
     camera->transform.setPosition(
         lerp(camera->transform.getPosition(), cameraTargetPosition, 0.1f)
     );
 
-    // Look at center
+    // Look at curling stone
     // TODO: Use LookAt matrix
-    float rotationY = atan2f(fieldCenterToStone.z, fieldCenterToStone.x) - M_PI_2;
-    float rotationX = 20.0f * (M_PI / 360.0f);
-    camera->transform.setRotation({ rotationX, rotationY, 0.f });
+    Vector3f viewDirection = normalize(cameraTargetPosition - body->position);
+    float yaw = atan2f(viewDirection.z, viewDirection.x) - M_PI_2;
+    float pitch = 20.0f * (M_PI / 360.0f);
+    camera->transform.setRotation({ pitch, yaw, 0.f });
 }
