@@ -168,7 +168,7 @@ void PlayerController::updateCamera()
         lerp(camera->transform.getPosition(), cameraTargetPosition, 0.1f)
     );
 
-    // Look at
+    // Look at center
     // TODO: Use LookAt matrix
     float rotationY = atan2f(fieldCenterToStone.z, fieldCenterToStone.x) - M_PI_2;
     float rotationX = 20.0f * (M_PI / 360.0f);
