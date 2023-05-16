@@ -11,15 +11,23 @@ void handleSphereToSphereCollision(PhysicsBody &first, PhysicsBody &second)
         first.acceleration = Vector3f::zero;
         second.acceleration = Vector3f::zero;
 
-        Vector3f newFirstVelocity = ((first.mass - second.mass) / (first.mass + second.mass)) * first.velocity +
-                                    ((2 * second.mass) / (first.mass + second.mass)) * second.velocity;
+        float firstSpeed = first.velocity.length();
+        float secondSpeed = second.velocity.length();
+        float massSum = first.mass + second.mass;
+        float momentumSum = first.mass * firstSpeed + second.mass * secondSpeed;
 
-        Vector3f newSecondVelocity = ((2 * first.mass) / (first.mass + second.mass)) * first.velocity +
-                                    ((second.mass - first.mass) / (first.mass + second.mass)) * second.velocity;
+        float cr = 0.85f; // Coefficient of restitution
 
-        first.velocity = newFirstVelocity;
-        second.velocity = newSecondVelocity;
+        // Inelastic collision
+        float newFirstSpeed = (cr * second.mass * (secondSpeed - firstSpeed) + momentumSum) / massSum;
+        float newSecondSpeed = (cr * first.mass * (firstSpeed - secondSpeed) + momentumSum) / massSum;
 
+        // Ideally, the momentum perpendicular to the collision tangent should be conserved
+        Vector3f normal = normalize(first.position - second.position);
+        first.velocity = newFirstSpeed * normal;
+        second.velocity = newSecondSpeed * normal * -1.f;
+
+        // De-penetrate the colliders to avoid subsequent re-collisions
         float penetrationAmount = minDistance - currentDistance;
         Vector3f penetration = penetrationAmount * normalize(second.position - first.position);
         first.position += (-0.5f * penetration);
