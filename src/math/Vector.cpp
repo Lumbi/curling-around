@@ -49,6 +49,11 @@ Vector3f normalize(const Vector3f &vector)
     return { vector.x / length, vector.y / length, vector.z / length };
 }
 
+float dot(const Vector3f &lhs, const Vector3f &rhs)
+{
+    return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
+}
+
 float distance(const Vector3f &first, const Vector3f &second)
 {
     return sqrtf(
