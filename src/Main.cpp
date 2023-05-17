@@ -34,6 +34,7 @@
 #include "game/components/ModelComponent.hpp"
 #include "game/components/PhysicsBodyComponent.hpp"
 #include "game/actors/CurlingStone.hpp"
+#include "game/actors/Obstacle.hpp"
 #include "game/PlayerController.hpp"
 
 int main()
@@ -90,8 +91,9 @@ int main()
         scene->setCamera(std::move(camera));
     }
 
-    // Field
+    // Level
     {
+        // Field
         auto fieldActor = std::make_unique<Actor>();
         fieldActor->attachComponent(
             std::make_unique<ModelComponent>(
@@ -101,6 +103,7 @@ int main()
         );
         scene->getRoot()->addChild(std::move(fieldActor));
 
+        // Target
         auto targetActor = std::make_unique<Actor>();
         targetActor->attachComponent(
             std::make_unique<ModelComponent>(
@@ -109,17 +112,13 @@ int main()
             )
         );
         scene->getRoot()->addChild(std::move(targetActor));
-    }
 
-    {
-        auto testActorA = std::make_unique<CurlingStone>(0);
-        testActorA->getBody()->position = { -200.0f, 0.0f, 0.0f };
-        testActorA->getBody()->acceleration = { 0.2f, 0.0f, 0.0f };
-        scene->getRoot()->addChild(std::move(testActorA));
-
-        auto testActorB = std::make_unique<CurlingStone>(1);
-        testActorB->getBody()->position = { 200.0f, 0.0f, 0.0f };
-        scene->getRoot()->addChild(std::move(testActorB));
+        // Obstacles
+        scene->getRoot()->addChild(std::make_unique<Obstacle>((Vector3f) { 1000.f,  0.f,   0.f }));
+        scene->getRoot()->addChild(std::make_unique<Obstacle>((Vector3f) {  500.f,  0.f, 1100.f }));
+        scene->getRoot()->addChild(std::make_unique<Obstacle>((Vector3f) { -300.f,  0.f,  600.f }));
+        scene->getRoot()->addChild(std::make_unique<Obstacle>((Vector3f) {  700.f,  0.f, -700.f }));
+        scene->getRoot()->addChild(std::make_unique<Obstacle>((Vector3f) { -500.f,  0.f, -800.f }));
     }
 
     bool running = true;

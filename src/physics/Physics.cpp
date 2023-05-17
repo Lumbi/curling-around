@@ -28,8 +28,7 @@ void Physics::update()
     // Update simulation
     for (auto&& body : physicsBodies) {
         if (body) {
-            body->velocity += body->acceleration;
-            body->position += body->velocity;
+            body->position += body->velocity; // TODO: Multiply by Delta Time
         }
     }
 

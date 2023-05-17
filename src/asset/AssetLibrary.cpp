@@ -36,6 +36,7 @@ void AssetLibrary::load()
     ModelLoader modelLoader;
     models[ModelKey::curlingStone] = modelLoader.load("asset/curling_stone.fbx");
     models[ModelKey::field] = modelLoader.load("asset/field.fbx");
+    models[ModelKey::rock] = modelLoader.load("asset/rock.fbx");
     models[ModelKey::target] = modelLoader.load("asset/target.fbx");
 
     // Load textures

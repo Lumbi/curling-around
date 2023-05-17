@@ -18,6 +18,7 @@ class AssetLibrary {
         enum class ModelKey {
             curlingStone,
             field,
+            rock,
             target
         };
 

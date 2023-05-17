@@ -5,10 +5,15 @@
 #include "physics/Collider.hpp"
 
 struct PhysicsBody {
+    enum Type {
+        dynamic,
+        fixed
+    };
+
+    Type type;
     float mass;
     Vector3f position;
     Vector3f velocity;
-    Vector3f acceleration;
     Collider collider;
 
     static PhysicsBody makeSphere(float mass, float radius);

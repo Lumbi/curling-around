@@ -39,6 +39,7 @@ add_executable(
     src/game/components/ModelComponent.cpp
     src/game/components/PhysicsBodyComponent.cpp
     src/game/actors/CurlingStone.cpp
+    src/game/actors/Obstacle.cpp
     src/game/PlayerController.cpp
 )
 

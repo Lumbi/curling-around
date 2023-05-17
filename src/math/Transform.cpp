@@ -36,6 +36,7 @@ void Transform::rotateBy(const Vector3f &delta)
 
 Matrix4f Transform::getMatrix() const
 {
+    // TODO: Support actor scaling
     return
         Matrix4f::rotation_x(rotation.x) *
         Matrix4f::rotation_y(rotation.y) *
