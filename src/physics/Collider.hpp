@@ -5,8 +5,16 @@ struct SphereCollider {
     float radius;
 };
 
-union Collider {
-    SphereCollider sphere;
+struct Collider {
+    enum class Kind {
+        sphere
+    };
+
+    Kind kind;
+
+    union {
+        SphereCollider sphere;
+    };
 };
 
 #endif

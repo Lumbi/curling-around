@@ -5,11 +5,6 @@
 #include "physics/Collider.hpp"
 
 struct PhysicsBody {
-    enum class Kind {
-        sphere
-    };
-
-    Kind kind;
     float mass;
     Vector3f position;
     Vector3f velocity;

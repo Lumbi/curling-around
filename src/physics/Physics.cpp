@@ -39,10 +39,10 @@ void Physics::update()
         for (auto&& secondBody : physicsBodies) {
             if (!secondBody) continue;
             if (firstBody == secondBody) continue;
-            switch (firstBody->kind) {
-            case PhysicsBody::Kind::sphere:
-                switch (secondBody->kind) {
-                case PhysicsBody::Kind::sphere:
+            switch (firstBody->collider.kind) {
+            case Collider::Kind::sphere:
+                switch (secondBody->collider.kind) {
+                case Collider::Kind::sphere:
                     handleSphereToSphereCollision(*firstBody, *secondBody);
                     break;
                 }
