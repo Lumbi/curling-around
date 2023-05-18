@@ -52,6 +52,7 @@ class AssetLibrary {
         AssetLibrary & operator=(AssetLibrary &) = delete;
 
     public:
+        /// @brief Load all assets into the library.
         void load();
 
     private:
