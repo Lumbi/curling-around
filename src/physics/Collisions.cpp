@@ -22,6 +22,8 @@ void handleSphereToSphereCollision(PhysicsBody &first, PhysicsBody &second)
         // Ideally, the momentum perpendicular to the collision tangent should be conserved
         Vector3f normal = normalize(first.position - second.position);
 
+        // Avoid changing the velocity for dynamic bodies
+        // TODO: This could be done in a setter inside PhysicsBody instead
         if (first.type == PhysicsBody::Type::dynamic) {
             first.velocity = newFirstSpeed * normal;
         }

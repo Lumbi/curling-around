@@ -1,12 +1,22 @@
 #include "Mesh.hpp"
 
+// Positions for vertex attributes
+
+static const GLuint VERTEX_ATTRIB_POSITION = 0;
+static const GLuint VERTEX_ATTRIB_NORMAL = 1;
+static const GLuint VERTEX_ATTRIB_TEXCOORD0 = 2;
+
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<Index> indices)
     : vertices(vertices),
       indices(indices)
 {
+    // Create the VBOs and VAO
+
     glGenBuffers(1, &vertexBuffer);
     glGenBuffers(1, &elementBuffer);
     glGenVertexArrays(1, &vertexArray);
+
+    // Put the vertex data into the buffers
 
     glBindVertexArray(vertexArray);
 
@@ -15,6 +25,8 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<Index> indices)
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(Index), &indices[0], GL_STATIC_DRAW);
+
+    // Set the vertex attributes
 
     glEnableVertexAttribArray(VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(
@@ -48,6 +60,8 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<Index> indices)
 
 Mesh::~Mesh()
 {
+    // Destroy the VBOs and VAO
+
     glDeleteBuffers(1, &vertexBuffer);
     glDeleteVertexArrays(1, &vertexArray);
     glDeleteBuffers(1, &elementBuffer);

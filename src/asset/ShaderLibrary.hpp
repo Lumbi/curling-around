@@ -3,15 +3,19 @@
 
 #include "rendering/Shader.hpp"
 
+/// @brief A singleton to manage shaders.
 class ShaderLibrary
 {
     public:
+        /// @brief Get the shared singleton instance.
         static ShaderLibrary & shared();
 
+        /// @brief A default shader with basic texture and lighting support.
+        Shader defaultShader;
+
+        // Disable the copy-constructor and copy-assignment operator.
         ShaderLibrary(ShaderLibrary &) = delete;
         ShaderLibrary& operator=(ShaderLibrary &) = delete;
-
-        Shader defaultShader;
 
     private:
         ShaderLibrary();

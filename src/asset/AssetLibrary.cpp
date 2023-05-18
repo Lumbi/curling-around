@@ -48,6 +48,7 @@ void AssetLibrary::load()
     textures[TextureKey::target] = textureLoader.load("asset/target.jpg");
 
     // Load materials
+
     Shader *defaultShader = &ShaderLibrary::shared().defaultShader;
     materials[MaterialKey::defaultCurlingStoneRed] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::curlingStoneRed));
     materials[MaterialKey::defaultCurlingStoneBlue] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::curlingStoneBlue));

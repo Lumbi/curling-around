@@ -20,7 +20,7 @@ void Material::use(const Matrix4f& projection, const Matrix4f& view, const Matri
             shader->setTexture0(*texture);
         }
 
-        // TODO: Move
+        // TODO: Create abstraction for light and refactor this code
         shader->setGlobalLightPosition({ 10000, 20000, 0 });
 
         shader->use();
