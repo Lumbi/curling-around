@@ -1,7 +1,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include "language/Index.hpp"
+#include "math/Index.hpp"
 #include "math/Vector.hpp"
 
 /// @brief A 4x4 matrix of floats.

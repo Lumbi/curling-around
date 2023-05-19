@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "rendering/Vertex.hpp"
-#include "language/Index.hpp"
+#include "math/Index.hpp"
 
 #include "OpenGL.h"
 

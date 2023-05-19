@@ -5,7 +5,7 @@
 #include <memory>
 #include <string>
 
-#include "language/Index.hpp"
+#include "math/Index.hpp"
 #include "math/Matrix.hpp"
 
 class Mesh;

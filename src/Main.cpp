@@ -21,7 +21,7 @@
 #include "rendering/ModelRenderer.hpp"
 #include "physics/Physics.hpp"
 #include "physics/PhysicsBody.hpp"
-#include "language/Index.hpp"
+#include "math/Index.hpp"
 #include "input/Keyboard.hpp"
 #include "input/Input.hpp"
 #include "asset/TextureLoader.hpp"

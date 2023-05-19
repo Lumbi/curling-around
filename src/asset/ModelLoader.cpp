@@ -1,6 +1,6 @@
 #include "ModelLoader.hpp"
 
-#include "language/Index.hpp"
+#include "math/Index.hpp"
 #include "rendering/Vertex.hpp"
 #include "rendering/Mesh.hpp"
 #include "rendering/Model.hpp"
