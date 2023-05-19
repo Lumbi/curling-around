@@ -45,7 +45,7 @@ int main()
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window *window = SDL_CreateWindow(
-        "Untitled 3D Game", // title
+        "Curling Around!", // title
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, // position
         WINDOW_WIDTH, WINDOW_HEIGHT, // size
         SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL // flags
