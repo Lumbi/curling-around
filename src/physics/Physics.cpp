@@ -2,6 +2,7 @@
 
 #include "physics/PhysicsBody.hpp"
 #include "physics/Collisions.hpp"
+#include "Time.hpp"
 
 #include <algorithm>
 
@@ -28,7 +29,7 @@ void Physics::update()
     // Update simulation
     for (auto&& body : physicsBodies) {
         if (body) {
-            body->position += body->velocity; // TODO: Multiply by Delta Time
+            body->position += (body->velocity * Time::shared().deltaTime);
         }
     }
 

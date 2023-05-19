@@ -12,6 +12,7 @@ find_library(ASSIMP_LIBRARIES NAMES assimp PATHS ${CMAKE_SOURCE_DIR}/lib/assimp/
 add_executable(
     ${PROJECT_NAME}
     src/Main.cpp
+    src/Time.cpp
     src/math/Matrix.cpp
     src/math/Vector.cpp
     src/math/Transform.cpp

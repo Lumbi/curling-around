@@ -63,25 +63,26 @@ class PlayerController {
         // Camera
         Vector3f cameraTargetPosition = Vector3f::zero;
         Vector3f cameraTargetRotation = Vector3f::zero;
+        const float cameraSpeed = 5.f;
 
         // Game state
         int currentPlayerID = 0;
 
         // Aiming
         float aimAngle = 0.f;
-        float aimSpeed = 0.04f; // in radians per frame
+        float aimSpeed = 1.8f; // in radians per seconds
 
         // Charging
-        float chargeTime = 0.0f;
-        float chargeSpeed = 0.1f;
-        float swingDistance = 150.0f;
-        float shotPower = 0.0f;
-        float shotPowerDelta = 0.0f;
-        const float minShotSpeed = 10.0f;
-        const float maxShotSpeed = 80.0f;
+        float chargeTime = 0.f;
+        float chargeSpeed = 3.f;
+        float swingDistance = 200.f;
+        float shotPower = 0.f;
+        float shotPowerDelta = 0.f;
+        const float minShotSpeed = 600.f;
+        const float maxShotSpeed = 4000.f;
 
         // Waiting
-        const float waitDelay = 1.0f;
+        const float waitDelay = 1.f;
         float waitTime = 0.f;
 };
 

@@ -77,7 +77,8 @@
         "unordered_map": "cpp",
         "unordered_set": "cpp",
         "variant": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "thread": "cpp"
     },
     "cmake.sourceDirectory": "/Users/gabriellumbi/Documents/Dev/stuff",
     "cmake.configureOnOpen": true,

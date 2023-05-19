@@ -1,6 +1,4 @@
 #include <iostream>
-#include <chrono>
-#include <thread>
 #include <vector>
 #include <memory>
 #include <cmath>
@@ -10,6 +8,7 @@
 #include <SDL_opengl.h>
 #include <SDL_opengl_glext.h>
 
+#include "Time.hpp"
 #include "math/Matrix.hpp"
 #include "math/Vector.hpp"
 #include "rendering/Vertex.hpp"
@@ -87,7 +86,6 @@ int main()
     {
         float aspectRatio = (float) WINDOW_WIDTH / (float) WINDOW_HEIGHT;
         auto camera = std::make_unique<Camera>(aspectRatio);
-        camera->transform.setPosition({ 0, 100, 500 });
         scene->setCamera(std::move(camera));
     }
 
@@ -127,10 +125,14 @@ int main()
 
     PlayerController playerController(scene.get());
 
+    const float targetFramesPerSecond = 60.f;
+    const float targetFrameTimeInSeconds = 1.f / targetFramesPerSecond;
+
     while (running)
     {
-        Input::shared().update();
+        Time::shared().beginFrame();
 
+        Input::shared().update();
         if (Input::shared().quit) {
             running = false;
         }
@@ -174,7 +176,11 @@ int main()
 
         SDL_GL_SwapWindow(window);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(16));
+        Time::shared().endFrame();
+
+        if (Time::shared().deltaTime < targetFrameTimeInSeconds) {
+            Time::shared().sleep(targetFrameTimeInSeconds - Time::shared().deltaTime);
+        }
     }
 
     SDL_Quit();

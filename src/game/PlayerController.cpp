@@ -6,6 +6,7 @@
 #include "game/actors/CurlingStone.hpp"
 #include "physics/PhysicsBody.hpp"
 #include "input/Input.hpp"
+#include "Time.hpp"
 
 #include <memory>
 #include <math.h>
@@ -57,7 +58,7 @@ void PlayerController::update()
         case State::sliding: {
             if (!curlingStone) state = State::waiting;
             moveCameraBehindStone();
-            if (curlingStone->getBody()->velocity.length() < 0.5f) {
+            if (curlingStone->getBody()->velocity.length() < 10.f) {
                 curlingStone = nullptr;
                 state = State::waiting;
             }
@@ -65,7 +66,7 @@ void PlayerController::update()
         }
 
         case State::waiting: {
-            waitTime += 1.f / 60.f; // TODO: Use delta time
+            waitTime += Time::shared().deltaTime;
             if (waitTime >= waitDelay) {
                 endTurn();
                 state = State::aiming;
@@ -96,12 +97,12 @@ void PlayerController::aimShot()
 
     bool didMove = false;
     if (Input::shared().keyboard.isPressed(AIM_LEFT_KEY)) {
-        aimAngle += aimSpeed;
+        aimAngle += (aimSpeed * Time::shared().deltaTime);
         didMove = true;
     }
 
     if (Input::shared().keyboard.isPressed(AIM_RIGHT_KEY)) {
-        aimAngle -= aimSpeed;
+        aimAngle -= (aimSpeed * Time::shared().deltaTime);
         didMove = true;
     }
 
@@ -119,7 +120,7 @@ void PlayerController::chargeShot()
     if (!curlingStone) { return; }
     float previousShotPower = shotPower;
     shotPower = (sinf(chargeTime) * sinf(chargeTime));
-    chargeTime += chargeSpeed;
+    chargeTime += (chargeSpeed * Time::shared().deltaTime);
     shotPowerDelta = shotPower - previousShotPower;
 
     PhysicsBody *body = curlingStone->getBody();
@@ -218,13 +219,15 @@ void PlayerController::updateCamera()
     PhysicsBody *body = curlingStone->getBody();
     if (!body) { return; }
 
+    // TODO: Use smooth step and correct interpolation
+
     // Animate position
     camera->transform.setPosition(
-        lerp(camera->transform.getPosition(), cameraTargetPosition, 0.1f)
+        lerp(camera->transform.getPosition(), cameraTargetPosition, cameraSpeed * Time::shared().deltaTime)
     );
 
     // Amimate rotation
     camera->transform.setRotation(
-        lerp(camera->transform.getRotation(), cameraTargetRotation, 0.1f)
+        lerp(camera->transform.getRotation(), cameraTargetRotation, cameraSpeed * Time::shared().deltaTime)
     );
 }
