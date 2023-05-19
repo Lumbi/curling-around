@@ -9,12 +9,12 @@ Component::Component()
 Component::~Component()
 {}
 
-void Component::setActor(Actor *actor)
+void Component::setActor(Actor *newActor)
 {
-    this->actor = actor;
+    this->actor = newActor;
 }
 
-Actor * const Component::getActor() const
+Actor * Component::getActor() const
 {
     return actor;
 }

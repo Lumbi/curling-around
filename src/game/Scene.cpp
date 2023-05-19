@@ -18,7 +18,7 @@ Camera * Scene::getCamera()
     return camera.get();
 }
 
-void Scene::setCamera(std::unique_ptr<Camera> camera)
+void Scene::setCamera(std::unique_ptr<Camera> newCamera)
 {
-    this->camera = std::move(camera);
+    this->camera = std::move(newCamera);
 }

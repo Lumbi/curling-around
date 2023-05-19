@@ -2,30 +2,33 @@
 #define VECTOR_H
 
 /// @brief A 2D vector of floats.
-struct Vector2f
+class Vector2f
 {
-    float x;
-    float y;
+    public:
+        float x;
+        float y;
 };
 
 /// @brief A 3D vector of floats.
-struct Vector3f
+class Vector3f
 {
-    float x;
-    float y;
-    float z;
+    public:
+        float x;
+        float y;
+        float z;
 
-    /// @brief A vector at { 0 , 0 }
-    static const Vector3f zero;
+    public:
+        /// @brief A vector at (0, 0)
+        static const Vector3f zero;
 
-    /// @brief Add and assign this vector with another vector.
-    Vector3f& operator+=(const Vector3f &);
+        /// @brief Add and assign this vector with another vector.
+        Vector3f& operator+=(const Vector3f &);
 
-    /// @brief Multiply and assign this vector by a scalar.
-    Vector3f& operator*=(float);
+        /// @brief Multiply and assign this vector by a scalar.
+        Vector3f& operator*=(float);
 
-    /// @brief Get the length (magnitude) of the vector.
-    float length() const;
+        /// @brief Get the length (magnitude) of the vector.
+        float length() const;
 };
 
 /// @brief Add two vectors.

@@ -14,7 +14,6 @@ void ModelRenderer::render(
     const Matrix4f &modelMatrix
 )
 {
-    Model::Node *currentNode = model.getRoot();
     render(model, material, projectionMatrix, viewMatrix, modelMatrix, *model.getRoot());
 }
 

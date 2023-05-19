@@ -9,9 +9,9 @@ Vector3f Transform::getPosition() const
     return position;
 }
 
-void Transform::setPosition(const Vector3f &position)
+void Transform::setPosition(const Vector3f &newPosition)
 {
-    this->position = position;
+    this->position = newPosition;
 }
 
 void Transform::translateBy(const Vector3f &delta)
@@ -24,9 +24,9 @@ Vector3f Transform::getRotation() const
     return rotation;
 }
 
-void Transform::setRotation(const Vector3f &rotation)
+void Transform::setRotation(const Vector3f &newRotation)
 {
-    this->rotation = rotation;
+    this->rotation = newRotation;
 }
 
 void Transform::rotateBy(const Vector3f &delta)

@@ -33,7 +33,7 @@ PhysicsBody & PhysicsBodyComponent::getBody()
     return physicsBody;
 }
 
-void PhysicsBodyComponent::setFriction(float friction)
+void PhysicsBodyComponent::setFriction(float newFriction)
 {
-    this->friction = friction;
+    this->friction = newFriction;
 }

@@ -21,7 +21,7 @@ class Component
         virtual void draw(Scene &) = 0;
 
         /// @brief Get the component's parent actor.
-        Actor * const getActor() const;
+        Actor * getActor() const;
 
         /// @brief Set the component's parent actor.
         void setActor(Actor *);
