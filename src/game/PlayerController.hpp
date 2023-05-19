@@ -78,7 +78,7 @@ class PlayerController {
         float shotPower = 0.0f;
         float shotPowerDelta = 0.0f;
         const float minShotSpeed = 10.0f;
-        const float maxShotSpeed = 100.0f;
+        const float maxShotSpeed = 80.0f;
 
         // Waiting
         const float waitDelay = 1.0f;
