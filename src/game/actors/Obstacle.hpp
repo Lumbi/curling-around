@@ -7,10 +7,14 @@
 class PhysicsBodyComponent;
 class PhysicsBody;
 
+/// @brief An obstacle on the playing field.
 class Obstacle: public Actor {
     public:
+        /// @brief Initialize an obstacle.
+        /// @param position The position of the obstacle.
         Obstacle(Vector3f position);
 
+        /// @brief Destroy the obstacle.
         virtual ~Obstacle();
 };
 

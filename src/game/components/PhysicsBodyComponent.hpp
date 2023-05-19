@@ -8,16 +8,27 @@
 
 class PhysicsBody;
 
+/// @brief A component that handles updating and linking a physics body to an actor.
 class PhysicsBodyComponent: public Component {
     public:
-        PhysicsBodyComponent(PhysicsBody);
+        /// @brief Initialize the physics body component.
+        /// @param physicsBody The physics body to link the actor with.
+        PhysicsBodyComponent(PhysicsBody physicsBody);
+
+        /// @brief Destroy the physics body component.
         virtual ~PhysicsBodyComponent();
 
     public:
+        /// @brief Update the physics body component for a single frame.
         virtual void update() override;
+
+        /// @brief Draw the physics body component in the scene (currently doesn't do anything but could be used for debug).
         virtual void draw(Scene &) override;
 
+        /// @brief The the physics body managed by the component.
         PhysicsBody& getBody();
+
+        /// @brief Set the linear friction coefficient experienced by the physics body at each frame.
         void setFriction(float);
 
     private:
