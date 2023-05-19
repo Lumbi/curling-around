@@ -11,7 +11,6 @@ class Physics {
         /// @brief Get the shared singleton instance.
         static Physics & shared();
 
-
         /// @brief Add a physics body to the simulation.
         void addPhysicsBody(PhysicsBody *);
 
