@@ -48,6 +48,7 @@ add_executable(
     src/game/actors/CurlingStone.cpp
     src/game/actors/Obstacle.cpp
     src/game/PlayerController.cpp
+    src/game/FreeCameraController.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)

@@ -105,8 +105,6 @@ int main()
 
     bool running = true;
 
-    Keyboard &keyboard = Input::shared().keyboard;
-
     PlayerController playerController(scene.get());
 
     const float targetFramesPerSecond = 60.f;
@@ -124,32 +122,6 @@ int main()
         Physics::shared().update();
 
         playerController.update();
-
-        // Camera controls
-        Camera &camera = *scene->getCamera();
-        if (false) {
-            if (keyboard.isPressed(SDLK_UP)) { camera.transform.rotateBy({ -0.1f, 0, 0 }); }
-            if (keyboard.isPressed(SDLK_DOWN)) { camera.transform.rotateBy({ 0.1f, 0, 0 }); }
-            if (keyboard.isPressed(SDLK_LEFT)) { camera.transform.rotateBy({ 0, -0.1f, 0 }); }
-            if (keyboard.isPressed(SDLK_RIGHT)) { camera.transform.rotateBy({ 0, 0.1f, 0 }); }
-
-            float cameraSpeed = 30.0f;
-            if (keyboard.isPressed(SDLK_LSHIFT)) {
-                cameraSpeed = 10.0f;
-            }
-            Vector3f cameraMovement = Vector3f::zero;
-            if (keyboard.isPressed(SDLK_a)) { cameraMovement.x -= cameraSpeed; }
-            if (keyboard.isPressed(SDLK_d)) { cameraMovement.x += cameraSpeed; }
-            if (keyboard.isPressed(SDLK_w)) { cameraMovement.z -= cameraSpeed; }
-            if (keyboard.isPressed(SDLK_s)) { cameraMovement.z += cameraSpeed; }
-            if (cameraMovement.x != 0 || cameraMovement.y != 0 || cameraMovement.z != 0) {
-                cameraMovement = camera.transform.getMatrix().inverse() * cameraMovement;
-                camera.transform.translateBy(cameraMovement);
-            }
-
-            if (keyboard.isPressed(SDLK_q)) { camera.transform.translateBy({ 0, -cameraSpeed, 0}); }
-            if (keyboard.isPressed(SDLK_e)) { camera.transform.translateBy({ 0, cameraSpeed, 0}); }
-        }
 
         glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         glClearColor(0.f, 0.f, 0.f, 1.f);
