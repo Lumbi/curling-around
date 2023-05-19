@@ -39,7 +39,7 @@
 
 int main()
 {
-    const int WINDOW_WIDTH = 1280;
+    const int WINDOW_WIDTH = 960;
     const int WINDOW_HEIGHT = 720;
 
     SDL_Init(SDL_INIT_VIDEO);
