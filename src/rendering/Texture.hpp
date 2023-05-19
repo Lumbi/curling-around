@@ -24,8 +24,6 @@ class Texture
         void bind() const;
 
     private:
-        int width;
-        int height;
         GLuint texture;
 };
 

@@ -96,11 +96,11 @@ int main()
         scene->getRoot()->addChild(std::move(targetActor));
 
         // Obstacles
-        scene->getRoot()->addChild(std::make_unique<Obstacle>((Vector3f) { 1000.f,  0.f,   0.f }));
-        scene->getRoot()->addChild(std::make_unique<Obstacle>((Vector3f) {  500.f,  0.f, 1100.f }));
-        scene->getRoot()->addChild(std::make_unique<Obstacle>((Vector3f) { -300.f,  0.f,  600.f }));
-        scene->getRoot()->addChild(std::make_unique<Obstacle>((Vector3f) {  700.f,  0.f, -700.f }));
-        scene->getRoot()->addChild(std::make_unique<Obstacle>((Vector3f) { -500.f,  0.f, -800.f }));
+        scene->getRoot()->addChild(std::make_unique<Obstacle>(Vector3f(1000.f,  0.f,   0.f)));
+        scene->getRoot()->addChild(std::make_unique<Obstacle>(Vector3f(500.f,  0.f, 1100.f)));
+        scene->getRoot()->addChild(std::make_unique<Obstacle>(Vector3f(-300.f,  0.f,  600.f)));
+        scene->getRoot()->addChild(std::make_unique<Obstacle>(Vector3f(700.f,  0.f, -700.f)));
+        scene->getRoot()->addChild(std::make_unique<Obstacle>(Vector3f(-500.f,  0.f, -800.f)));
     }
 
     bool running = true;

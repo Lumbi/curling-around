@@ -24,11 +24,11 @@ std::unique_ptr<Model> ModelLoader::load(const char *file)
 
     // Load mesh data
 
-    for (int meshIndex = 0; meshIndex < scene->mNumMeshes; meshIndex++) {
+    for (Index meshIndex = 0; meshIndex < scene->mNumMeshes; meshIndex++) {
         aiMesh *meshData = scene->mMeshes[meshIndex];
         std::vector<Vertex> vertices;
         std::vector<Index> indices;
-        for (int vertexIndex = 0; vertexIndex < meshData->mNumVertices; vertexIndex++) {
+        for (Index vertexIndex = 0; vertexIndex < meshData->mNumVertices; vertexIndex++) {
             Vertex vertex;
             aiVector3D positionData = meshData->mVertices[vertexIndex];
             vertex.position = { positionData.x, positionData.y, positionData.z };
@@ -45,9 +45,9 @@ std::unique_ptr<Model> ModelLoader::load(const char *file)
             vertices.push_back(vertex);
         }
 
-        for (int faceIndex = 0; faceIndex < meshData->mNumFaces; faceIndex++) {
+        for (Index faceIndex = 0; faceIndex < meshData->mNumFaces; faceIndex++) {
             aiFace face = meshData->mFaces[faceIndex];
-            for (int index = 0; index < face.mNumIndices; index++) {
+            for (Index index = 0; index < face.mNumIndices; index++) {
                 indices.push_back(face.mIndices[index]);
             }
         }
@@ -71,7 +71,7 @@ std::unique_ptr<Model> ModelLoader::load(const char *file)
 void loadNode(Model::Node *targetNode, aiNode *nodeData) {
     targetNode->name = nodeData->mName.C_Str();
 
-    for (int meshIndex = 0; meshIndex < nodeData->mNumMeshes; meshIndex++) {
+    for (Index meshIndex = 0; meshIndex < nodeData->mNumMeshes; meshIndex++) {
         targetNode->meshes.push_back(nodeData->mMeshes[meshIndex]);
     }
 
@@ -83,7 +83,7 @@ void loadNode(Model::Node *targetNode, aiNode *nodeData) {
         m.a4, m.b4, m.c4, m.d4,
     };
 
-    for (int childIndex = 0; childIndex < nodeData->mNumChildren; childIndex++) {
+    for (Index childIndex = 0; childIndex < nodeData->mNumChildren; childIndex++) {
         auto childNode = std::make_unique<Model::Node>();
         auto childData = nodeData->mChildren[childIndex];
         loadNode(childNode.get(), childData);

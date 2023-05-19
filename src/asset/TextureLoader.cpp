@@ -20,5 +20,5 @@ std::unique_ptr<Texture> TextureLoader::load(const char *file)
 
     stbi_image_free(textureData);
 
-    return std::move(texture);
+    return texture;
 }

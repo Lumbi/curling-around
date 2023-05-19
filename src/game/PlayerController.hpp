@@ -51,9 +51,9 @@ class PlayerController {
         void updateCamera();
 
     private:
-        State state;
+        State state = State::aiming;
         Scene *scene;
-        CurlingStone *curlingStone;
+        CurlingStone *curlingStone = nullptr;
 
         // Positions
         Vector3f fieldCenter = Vector3f::zero;

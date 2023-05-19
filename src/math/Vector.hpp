@@ -17,6 +17,9 @@ class Vector3f
         float y;
         float z;
 
+        Vector3f(float px, float py, float pz): x(px), y(py), z(pz) {};
+        Vector3f() = default;
+
     public:
         /// @brief A vector at (0, 0)
         static const Vector3f zero;

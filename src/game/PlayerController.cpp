@@ -17,7 +17,7 @@ static const SDL_KeyCode AIM_RIGHT_KEY = SDLK_RIGHT;
 static const SDL_KeyCode VIEW_BIRDSEYE_KEY = SDLK_UP;
 
 PlayerController::PlayerController(Scene *scene)
-    : scene(scene), state(State::aiming), curlingStone(nullptr)
+    : scene(scene)
 {
     spawnPosition = { 0.f, 0.f, spawnDistance };
 }
