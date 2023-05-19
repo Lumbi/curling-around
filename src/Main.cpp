@@ -1,7 +1,5 @@
 #include <iostream>
-#include <vector>
 #include <memory>
-#include <cmath>
 
 #define GL_GLEXT_PROTOTYPES
 #include <SDL.h>
@@ -9,29 +7,15 @@
 #include <SDL_opengl_glext.h>
 
 #include "Time.hpp"
-#include "math/Matrix.hpp"
 #include "math/Vector.hpp"
-#include "rendering/Vertex.hpp"
-#include "rendering/Shader.hpp"
-#include "rendering/Texture.hpp"
-#include "rendering/Mesh.hpp"
 #include "rendering/Camera.hpp"
-#include "rendering/Model.hpp"
-#include "rendering/ModelRenderer.hpp"
 #include "physics/Physics.hpp"
-#include "physics/PhysicsBody.hpp"
-#include "math/Index.hpp"
 #include "input/Keyboard.hpp"
 #include "input/Input.hpp"
-#include "asset/TextureLoader.hpp"
-#include "asset/ModelLoader.hpp"
-#include "asset/ShaderLibrary.hpp"
 #include "asset/AssetLibrary.hpp"
 #include "game/Scene.hpp"
 #include "game/Actor.hpp"
-#include "game/Component.hpp"
 #include "game/components/ModelComponent.hpp"
-#include "game/components/PhysicsBodyComponent.hpp"
 #include "game/actors/CurlingStone.hpp"
 #include "game/actors/Obstacle.hpp"
 #include "game/PlayerController.hpp"
