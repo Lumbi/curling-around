@@ -21,7 +21,7 @@ void Material::use(const Matrix4f& projection, const Matrix4f& view, const Matri
         }
 
         // TODO: Create abstraction for light and refactor this code
-        shader->setGlobalLightPosition({ 10000, 20000, 0 });
+        shader->setGlobalLightPosition({ 10000.f, 20000.f, 0.f });
 
         shader->use();
     }

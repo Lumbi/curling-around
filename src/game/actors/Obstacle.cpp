@@ -16,7 +16,7 @@ Obstacle::Obstacle(Vector3f position)
     );
     physicsBodyComponent->getBody().position = position;
     physicsBodyComponent->getBody().type = PhysicsBody::Type::fixed;
-    getTransform().setRotation({ 0, (rand() % 360) * (float)M_PI / 180.f, 0 }); // TODO: Support physics body rotation
+    getTransform().setRotation({ 0.f, (rand() % 360) * (float)M_PI / 180.f, 0.f }); // TODO: Support physics body rotation
 
     attachComponent(std::move(modelComponent));
     attachComponent(std::move(physicsBodyComponent));

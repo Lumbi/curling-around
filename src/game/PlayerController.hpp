@@ -56,8 +56,8 @@ class PlayerController {
         CurlingStone *curlingStone;
 
         // Positions
-        Vector3f fieldCenter = { 0, 0, 0 };
-        const float spawnDistance = 1700;
+        Vector3f fieldCenter = Vector3f::zero;
+        const float spawnDistance = 1700.f;
         Vector3f spawnPosition;
 
         // Camera

@@ -16,20 +16,20 @@ float Matrix4f::operator[](Index i) const
 Matrix4f Matrix4f::identity()
 {
     return {
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 1
+        1.f, 0.f, 0.f, 0.f,
+        0.f, 1.f, 0.f, 0.f,
+        0.f, 0.f, 1.f, 0.f,
+        0.f, 0.f, 0.f, 1.f
     };
 }
 
 Matrix4f Matrix4f::translation(float tx, float ty, float tz)
 {
     return {
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        tx, ty, tz, 1
+        1.f, 0.f, 0.f, 0.f,
+        0.f, 1.f, 0.f, 0.f,
+        0.f, 0.f, 1.f, 0.f,
+        tx,  ty,  tz,  1.f
     };
 }
 
@@ -38,10 +38,10 @@ Matrix4f Matrix4f::rotation_x(float radians)
     const float c = cos(radians);
     const float s = sin(radians);
     return {
-        1,  0,  0,  0,
-        0,  c, -s,  0,
-        0,  s,  c,  0,
-        0,  0,  0,  1
+        1.f,  0.f,  0.f,  0.f,
+        0.f,  c,   -s,    0.f,
+        0.f,  s,    c,    0.f,
+        0.f,  0.f,  0.f,  1.f
     };
 }
 
@@ -50,10 +50,10 @@ Matrix4f Matrix4f::rotation_y(float radians)
     const float c = cos(radians);
     const float s = sin(radians);
     return {
-        c,  0,  s,  0,
-        0,  1,  0,  0,
-       -s,  0,  c,  0,
-        0,  0,  0,  1
+        c,   0.f,  s,   0.f,
+        0.f, 1.f,  0.f, 0.f,
+       -s,   0.f,  c,   0.f,
+        0.f, 0.f,  0.f, 1.f
     };
 }
 
@@ -62,10 +62,10 @@ Matrix4f Matrix4f::rotation_z(float radians)
     const float c = cos(radians);
     const float s = sin(radians);
     return {
-        c, -s,  0,  0,
-        s,  c,  0,  0,
-        0,  0,  1,  0,
-        0,  0,  0,  1
+        c,  -s,   0.f, 0.f,
+        s,   c,   0.f, 0.f,
+        0.f, 0.f, 1.f, 0.f,
+        0.f, 0.f, 0.f, 1.f
     };
 }
 
@@ -75,10 +75,10 @@ Matrix4f Matrix4f::fov_perspective(float near, float far, float fov, float aspec
     const float x = y / aspect;
     const float range = near - far;
     return {
-        x, 0, 0, 0,
-        0, y, 0, 0,
-        0, 0, (far + near) / range, -1,
-        0, 0, (2 * far * near) / range, 0
+        x,   0.f, 0.f, 0.f,
+        0.f, y,   0.f, 0.f,
+        0.f, 0.f, (far + near) / range, -1.f,
+        0.f, 0.f, (2 * far * near) / range, 0.f
     };
 }
 
