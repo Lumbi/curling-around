@@ -12,6 +12,7 @@
 #include "input/Keyboard.hpp"
 #include "input/Input.hpp"
 #include "asset/AssetLibrary.hpp"
+#include "game/Parameter.hpp"
 #include "game/Scene.hpp"
 #include "game/Actor.hpp"
 #include "game/components/ModelComponent.hpp"
@@ -21,6 +22,8 @@
 
 int main()
 {
+    Parameter::shared().load();
+
     const int WINDOW_WIDTH = 960;
     const int WINDOW_HEIGHT = 720;
 
@@ -111,6 +114,8 @@ int main()
     {
         Time::shared().beginFrame();
         {
+            Parameter::shared().update();
+
             Input::shared().update();
             if (Input::shared().quit) {
                 running = false;

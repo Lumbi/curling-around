@@ -40,6 +40,7 @@ add_executable(
     src/asset/ModelLoader.cpp
     src/asset/ShaderLibrary.cpp
     src/asset/AssetLibrary.cpp
+    src/game/Parameter.cpp
     src/game/Component.cpp
     src/game/Actor.cpp
     src/game/Scene.cpp

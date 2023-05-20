@@ -1,5 +1,6 @@
 #include "CurlingStone.hpp"
 
+#include "game/Parameter.hpp"
 #include "asset/AssetLibrary.hpp"
 #include "game/components/ModelComponent.hpp"
 #include "game/components/PhysicsBodyComponent.hpp"
@@ -14,7 +15,10 @@ CurlingStone::CurlingStone(int playerID)
     );
 
     auto physicsBodyComponent = std::make_unique<PhysicsBodyComponent>(
-        PhysicsBody::makeSphere(1.0f, 100.0f)
+        PhysicsBody::makeSphere(
+            Parameter::shared().get(Parameter::Key::Actor_CurlingStone_Mass, 1.0f),
+            100.0f
+        )
     );
 
     attachComponent(std::move(modelComponent));

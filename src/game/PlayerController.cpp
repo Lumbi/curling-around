@@ -7,6 +7,7 @@
 #include "physics/PhysicsBody.hpp"
 #include "input/Input.hpp"
 #include "Time.hpp"
+#include "Parameter.hpp"
 
 #include <memory>
 #include <math.h>
@@ -19,11 +20,21 @@ static const SDL_KeyCode VIEW_BIRDSEYE_KEY = SDLK_UP;
 PlayerController::PlayerController(Scene* scene, Camera *camera)
     : scene(scene), camera(camera)
 {
+    spawnDistance = Parameter::shared().get(Parameter::Key::Player_CurlingStone_SpawnDistance, 1700.f);
     spawnPosition = { 0.f, 0.f, spawnDistance };
 }
 
 void PlayerController::update()
 {
+    spawnDistance = Parameter::shared().get(Parameter::Key::Player_CurlingStone_SpawnDistance, spawnDistance);
+    cameraSpeed = Parameter::shared().get(Parameter::Key::Player_Camera_Speed, 5.f);
+    aimSpeed = Parameter::shared().get(Parameter::Key::Player_Aim_Speed, 1.8f);
+    chargeSpeed = Parameter::shared().get(Parameter::Key::Player_Charge_Speed, 3.f);
+    swingDistance = Parameter::shared().get(Parameter::Key::Player_Swing_Distance, 200.f);
+    minShotSpeed = Parameter::shared().get(Parameter::Key::Player_Shot_Speed_Min, 600.f);
+    maxShotSpeed = Parameter::shared().get(Parameter::Key::Player_Shot_Speed_Max, 4000.f);
+    waitDelay = Parameter::shared().get(Parameter::Key::Player_EndTurn_WaitDelay, 1.f);
+
     switch (state) {
         case State::aiming: {
             if (!curlingStone) spawnStone();

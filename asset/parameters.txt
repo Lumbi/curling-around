@@ -1,0 +1,9 @@
+Actor_CurlingStone_Mass=1
+Player_CurlingStone_SpawnDistance=1700
+Player_Camera_Speed=5
+Player_Aim_Speed=1.8
+Player_Charge_Speed=3
+Player_Swing_Distance=200
+Player_Shot_Speed_Min=600
+Player_Shot_Speed_Max=4000
+Player_EndTurn_WaitDelay=1
