@@ -29,7 +29,9 @@ void Physics::update()
     // Update simulation
     for (auto&& body : physicsBodies) {
         if (body) {
-            body->position += (body->velocity * Time::shared().deltaTime);
+            if (body->type == PhysicsBody::Type::dynamic) {
+                body->position += (body->velocity * Time::shared().deltaTime);
+            }
         }
     }
 
