@@ -25,7 +25,7 @@ void PhysicsBodyComponent::update()
     physicsBody.velocity *= (1.0f - friction);
 }
 
-void PhysicsBodyComponent::draw(Scene &)
+void PhysicsBodyComponent::draw(Renderer &)
 {}
 
 PhysicsBody & PhysicsBodyComponent::getBody()

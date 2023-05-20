@@ -9,7 +9,7 @@
 #include <vector>
 
 class Component;
-class Scene;
+class Renderer;
 
 /// @brief An actor in placed in a scene. It contains child actors and components.
 class Actor
@@ -33,8 +33,8 @@ class Actor
         /// @brief Update the actor for a single frame. Also update the child actors and components.
         virtual void update();
 
-        /// @brief Draw the actor in the scene.
-        virtual void draw(Scene &);
+        /// @brief Draw the actor using the provided renderer.
+        virtual void draw(Renderer &);
 
         /// @brief Get the components attached to the actor.
         const std::vector<std::unique_ptr<Component>>& getComponents() const;

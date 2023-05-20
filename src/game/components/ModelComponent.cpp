@@ -2,8 +2,8 @@
 
 #include "rendering/Camera.hpp"
 #include "rendering/Material.hpp"
+#include "rendering/Renderer.hpp"
 #include "game/Actor.hpp"
-#include "game/Scene.hpp"
 
 ModelComponent::ModelComponent(Model *model, Material *material)
     : model(model),
@@ -16,15 +16,13 @@ ModelComponent::~ModelComponent()
 void ModelComponent::update()
 {}
 
-void ModelComponent::draw(Scene &scene)
+void ModelComponent::draw(Renderer &renderer)
 {
     Actor *actor = getActor();
     if (model && material && actor) {
         renderer.render(
             *model,
             *material,
-            scene.getCamera()->getProjection(),
-            scene.getCamera()->getView(),
             actor->getLocalToWorldMatrix()
         );
     }

@@ -2,7 +2,6 @@
 #define MODEL_COMPONENT_H
 
 #include "game/Component.hpp"
-#include "rendering/ModelRenderer.hpp"
 
 #include <memory>
 
@@ -25,14 +24,13 @@ class ModelComponent: public Component
         /// @brief Update the model component for a single frame.
         virtual void update() override;
 
-        /// @brief Draw the model component in the scene.
+        /// @brief Draw the model component using the provided renderer.
         ///        The model is drawn relative to the actor's transform.
-        virtual void draw(Scene &) override;
+        virtual void draw(Renderer &) override;
 
     private:
         Model *model;
         Material *material; // NOTE: Material should be tied to a mesh instead
-        ModelRenderer renderer;
 };
 
 #endif

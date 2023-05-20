@@ -2,7 +2,7 @@
 #define COMPONENT_H
 
 class Actor;
-class Scene;
+class Renderer;
 
 /// @brief An abstract component that can be derived to encapsulate game logic.
 class Component
@@ -17,8 +17,8 @@ class Component
         /// @brief Update the component for a single frame.
         virtual void update() = 0;
 
-        /// @brief Draw the component in a scene.
-        virtual void draw(Scene &) = 0;
+        /// @brief Draw the component using the provided renderer.
+        virtual void draw(Renderer &) = 0;
 
         /// @brief Get the component's parent actor.
         Actor * getActor() const;

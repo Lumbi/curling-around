@@ -1,14 +1,13 @@
 #include <iostream>
 #include <memory>
 
-#define GL_GLEXT_PROTOTYPES
+#include "OpenGL.h"
 #include <SDL.h>
-#include <SDL_opengl.h>
-#include <SDL_opengl_glext.h>
 
 #include "Time.hpp"
 #include "math/Vector.hpp"
 #include "rendering/Camera.hpp"
+#include "rendering/Renderer.hpp"
 #include "physics/Physics.hpp"
 #include "input/Keyboard.hpp"
 #include "input/Input.hpp"
@@ -33,6 +32,13 @@ int main()
         WINDOW_WIDTH, WINDOW_HEIGHT, // size
         SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL // flags
     );
+
+    // Initialize the camera
+    float aspectRatio = (float) WINDOW_WIDTH / (float) WINDOW_HEIGHT;
+    auto camera = std::make_unique<Camera>(aspectRatio);
+
+    // Initialize the renderer
+    Renderer renderer(window, camera.get());
 
     // Set OpenGL attributes
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -66,13 +72,6 @@ int main()
 
     auto scene = std::make_unique<Scene>();
 
-    // Camera
-    {
-        float aspectRatio = (float) WINDOW_WIDTH / (float) WINDOW_HEIGHT;
-        auto camera = std::make_unique<Camera>(aspectRatio);
-        scene->setCamera(std::move(camera));
-    }
-
     // Level
     {
         // Field
@@ -105,7 +104,7 @@ int main()
 
     bool running = true;
 
-    PlayerController playerController(scene.get());
+    PlayerController playerController(scene.get(), camera.get());
 
     const float targetFramesPerSecond = 60.f;
     const float targetFrameTimeInSeconds = 1.f / targetFramesPerSecond;
@@ -113,25 +112,20 @@ int main()
     while (running)
     {
         Time::shared().beginFrame();
+        {
+            Input::shared().update();
+            if (Input::shared().quit) {
+                running = false;
+            }
 
-        Input::shared().update();
-        if (Input::shared().quit) {
-            running = false;
+            Physics::shared().update();
+            playerController.update();
+            scene->update();
+
+            renderer.begin();
+            scene->draw(renderer);
+            renderer.end();
         }
-
-        Physics::shared().update();
-
-        playerController.update();
-
-        glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        glClearColor(0.f, 0.f, 0.f, 1.f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        scene->getRoot()->update();
-        scene->getRoot()->draw(*scene.get());
-
-        SDL_GL_SwapWindow(window);
-
         Time::shared().endFrame();
 
         if (Time::shared().deltaTime < targetFrameTimeInSeconds) {

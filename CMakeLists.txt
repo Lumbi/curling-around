@@ -29,7 +29,7 @@ add_executable(
     src/rendering/Material.cpp
     src/rendering/Mesh.cpp
     src/rendering/Model.cpp
-    src/rendering/ModelRenderer.cpp
+    src/rendering/Renderer.cpp
     src/input/Keyboard.cpp
     src/input/Input.cpp
     src/physics/Collider.cpp

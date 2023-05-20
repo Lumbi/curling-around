@@ -16,8 +16,8 @@ static const SDL_KeyCode AIM_LEFT_KEY = SDLK_LEFT;
 static const SDL_KeyCode AIM_RIGHT_KEY = SDLK_RIGHT;
 static const SDL_KeyCode VIEW_BIRDSEYE_KEY = SDLK_UP;
 
-PlayerController::PlayerController(Scene *scene)
-    : scene(scene)
+PlayerController::PlayerController(Scene* scene, Camera *camera)
+    : scene(scene), camera(camera)
 {
     spawnPosition = { 0.f, 0.f, spawnDistance };
 }
@@ -155,7 +155,6 @@ void PlayerController::endTurn()
 void PlayerController::moveCameraBehindStone(bool immediate)
 {
     if (!curlingStone) { return; }
-    Camera *camera = scene->getCamera();
     if (!camera) { return; }
     PhysicsBody *body = curlingStone->getBody();
     if (!body) { return; }
@@ -190,7 +189,6 @@ void PlayerController::moveCameraBehindStone(bool immediate)
 
 void PlayerController::moveCameraBirdseye()
 {
-    Camera *camera = scene->getCamera();
     if (!camera) { return; }
 
     Vector3f backward = normalize(spawnPosition - fieldCenter);
@@ -214,7 +212,6 @@ void PlayerController::moveCameraBirdseye()
 void PlayerController::updateCamera()
 {
     if (!curlingStone) { return; }
-    Camera *camera = scene->getCamera();
     if (!camera) { return; }
     PhysicsBody *body = curlingStone->getBody();
     if (!body) { return; }

@@ -4,6 +4,7 @@
 #include "math/Vector.hpp"
 
 class Scene;
+class Camera;
 class CurlingStone;
 
 /// @brief A class to control the player's actions and update the camera accordingly.
@@ -18,8 +19,10 @@ class PlayerController {
         };
 
     public:
-        /// @brief Initialize the player controller in the scene.
-        PlayerController(Scene *);
+        /// @brief Initialize the player controller.
+        /// @param scene The scene in which to play.
+        /// @param camera The camera to control.
+        PlayerController(Scene *scene, Camera *camera);
 
         /// @brief Update the player controller for a single frame.
         void update();
@@ -51,8 +54,9 @@ class PlayerController {
         void updateCamera();
 
     private:
-        State state = State::aiming;
         Scene *scene;
+        Camera *camera;
+        State state = State::aiming;
         CurlingStone *curlingStone = nullptr;
 
         // Positions

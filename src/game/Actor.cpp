@@ -41,13 +41,13 @@ void Actor::update()
     }
 }
 
-void Actor::draw(Scene &scene)
+void Actor::draw(Renderer &renderer)
 {
     for (auto&& component : components) {
-        component->draw(scene);
+        component->draw(renderer);
     }
     for (auto&& child : children) {
-        child->draw(scene);
+        child->draw(renderer);
     }
 }
 

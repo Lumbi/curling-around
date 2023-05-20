@@ -5,8 +5,7 @@
 #include <vector>
 
 class Actor;
-class Component;
-class Camera;
+class Renderer;
 
 /// @brief A scene where a hierachy of actors are updated.
 class Scene
@@ -18,15 +17,12 @@ class Scene
         /// @brief Get the scene's root actor.
         Actor * getRoot();
 
-        /// @brief Get the scene's camera.
-        Camera * getCamera();
+        void update();
 
-        /// @brief Set the scene's camera.
-        void setCamera(std::unique_ptr<Camera>);
+        void draw(Renderer &);
 
     private:
         std::unique_ptr<Actor> root;
-        std::unique_ptr<Camera> camera;
 };
 
 #endif

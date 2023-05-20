@@ -12,7 +12,7 @@
 /// @see Model
 class Mesh
 {
-    friend class ModelRenderer;
+    friend class Renderer;
 
     public:
         /// @brief The vertices of this mesh.

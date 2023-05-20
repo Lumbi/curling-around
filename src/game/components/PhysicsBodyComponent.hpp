@@ -22,8 +22,8 @@ class PhysicsBodyComponent: public Component {
         /// @brief Update the physics body component for a single frame.
         virtual void update() override;
 
-        /// @brief Draw the physics body component in the scene (currently doesn't do anything but could be used for debug).
-        virtual void draw(Scene &) override;
+        /// @brief Draw the physics body component using the provided renderer (currently doesn't do anything but could be used for debug).
+        virtual void draw(Renderer &) override;
 
         /// @brief The the physics body managed by the component.
         PhysicsBody& getBody();

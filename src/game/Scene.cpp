@@ -3,6 +3,7 @@
 #include "Actor.hpp"
 #include "Component.hpp"
 #include "rendering/Camera.hpp"
+#include "rendering/Renderer.hpp"
 
 Scene::Scene()
     : root(std::make_unique<Actor>())
@@ -13,12 +14,12 @@ Actor * Scene::getRoot()
     return root.get();
 }
 
-Camera * Scene::getCamera()
+void Scene::update()
 {
-    return camera.get();
+    root->update();
 }
 
-void Scene::setCamera(std::unique_ptr<Camera> newCamera)
+void Scene::draw(Renderer &renderer)
 {
-    this->camera = std::move(newCamera);
+    root->draw(renderer);
 }
