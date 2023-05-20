@@ -58,8 +58,6 @@ int main()
         printf("Warnning: Could not enable v-sync: %s\n", SDL_GetError());
     }
 
-    glShadeModel(GL_SMOOTH);
-
     // Face culling
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
