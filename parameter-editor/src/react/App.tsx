@@ -1,11 +1,13 @@
 import 'react'
 import { useState } from 'react'
 import { Parameter, isValid } from './parameter'
-import { Button, Input, Table, TableHead, TableRow, TableCell, TableBody, Typography, Stack, Box, InputAdornment, Icon } from '@mui/material'
+import { Button, Input, Table, TableHead, TableRow, TableCell, TableBody, Stack, Box, InputAdornment, IconButton } from '@mui/material'
 import ErrorIcon from '@mui/icons-material/Error'
+import DeleteIcon from '@mui/icons-material/Delete'
+import AddIcon from '@mui/icons-material/Add'
 
 export const App = () => {
-    const [parameters, setParameters] = useState<Parameter[]>([])
+    const [parameters, setParameters] = useState<Parameter[]>([{key: 'a', value: '1'}])
 
     const load = async (inputFile: File) => {
         setParameters([])
@@ -25,6 +27,10 @@ export const App = () => {
                     : oldParameter
             })
         setParameters(updatedParameters)
+    }
+
+    const appendParameter = () => {
+        setParameters([...parameters, { key: '', value: ''}])
     }
 
     return (
@@ -50,6 +56,11 @@ export const App = () => {
                     parameters={parameters}
                     updateParameter={updateParameter}
                 />
+                <Box display='flex' justifyContent='center'>
+                    <IconButton onClick={appendParameter}>
+                        <AddIcon/>
+                    </IconButton>
+                </Box>
             </Stack>
         </>
     )
@@ -125,6 +136,11 @@ const ParameterRow = (props: ParameterRowProps) => {
                         )}
                         fullWidth={true}
                     />
+                </TableCell>
+                <TableCell>
+                    <IconButton>
+                        <DeleteIcon/>
+                    </IconButton>
                 </TableCell>
             </TableRow>
         </>
