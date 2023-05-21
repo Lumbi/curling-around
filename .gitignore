@@ -20,3 +20,9 @@ cmake_uninstall.cmake
 
 build/*
 lib/*
+
+# Node
+node_modules/
+.npm
+dist
+*.log
