@@ -9,8 +9,6 @@ function createWindow() {
         }
     })
 
-    appWindow.webContents.openDevTools()
-
     ipcMain.handle('saveToDisk', async (_, path, data) => {
         await fs.writeFile(path, data, 'utf-8')
     })

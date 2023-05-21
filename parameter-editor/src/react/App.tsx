@@ -10,9 +10,10 @@ import './electron'
 
 export const App = () => {
     const [parameterFile, setParameterFile] = useState<File | null>(null);
-    const [parameters, setParameters] = useState<Parameter[]>([{key: 'a', value: '1'}])
+    const [parameters, setParameters] = useState<Parameter[]>([])
 
     const isSaveEnabled = parameterFile !== null && parameters.every(isValid)
+    const isAddEnabled = isSaveEnabled
 
     const load = async (inputFile: File) => {
         setParameterFile(inputFile)
@@ -96,7 +97,7 @@ export const App = () => {
                     updateParameter={updateParameter}
                 />
                 <Box display='flex' justifyContent='center'>
-                    <IconButton onClick={appendParameter}>
+                    <IconButton onClick={appendParameter} disabled={!isAddEnabled}>
                         <AddIcon/>
                     </IconButton>
                 </Box>
