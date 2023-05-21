@@ -7,9 +7,13 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
 
 export const App = () => {
+    const [parameterFile, setParameterFile] = useState<File | null>(null);
     const [parameters, setParameters] = useState<Parameter[]>([{key: 'a', value: '1'}])
 
+    const isSaveEnabled = parameterFile !== null && parameters.every(isValid)
+
     const load = async (inputFile: File) => {
+        setParameterFile(inputFile)
         setParameters([])
         const inputText = await inputFile?.text()
         const parameters = inputText
@@ -27,6 +31,10 @@ export const App = () => {
                     : oldParameter
             })
         setParameters(updatedParameters)
+    }
+
+    const save = () => {
+
     }
 
     const appendParameter = () => {
@@ -48,9 +56,7 @@ export const App = () => {
                             }
                         }}
                     />
-                    <Box display='flex' justifyContent='flex-end'>
-                        <Button variant='contained'>Save</Button>
-                    </Box>
+                    <Button variant='contained' disabled={!isSaveEnabled}>Save</Button>
                 </Stack>
                 <ParameterTable
                     parameters={parameters}
