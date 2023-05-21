@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "OpenGL.h"
+#define SDL_MAIN_HANDLED
 #include <SDL.h>
 
 #include "Time.hpp"
@@ -20,7 +21,7 @@
 #include "game/actors/Obstacle.hpp"
 #include "game/PlayerController.hpp"
 
-int main()
+int main(int argc, char* argv[])
 {
     Parameter::shared().load();
 
@@ -55,6 +56,12 @@ int main()
         return -1;
     }
     printf("Using OpenGL version %s\n", glGetString(GL_VERSION));
+
+    if (GLEW_OK != glewInit())
+    {
+        // GLEW failed!
+        return -1;
+    }
 
     // V-sync
     if (SDL_GL_SetSwapInterval(1) != 0) {

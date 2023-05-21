@@ -7,13 +7,18 @@ project(CurlingAround)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_BUILD_TYPE Debug)
 
-add_compile_options(-fsanitize=address)
-add_link_options(-fsanitize=address)
-add_compile_options(-Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wpedantic -Wunused -Woverloaded-virtual)
+# add_compile_options(-fsanitize=address)
+# add_link_options(-fsanitize=address)
+# add_compile_options(-Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wpedantic -Wunused -Woverloaded-virtual)
+
+SET(CMAKE_FIND_LIBRARY_PREFIXES "")
+SET(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
 
 find_package(OpenGL REQUIRED)
-find_package(SDL2 REQUIRED)
+# find_package(SDL2 REQUIRED)
+find_library(SDL2_LIBRARIES NAMES SDL2 PATHS ${CMAKE_SOURCE_DIR}/lib/SDL2/bin)
 find_library(ASSIMP_LIBRARIES NAMES assimp PATHS ${CMAKE_SOURCE_DIR}/lib/assimp/bin)
+find_library(GLEW_LIBRARIES NAMES glew32 PATHS ${CMAKE_SOURCE_DIR}/lib/glew/bin)
 
 add_executable(
     ${PROJECT_NAME}
@@ -54,17 +59,21 @@ add_executable(
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)
 
+add_library(SDL2 SHARED IMPORTED)
 add_library(assimp SHARED IMPORTED)
+add_library(glew SHARED IMPORTED)
 
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 target_include_directories(${PROJECT_NAME} PRIVATE lib)
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${OPENGL_INCLUDE_DIR})
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/lib/SDL2/include)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/lib/assimp/include)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/lib/glew/include)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${ASSIMP_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${GLEW_LIBRARIES})
 
 file(COPY asset DESTINATION ${CMAKE_BINARY_DIR})

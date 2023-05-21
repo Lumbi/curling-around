@@ -10,6 +10,8 @@
 #include "Parameter.hpp"
 
 #include <memory>
+
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 static const SDL_KeyCode SHOOT_KEY = SDLK_SPACE;
