@@ -3,10 +3,13 @@ const path = require('path')
 const isProduction = process.env.NODE_ENV == 'production'
 
 const config = {
-  entry: '/src/electron/index.ts',
+  entry: {
+    electron: '/src/electron/index.ts',
+    preload: '/src/electron/preload.ts'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'electron.js'
+    filename: '[name].js'
   },
   target: 'electron-renderer',
   devtool: 'source-map',

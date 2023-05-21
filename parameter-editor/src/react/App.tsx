@@ -1,10 +1,12 @@
 import 'react'
 import { useState } from 'react'
 import { Parameter, isValid } from './parameter'
-import { Button, Input, Table, TableHead, TableRow, TableCell, TableBody, Stack, Box, InputAdornment, IconButton } from '@mui/material'
+import { Button, Input, Table, TableHead, TableRow, TableCell, TableBody, Stack, Box, InputAdornment, IconButton, Snackbar } from '@mui/material'
 import ErrorIcon from '@mui/icons-material/Error'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
+
+import './electron'
 
 export const App = () => {
     const [parameterFile, setParameterFile] = useState<File | null>(null);
@@ -33,8 +35,32 @@ export const App = () => {
         setParameters(updatedParameters)
     }
 
-    const save = () => {
+    const filePath = (file: File): string | undefined => {
+        const path = (file as any)['path'] as unknown // 'path' is injected when running in Electron context
+        if (typeof path === 'string') {
+            return path
+        } else {
+            return undefined
+        }
+    }
 
+    const serializeParameters = (parameters: Parameter[]) => {
+        return parameters.map(({ key, value }) => `${key}=${value}`).join('\n')
+    }
+
+    const [didSave, setDidSave] = useState(false)
+    const save = () => {
+        const electron = window.electron
+        const data = serializeParameters(parameters)
+
+         // Electron context
+        if (electron) {
+            if (!parameterFile) { return }
+            const path = filePath(parameterFile)
+            if (!path) { return }
+            electron.saveToDisk(path, data)
+            setDidSave(true)
+        }
     }
 
     const appendParameter = () => {
@@ -52,11 +78,18 @@ export const App = () => {
                             const input = event.target as HTMLInputElement
                             const inputFile = input.files?.item(0)
                             if (inputFile) {
+                                console.log(inputFile)
                                 load(inputFile)
                             }
                         }}
                     />
-                    <Button variant='contained' disabled={!isSaveEnabled}>Save</Button>
+                    <Button
+                        variant='contained'
+                        disabled={!isSaveEnabled}
+                        onClick={save}
+                    >
+                            Save
+                    </Button>
                 </Stack>
                 <ParameterTable
                     parameters={parameters}
@@ -68,6 +101,13 @@ export const App = () => {
                     </IconButton>
                 </Box>
             </Stack>
+
+            <Snackbar
+                open={didSave}
+                onClose={() => setDidSave(false)}
+                autoHideDuration={6000}
+                message={`Saved at ${parameterFile ? filePath(parameterFile) : '?'}`}
+            />
         </>
     )
 }
