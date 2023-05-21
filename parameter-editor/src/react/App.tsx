@@ -1,6 +1,6 @@
 import 'react'
 import { useState } from 'react'
-import { Parameter } from './parameter'
+import { Parameter, isValid } from './parameter'
 import { Button, Input, Table, TableHead, TableRow, TableCell, TableBody, Typography, Stack, Box, InputAdornment, Icon } from '@mui/material'
 import ErrorIcon from '@mui/icons-material/Error'
 
@@ -8,6 +8,7 @@ export const App = () => {
     const [parameters, setParameters] = useState<Parameter[]>([])
 
     const load = async (inputFile: File) => {
+        setParameters([])
         const inputText = await inputFile?.text()
         const parameters = inputText
             .split('\n')
@@ -16,9 +17,19 @@ export const App = () => {
         setParameters(parameters)
     }
 
+    const updateParameter = (index: number, updatedParameter: Parameter) => {
+        const updatedParameters = parameters
+            .map((oldParameter, currentIndex) => {
+                return currentIndex == index
+                    ? updatedParameter
+                    : oldParameter
+            })
+        setParameters(updatedParameters)
+    }
+
     return (
         <>
-            <Stack spacing={4}>
+            <Stack spacing={4} margin={4}>
                 <Stack direction='row' spacing={4}>
                     <Input
                         type='file'
@@ -35,58 +46,83 @@ export const App = () => {
                         <Button variant='contained'>Save</Button>
                     </Box>
                 </Stack>
-                <ParameterTable parameters={parameters}/>
+                <ParameterTable
+                    parameters={parameters}
+                    updateParameter={updateParameter}
+                />
             </Stack>
         </>
     )
 }
 
-const ParameterTable = (props: { parameters: Parameter[] }) => {
+type ParameterUpdater = {
+    updateParameter: (index: number, parameter: Parameter) => void
+}
+
+type ParameterTableProps = {
+    parameters: Parameter[]
+} & ParameterUpdater
+
+const ParameterTable = (props: ParameterTableProps) => {
     return (
         <Table>
             <TableHead>
             </TableHead>
             <TableBody>
             {
-                props.parameters.map(parameter => <ParameterRow key={parameter.key} parameter={parameter}/>)
+                props.parameters.map((parameter, index) =>
+                    <ParameterRow
+                        key={index}
+                        index={index}
+                        parameter={parameter}
+                        updateParameter={props.updateParameter}
+                    />
+                )
             }
             </TableBody>
         </Table>
     )
 }
 
-const ParameterRow = (props: { parameter: Parameter }) => {
-    const [parameterKey, setParameterKey] = useState(props.parameter.key)
-    const [parameterValue, setParameterValue] = useState(props.parameter.value)
+type ParameterRowProps = {
+    index: number,
+    parameter: Parameter
+} & ParameterUpdater
 
-    const parameterValueIsInvalid = isNaN(Number(parameterValue)) || isNaN(parseFloat(parameterValue))
-
+const ParameterRow = (props: ParameterRowProps) => {
+    const isParameterValid = isValid(props.parameter)
     return (
         <>
             <TableRow>
                 <TableCell>
                     <Input
                         type='text'
-                        value={parameterKey}
-                        onChange={(event) => setParameterKey(event.target.value)}
+                        value={props.parameter.key}
+                        onChange={(event) => props.updateParameter(
+                            props.index,
+                            { ...props.parameter, key: event.target.value }
+                        )}
                         fullWidth={true}
                     />
                 </TableCell>
                 <TableCell>
                     <Input
                         type='text'
-                        value={parameterValue}
-                        error={parameterValueIsInvalid}
+                        value={props.parameter.value}
+                        error={!isParameterValid}
                         endAdornment={
                             <InputAdornment position='end'>
                                 {
-                                    parameterValueIsInvalid
+                                    !isParameterValid
                                         ? <ErrorIcon color='error'/>
                                         : null
                                 }
                             </InputAdornment>
                         }
-                        onChange={(event) => setParameterValue(event.target.value)}
+                        onChange={(event) => props.updateParameter(
+                            props.index,
+                            { ...props.parameter, value: event.target.value }
+                        )}
                         fullWidth={true}
                     />
                 </TableCell>
