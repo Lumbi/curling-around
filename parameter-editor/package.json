@@ -6,7 +6,7 @@
     "build": "concurrently \"npm run build:electron\" \"npm run build:react\"",
     "build:electron": "webpack --mode=development -c webpack.electron.config.js",
     "build:react": "webpack --mode=development -c webpack.react.config.js",
-    "serve": "webpack serve -c webpack.react.config.js --static dist",
+    "dev:serve": "webpack serve -c webpack.react.config.js --static dist",
     "start": "electron ./dist/electron.js"
   },
   "author": "Gabriel Lumbi",
