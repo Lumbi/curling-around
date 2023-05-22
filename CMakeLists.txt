@@ -9,7 +9,6 @@ set(CMAKE_BUILD_TYPE Debug)
 
 if(MSVC)
     add_compile_options(/permissive- /W4 /W4 /w14640)
-    add_compile_options(/fsanitize=address)
 elseif(APPLE)
     add_compile_options(-fsanitize=address)
     add_link_options(-fsanitize=address)

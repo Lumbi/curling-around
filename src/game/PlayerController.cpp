@@ -20,7 +20,8 @@ static const SDL_KeyCode AIM_RIGHT_KEY = SDLK_RIGHT;
 static const SDL_KeyCode VIEW_BIRDSEYE_KEY = SDLK_UP;
 
 PlayerController::PlayerController(Scene* scene, Camera *camera)
-    : scene(scene), camera(camera)
+    : scene(scene),
+      camera(camera)
 {
     spawnDistance = Parameter::shared().get(Parameter::Key::Player_CurlingStone_SpawnDistance, 1700.f);
     spawnPosition = { 0.f, 0.f, spawnDistance };
@@ -29,13 +30,13 @@ PlayerController::PlayerController(Scene* scene, Camera *camera)
 void PlayerController::update()
 {
     spawnDistance = Parameter::shared().get(Parameter::Key::Player_CurlingStone_SpawnDistance, spawnDistance);
-    cameraSpeed = Parameter::shared().get(Parameter::Key::Player_Camera_Speed, 5.f);
-    aimSpeed = Parameter::shared().get(Parameter::Key::Player_Aim_Speed, 1.8f);
-    chargeSpeed = Parameter::shared().get(Parameter::Key::Player_Charge_Speed, 3.f);
-    swingDistance = Parameter::shared().get(Parameter::Key::Player_Swing_Distance, 200.f);
-    minShotSpeed = Parameter::shared().get(Parameter::Key::Player_Shot_Speed_Min, 600.f);
-    maxShotSpeed = Parameter::shared().get(Parameter::Key::Player_Shot_Speed_Max, 4000.f);
-    waitDelay = Parameter::shared().get(Parameter::Key::Player_EndTurn_WaitDelay, 1.f);
+    cameraSpeed = Parameter::shared().get(Parameter::Key::Player_Camera_Speed, cameraSpeed);
+    aimSpeed = Parameter::shared().get(Parameter::Key::Player_Aim_Speed, aimSpeed);
+    chargeSpeed = Parameter::shared().get(Parameter::Key::Player_Charge_Speed, chargeSpeed);
+    swingDistance = Parameter::shared().get(Parameter::Key::Player_Swing_Distance, swingDistance);
+    minShotSpeed = Parameter::shared().get(Parameter::Key::Player_Shot_Speed_Min, minShotSpeed);
+    maxShotSpeed = Parameter::shared().get(Parameter::Key::Player_Shot_Speed_Max, maxShotSpeed);
+    waitDelay = Parameter::shared().get(Parameter::Key::Player_EndTurn_WaitDelay, waitDelay);
 
     switch (state) {
         case State::aiming: {
@@ -192,8 +193,8 @@ void PlayerController::moveCameraBehindStone(bool immediate)
     // Look at curling stone
     // TODO: Use LookAt matrix
     Vector3f viewDirection = normalize(cameraTargetPosition - fieldCenter);
-    float yaw = atan2f(viewDirection.z, viewDirection.x) - M_PI_2;
-    float pitch = 25.0f * (M_PI / 180.0f);
+    float yaw = atan2f(viewDirection.z, viewDirection.x) - (float)M_PI_2;
+    float pitch = 25.0f * ((float)M_PI / 180.0f);
     cameraTargetRotation = { pitch, yaw, 0.f };
     if (immediate) {
         camera->transform.setRotation(cameraTargetRotation);
@@ -217,8 +218,8 @@ void PlayerController::moveCameraBirdseye()
     // Look at field center
     // TODO: Use LookAt matrix
     Vector3f viewDirection = normalize(cameraTargetPosition - fieldCenter);
-    float yaw = atan2f(viewDirection.z, viewDirection.x) - M_PI_2;
-    float pitch = 60.0f * (M_PI / 180.0f);
+    float yaw = atan2f(viewDirection.z, viewDirection.x) - (float)M_PI_2;
+    float pitch = 60.0f * ((float)M_PI / 180.0f);
     cameraTargetRotation = { pitch, yaw, 0.f };
 }
 

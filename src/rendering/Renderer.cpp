@@ -35,7 +35,7 @@ void Renderer::render(Model &model, Material &material, const Matrix4f &transfor
             auto mesh = model.getMeshAt(meshIndex);
             material.use(camera->getProjection(), camera->getView(), top->getModelMatrix() * transform);
             glBindVertexArray(mesh->vertexArray);
-            glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, GLsizei(mesh->indices.size()), GL_UNSIGNED_INT, 0);
             glBindVertexArray(0);
         }
     }

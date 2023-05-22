@@ -35,8 +35,8 @@ Matrix4f Matrix4f::translation(float tx, float ty, float tz)
 
 Matrix4f Matrix4f::rotation_x(float radians)
 {
-    const float c = cos(radians);
-    const float s = sin(radians);
+    const float c = cosf(radians);
+    const float s = sinf(radians);
     return {
         1.f,  0.f,  0.f,  0.f,
         0.f,  c,   -s,    0.f,
@@ -47,8 +47,8 @@ Matrix4f Matrix4f::rotation_x(float radians)
 
 Matrix4f Matrix4f::rotation_y(float radians)
 {
-    const float c = cos(radians);
-    const float s = sin(radians);
+    const float c = cosf(radians);
+    const float s = sinf(radians);
     return {
         c,   0.f,  s,   0.f,
         0.f, 1.f,  0.f, 0.f,
@@ -59,8 +59,8 @@ Matrix4f Matrix4f::rotation_y(float radians)
 
 Matrix4f Matrix4f::rotation_z(float radians)
 {
-    const float c = cos(radians);
-    const float s = sin(radians);
+    const float c = cosf(radians);
+    const float s = sinf(radians);
     return {
         c,  -s,   0.f, 0.f,
         s,   c,   0.f, 0.f,
