@@ -16,7 +16,6 @@ elseif(APPLE)
     add_compile_options(-Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wpedantic -Wunused -Woverloaded-virtual)
 endif()
 
-
 if(MSVC)
     set(CMAKE_FIND_LIBRARY_PREFIXES "")
     set(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
