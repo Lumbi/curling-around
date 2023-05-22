@@ -21,7 +21,7 @@
 #include "game/actors/Obstacle.hpp"
 #include "game/PlayerController.hpp"
 
-int main(int argc, char* argv[])
+int main()
 {
     Parameter::shared().load();
 
