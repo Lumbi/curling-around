@@ -31,7 +31,7 @@ CurlingStone::~CurlingStone()
 
 PhysicsBody * CurlingStone::getBody()
 {
-    auto physicsBodyComponent = getComponents<PhysicsBodyComponent>();
+    auto physicsBodyComponent = getComponent<PhysicsBodyComponent>();
     if (physicsBodyComponent) {
         return &physicsBodyComponent->getBody();
     } else {

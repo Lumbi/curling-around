@@ -46,8 +46,11 @@ class Actor
         /// @brief Detach a component from the actor. The address is used to identify the component.
         void detachComponent(Component *);
 
+        /// @brief Get the first component matching a specified type.
+        /// @tparam T A class derived from Component
+        /// @return The component matching the type or nullptr if none found.
         template<std::derived_from<Component> T>
-        T * getComponents() {
+        T * getComponent() {
             for (auto&& component : components) {
                 T * found = dynamic_cast<T*>(component.get());
                 if (found) { return found; }
