@@ -71,7 +71,7 @@ Matrix4f Matrix4f::rotation_z(float radians)
 
 Matrix4f Matrix4f::fov_perspective(float near, float far, float fov, float aspect)
 {
-    const float y = 1 / tan(fov / 2.f);
+    const float y = 1.f / tanf(fov / 2.f);
     const float x = y / aspect;
     const float range = near - far;
     return {

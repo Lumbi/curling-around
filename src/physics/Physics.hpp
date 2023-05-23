@@ -9,9 +9,6 @@
 /// @brief A singleton to run the physics simulation.
 class Physics {
     public:
-        using CollisionCallback = std::function<void(PhysicsBody &, PhysicsBody &)>;
-
-    public:
         /// @brief Get the shared singleton instance.
         static Physics & shared();
 
