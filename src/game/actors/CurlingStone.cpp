@@ -49,10 +49,6 @@ void CurlingStone::update()
         freeze();
         shouldFreeze = false;
     }
-    if (shouldRemoveFreezingEffect) {
-        removeFreezingEffect();
-        shouldRemoveFreezingEffect = false;
-    }
 
     // Check for collisions with "freezing" bodies
     PhysicsBody *body = getBody();
@@ -62,20 +58,12 @@ void CurlingStone::update()
     for (auto&& otherBody : contacts) {
         if (!otherBody) { continue; }
 
-        // Case: this is getting frozen by another stone
-        if (
-            !(body->tag & PhysicsBodyProperties::frozen) &&
-            (otherBody->tag & PhysicsBodyProperties::freezing)
-        ) {
-            shouldFreeze = true;
-        }
-
-        // Case: this is freezing another stone
+        // When this stone has a freezing effect and touches another stone
         if (
             (body->tag & PhysicsBodyProperties::freezing) &&
             !(otherBody->tag & PhysicsBodyProperties::frozen)
         ) {
-            shouldRemoveFreezingEffect = true;
+            shouldFreeze = true;
         }
     }
 }
@@ -108,6 +96,8 @@ void CurlingStone::removeFreezingEffect()
 
 void CurlingStone::freeze()
 {
+    removeFreezingEffect();
+
     attachComponent(std::make_unique<ModelComponent>(
         AssetLibrary::shared().getModel(AssetLibrary::ModelKey::frozen),
         AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::defaultIce)

@@ -35,7 +35,6 @@ class CurlingStone: public Actor {
         using super = Actor;
 
         bool shouldFreeze = false;
-        bool shouldRemoveFreezingEffect = false;
         ModelComponent *freezingComponent = nullptr;
 
         void freeze();
