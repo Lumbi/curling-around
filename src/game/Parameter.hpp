@@ -6,6 +6,7 @@
 
 #define PARAMETER_KEYS \
     X(Actor_CurlingStone_Mass) \
+    X(Actor_CurlingStone_Bounciness) \
     X(Player_CurlingStone_SpawnDistance) \
     X(Player_Camera_Speed) \
     X(Player_Aim_Speed) \

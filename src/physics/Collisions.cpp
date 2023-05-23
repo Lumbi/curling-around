@@ -13,17 +13,16 @@ void handleSphereToSphereCollision(PhysicsBody &first, PhysicsBody &second)
         float massSum = first.mass + second.mass;
         float momentumSum = first.mass * firstSpeed + second.mass * secondSpeed;
 
-        float cr = 0.85f; // Coefficient of restitution
+        const float cr = 0.85f; // Coefficient of restitution
 
         // Inelastic collision
-        float newFirstSpeed = (cr * second.mass * (secondSpeed - firstSpeed) + momentumSum) / massSum;
-        float newSecondSpeed = (cr * first.mass * (firstSpeed - secondSpeed) + momentumSum) / massSum;
+        float newFirstSpeed = (cr * second.mass * (secondSpeed - firstSpeed) + momentumSum * first.bounciness) / massSum;
+        float newSecondSpeed = (cr * first.mass * (firstSpeed - secondSpeed) + momentumSum * second.bounciness) / massSum;
 
         // Ideally, the momentum perpendicular to the collision tangent should be conserved
         Vector3f normal = normalize(first.position - second.position);
 
-        // Avoid changing the velocity for dynamic bodies
-        // TODO: This could be done in a setter inside PhysicsBody instead
+        // Only the velocity for dynamic bodies
         if (first.type == PhysicsBody::Type::dynamic) {
             first.velocity = newFirstSpeed * normal;
         }

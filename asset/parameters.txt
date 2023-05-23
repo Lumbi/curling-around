@@ -1,4 +1,5 @@
 Actor_CurlingStone_Mass=1
+Actor_CurlingStone_Bounciness=1.05
 Player_CurlingStone_SpawnDistance=1700
 Player_Camera_Speed=5
 Player_Aim_Speed=1.8

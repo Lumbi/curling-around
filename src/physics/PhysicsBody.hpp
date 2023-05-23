@@ -21,6 +21,10 @@ class PhysicsBody {
         /// @brief The mass of the body in arbitrary units.
         float mass;
 
+        /// @brief How much the body bounces back in a collision.
+        ///        Values between 0 and 1 reduce the bounciness. Values above 1 increase the bounciness.
+        float bounciness;
+
         /// @brief The world space position of the body.
         Vector3f position;
 

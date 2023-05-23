@@ -14,12 +14,13 @@ CurlingStone::CurlingStone(int playerID)
             : AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::defaultCurlingStoneBlue)
     );
 
-    auto physicsBodyComponent = std::make_unique<PhysicsBodyComponent>(
-        PhysicsBody::makeSphere(
-            Parameter::shared().get(Parameter::Key::Actor_CurlingStone_Mass, 1.0f),
-            100.0f
-        )
+    PhysicsBody body = PhysicsBody::makeSphere(
+        Parameter::shared().get(Parameter::Key::Actor_CurlingStone_Mass, 1.0f),
+        100.0f
     );
+    body.bounciness = Parameter::shared().get(Parameter::Key::Actor_CurlingStone_Bounciness, 1.0f);
+
+    auto physicsBodyComponent = std::make_unique<PhysicsBodyComponent>(body);
 
     attachComponent(std::move(modelComponent));
     attachComponent(std::move(physicsBodyComponent));
