@@ -71,6 +71,7 @@ class PlayerController {
 
         // Game state
         int currentPlayerID = 0;
+        int shotCount = 0;
 
         // Aiming
         float aimAngle = 0.f;

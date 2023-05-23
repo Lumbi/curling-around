@@ -44,27 +44,38 @@ void CurlingStone::update()
 {
     super::update();
 
+    // Deferred state change
+    if (shouldFreeze) {
+        freeze();
+        shouldFreeze = false;
+    }
+    if (shouldRemoveFreezingEffect) {
+        removeFreezingEffect();
+        shouldRemoveFreezingEffect = false;
+    }
+
     // Check for collisions with "freezing" bodies
     PhysicsBody *body = getBody();
     if (!body) { return; }
     auto contacts = Physics::shared().getContacts(body->id);
+
     for (auto&& otherBody : contacts) {
         if (!otherBody) { continue; }
 
-        // Case: this is getting frozen
+        // Case: this is getting frozen by another stone
         if (
             !(body->tag & PhysicsBodyProperties::frozen) &&
             (otherBody->tag & PhysicsBodyProperties::freezing)
         ) {
-            freeze();
+            shouldFreeze = true;
         }
 
-        // Case: this is freezing other
-        else if (
+        // Case: this is freezing another stone
+        if (
             (body->tag & PhysicsBodyProperties::freezing) &&
             !(otherBody->tag & PhysicsBodyProperties::frozen)
         ) {
-            removeFreezingEffect();
+            shouldRemoveFreezingEffect = true;
         }
     }
 }
@@ -74,6 +85,15 @@ void CurlingStone::addFreezingEffect()
     PhysicsBody *body = getBody();
     if (!body) { return; }
     body->tag |= PhysicsBodyProperties::freezing;
+
+    if (!freezingComponent) {
+        auto newFreezingComponent = std::make_unique<ModelComponent>(
+            AssetLibrary::shared().getModel(AssetLibrary::ModelKey::curlingStone),
+            AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::effectFreezing)
+        );
+        this->freezingComponent = newFreezingComponent.get();
+        attachComponent(std::move(newFreezingComponent));
+    }
 }
 
 void CurlingStone::removeFreezingEffect()
@@ -81,15 +101,17 @@ void CurlingStone::removeFreezingEffect()
     PhysicsBody *body = getBody();
     if (!body) { return; }
     body->tag ^= PhysicsBodyProperties::freezing;
+
+    detachComponent(freezingComponent);
+    freezingComponent = nullptr;
 }
 
 void CurlingStone::freeze()
 {
-    auto modelComponent = std::make_unique<ModelComponent>(
+    attachComponent(std::make_unique<ModelComponent>(
         AssetLibrary::shared().getModel(AssetLibrary::ModelKey::frozen),
         AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::defaultIce)
-    );
-    attachComponent(std::move(modelComponent));
+    ));
 
     PhysicsBody *body = getBody();
     if (body) {

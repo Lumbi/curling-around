@@ -59,21 +59,21 @@ Shader::~Shader()
     glDeleteProgram(shaderProgram);
 }
 
-void Shader::setProjectionUniform(const Matrix4f &projection)
+void Shader::setProjection(const Matrix4f &projection)
 {
     GLint projectionUniform = glGetUniformLocation(shaderProgram, "projection");
     glProgramUniformMatrix4fv(shaderProgram, projectionUniform, 1, GL_FALSE, projection.data);
 }
 
-void Shader::setViewUniform(const Matrix4f &view)
+void Shader::setView(const Matrix4f &view)
 {
     GLint viewUniform = glGetUniformLocation(shaderProgram, "view");
     glProgramUniformMatrix4fv(shaderProgram, viewUniform, 1, GL_FALSE, view.data);
 }
 
-void Shader::setModelUniform(const Matrix4f &model)
+void Shader::setModel(const Matrix4f &model)
 {
-    GLint modelUniform  = glGetUniformLocation(shaderProgram, "model");
+    GLint modelUniform = glGetUniformLocation(shaderProgram, "model");
     glProgramUniformMatrix4fv(shaderProgram, modelUniform, 1, GL_FALSE, model.data);
 }
 
@@ -87,6 +87,12 @@ void Shader::setGlobalLightPosition(const Vector3f &globalLightPosition)
 {
     GLint globalLightPositionUniform = glGetUniformLocation(shaderProgram, "globalLightPosition");
     glProgramUniform3fv(shaderProgram, globalLightPositionUniform, 1, (float*) &globalLightPosition);
+}
+
+void Shader::setTime(float time)
+{
+    GLint timeUniform = glGetUniformLocation(shaderProgram, "time");
+    glProgramUniform1fv(shaderProgram, timeUniform, 1, (float*) &time);
 }
 
 void Shader::use()

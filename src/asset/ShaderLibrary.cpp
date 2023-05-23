@@ -57,6 +57,50 @@ const char *DEFAULT_FRAGMENT_SHADER_SOURCE = R"(
     }
 )";
 
+const char *EFFECT_VERTEX_SHADER_SOURCE = R"(
+    #version 410 core
+
+    layout (location = 0) in vec3 attribPosition;
+    layout (location = 1) in vec3 attribNormal;
+    layout (location = 2) in vec2 attribTexCoord0;
+
+    uniform mat4 projection;
+    uniform mat4 view;
+    uniform mat4 model;
+    uniform float time;
+
+    out vec2 textCoord0;
+    out float interpolation;
+
+    void main() {
+        vec3 normal = normalize((model * vec4(attribNormal, 0.0f)).xyz);
+
+        float adjustedTime = 3.f * time;
+        interpolation = sin(adjustedTime) * sin(adjustedTime);
+        vec4 displacement = 20.f * vec4(normal, 0.f) * (0.1f + interpolation);
+        gl_Position = projection * view * (model * vec4(attribPosition, 1.0f) + displacement);
+
+        textCoord0 = attribTexCoord0;
+    }
+)";
+
+const char *EFFECT_FRAGMENT_SHADER_SOURCE = R"(
+    #version 410 core
+
+    in float interpolation;
+    in vec2 textCoord0;
+
+    uniform vec3 globalLightPosition;
+    uniform sampler2D texture0;
+
+    out vec4 fragmentColor;
+
+    void main() {
+        vec4 textureColor0 = texture(texture0, textCoord0);
+        fragmentColor = vec4(textureColor0.rgb, 0.75f * (1.f - interpolation)); // Transparency
+    }
+)";
+
 ShaderLibrary & ShaderLibrary::shared()
 {
     static ShaderLibrary instance;
@@ -64,5 +108,6 @@ ShaderLibrary & ShaderLibrary::shared()
 }
 
 ShaderLibrary::ShaderLibrary()
-    : defaultShader(DEFAULT_VERTEX_SHADER_SOURCE, DEFAULT_FRAGMENT_SHADER_SOURCE)
+    : defaultShader(DEFAULT_VERTEX_SHADER_SOURCE, DEFAULT_FRAGMENT_SHADER_SOURCE),
+      effectShader(EFFECT_VERTEX_SHADER_SOURCE, EFFECT_FRAGMENT_SHADER_SOURCE)
 {}

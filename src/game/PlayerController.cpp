@@ -99,6 +99,13 @@ void PlayerController::spawnStone()
     PhysicsBody *body = newCurlingStone->getBody();
     if (body) { body->position = spawnPosition; }
     curlingStone = newCurlingStone.get();
+
+    // Add freezing effect to stones every 3 turns except the first turn
+    const int turn = shotCount / 2;
+    if (turn != 0 && turn % 2 == 0) {
+        newCurlingStone->addFreezingEffect();
+    }
+
     scene->getRoot()->addChild(std::move(newCurlingStone));
     moveCameraBehindStone();
 }
@@ -164,6 +171,7 @@ void PlayerController::endTurn()
     } else {
         currentPlayerID = 0;
     }
+    shotCount++;
 }
 
 void PlayerController::moveCameraBehindStone(bool immediate)

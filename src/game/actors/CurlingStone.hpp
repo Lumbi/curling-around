@@ -4,6 +4,7 @@
 #include "game/Actor.hpp"
 #include "physics/PhysicsBody.hpp"
 
+class ModelComponent;
 class PhysicsBodyComponent;
 class PhysicsBody;
 
@@ -32,6 +33,10 @@ class CurlingStone: public Actor {
 
     private:
         using super = Actor;
+
+        bool shouldFreeze = false;
+        bool shouldRemoveFreezingEffect = false;
+        ModelComponent *freezingComponent = nullptr;
 
         void freeze();
 };

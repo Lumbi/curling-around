@@ -76,6 +76,10 @@ int main()
     // Enable depth buffer
     glEnable(GL_DEPTH_TEST);
 
+    // Enable alpha blending
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     AssetLibrary::shared().load();
 
     auto scene = std::make_unique<Scene>();

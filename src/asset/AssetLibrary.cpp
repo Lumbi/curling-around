@@ -52,11 +52,13 @@ void AssetLibrary::load()
     // Load materials
 
     Shader *defaultShader = &ShaderLibrary::shared().defaultShader;
+    Shader *effectShader = &ShaderLibrary::shared().effectShader;
     materials[MaterialKey::defaultCurlingStoneRed] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::curlingStoneRed));
     materials[MaterialKey::defaultCurlingStoneBlue] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::curlingStoneBlue));
     materials[MaterialKey::defaultIce] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::ice));
     materials[MaterialKey::defaultRock] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::rock));
     materials[MaterialKey::defaultTarget] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::target));
+    materials[MaterialKey::effectFreezing] = std::make_unique<Material>(effectShader, getTexture(TextureKey::ice));
 }
 
 AssetLibrary::AssetLibrary()

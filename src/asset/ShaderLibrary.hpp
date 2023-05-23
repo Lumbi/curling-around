@@ -13,6 +13,9 @@ class ShaderLibrary
         /// @brief A default shader with basic texture and lighting support.
         Shader defaultShader;
 
+        /// @brief A special effect shader.
+        Shader effectShader;
+
         // Disable the copy-constructor and copy-assignment operator.
         ShaderLibrary(ShaderLibrary &) = delete;
         ShaderLibrary& operator=(ShaderLibrary &) = delete;

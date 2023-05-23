@@ -24,19 +24,22 @@ class Shader
         ~Shader();
 
         /// @brief Set the projection matrix uniform on this shader.
-        void setProjectionUniform(const Matrix4f &);
+        void setProjection(const Matrix4f &);
 
         /// @brief Set the view matrix uniform on this shader.
-        void setViewUniform(const Matrix4f &);
+        void setView(const Matrix4f &);
 
         /// @brief Set the model matrix uniform on this shader.
-        void setModelUniform(const Matrix4f &);
+        void setModel(const Matrix4f &);
 
         /// @brief Set the texture at index 0 uniform on this shader.
         void setTexture0(const Texture &);
 
         /// @brief Set global light position uniform on this shader.
         void setGlobalLightPosition(const Vector3f &);
+
+        /// @brief Set the time uniform on this shader.
+        void setTime(float);
 
         /// @brief Use this shader for subsequent rendering calls.
         void use();

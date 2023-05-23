@@ -44,7 +44,8 @@ class AssetLibrary {
             defaultCurlingStoneBlue,
             defaultIce,
             defaultRock,
-            defaultTarget
+            defaultTarget,
+            effectFreezing
         };
 
         /// @brief Get the material at the specified key.
