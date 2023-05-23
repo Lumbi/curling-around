@@ -36,9 +36,15 @@ void Actor::update()
     for (auto&& component : components) {
         component->update();
     }
+
     for (auto&& child : children) {
         child->update();
     }
+
+    for (auto&& componentToRemove: componentsToRemove) {
+        std::erase(componentsToRemove, componentToRemove);
+    }
+    componentsToRemove.clear();
 }
 
 void Actor::draw(Renderer &renderer)
@@ -46,6 +52,7 @@ void Actor::draw(Renderer &renderer)
     for (auto&& component : components) {
         component->draw(renderer);
     }
+
     for (auto&& child : children) {
         child->draw(renderer);
     }
@@ -69,13 +76,14 @@ const std::vector<std::unique_ptr<Component>>& Actor::getComponents() const
 
 void Actor::attachComponent(std::unique_ptr<Component> component)
 {
+    if (!component) return;
     component->setActor(this);
     components.push_back(std::move(component));
 }
 
 void Actor::detachComponent(Component *component)
 {
-    if (component == nullptr) return;
+    if (!component) { return; }
+    componentsToRemove.push_back(component);
     component->setActor(nullptr);
-    std::erase_if(components, [&] (auto&& c) { return c.get() == component; });
 }

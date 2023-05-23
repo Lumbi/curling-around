@@ -28,6 +28,7 @@ class Physics {
         Physics();
 
         std::vector<PhysicsBody *> physicsBodies;
+        std::vector<PhysicsBody *> physicsBodiesToRemove;
 };
 
 #endif

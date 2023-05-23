@@ -69,6 +69,7 @@ class Actor
         Actor *parent;
         std::vector<std::unique_ptr<Actor>> children;
         std::vector<std::unique_ptr<Component>> components;
+        std::vector<Component *> componentsToRemove;
 };
 
 #endif

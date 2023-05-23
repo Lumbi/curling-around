@@ -16,12 +16,14 @@ Physics::Physics()
 
 void Physics::addPhysicsBody(PhysicsBody *physicsBody)
 {
+    if (!physicsBody) { return; }
     physicsBodies.push_back(physicsBody);
 }
 
 void Physics::removePhysicsBody(PhysicsBody *physicsBody)
 {
-    std::erase(physicsBodies, physicsBody);
+    if (!physicsBody) { return; }
+    physicsBodiesToRemove.push_back(physicsBody);
 }
 
 void Physics::update()
@@ -52,4 +54,10 @@ void Physics::update()
             }
         }
     }
+
+    // Clean up removed physics bodies
+    for (auto&& physicsBodyToRemove: physicsBodiesToRemove) {
+        std::erase(physicsBodies, physicsBodyToRemove);
+    }
+    physicsBodiesToRemove.clear();
 }
