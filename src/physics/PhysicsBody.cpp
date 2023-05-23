@@ -1,13 +1,15 @@
 #include "PhysicsBody.hpp"
 
+static PhysicsBody::ID idSequence = 0;
+
+PhysicsBody::PhysicsBody()
+    : id(idSequence++)
+{}
+
 PhysicsBody PhysicsBody::makeSphere(float mass, float radius)
 {
-    return PhysicsBody {
-        Type::dynamic,
-        mass,
-        1.0f,
-        Vector3f::zero,
-        Vector3f::zero,
-        { Collider::Kind::sphere, { radius } }
-    };
+    PhysicsBody body;
+    body.mass = mass;
+    body.collider = { Collider::Kind::sphere, { radius } };
+    return body;
 }

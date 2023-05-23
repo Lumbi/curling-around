@@ -19,7 +19,8 @@ class AssetLibrary {
             curlingStone,
             field,
             rock,
-            target
+            target,
+            frozen
         };
 
         /// @brief Get the model at the specified key.
@@ -30,6 +31,7 @@ class AssetLibrary {
             curlingStoneRed,
             curlingStoneBlue,
             ice,
+            rock,
             target
         };
 
@@ -41,6 +43,7 @@ class AssetLibrary {
             defaultCurlingStoneRed,
             defaultCurlingStoneBlue,
             defaultIce,
+            defaultRock,
             defaultTarget
         };
 

@@ -1,6 +1,5 @@
 #include "Physics.hpp"
 
-#include "physics/PhysicsBody.hpp"
 #include "physics/Collisions.hpp"
 #include "Time.hpp"
 
@@ -28,6 +27,9 @@ void Physics::removePhysicsBody(PhysicsBody *physicsBody)
 
 void Physics::update()
 {
+    // Clear collision contacts
+    contacts.clear();
+
     // Update simulation
     for (auto&& body : physicsBodies) {
         if (body) {
@@ -43,14 +45,19 @@ void Physics::update()
         for (auto&& secondBody : physicsBodies) {
             if (!secondBody) continue;
             if (firstBody == secondBody) continue;
+            bool didCollide = false;
             switch (firstBody->collider.kind) {
             case Collider::Kind::sphere:
                 switch (secondBody->collider.kind) {
                 case Collider::Kind::sphere:
-                    handleSphereToSphereCollision(*firstBody, *secondBody);
+                    didCollide |= handleSphereToSphereCollision(*firstBody, *secondBody);
                     break;
                 }
                 break;
+            }
+            if (didCollide) {
+                contacts[firstBody->id].push_back(secondBody);
+                contacts[secondBody->id].push_back(firstBody);
             }
         }
     }
@@ -60,4 +67,9 @@ void Physics::update()
         std::erase(physicsBodies, physicsBodyToRemove);
     }
     physicsBodiesToRemove.clear();
+}
+
+const std::vector<PhysicsBody *> &Physics::getContacts(PhysicsBody::ID id)
+{
+    return contacts[id];
 }

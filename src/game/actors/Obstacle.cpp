@@ -11,7 +11,7 @@ Obstacle::Obstacle(Vector3f position)
 {
     auto modelComponent = std::make_unique<ModelComponent>(
         AssetLibrary::shared().getModel(AssetLibrary::ModelKey::rock),
-        AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::defaultIce)
+        AssetLibrary::shared().getMaterial(AssetLibrary::MaterialKey::defaultRock)
     );
 
     auto physicsBodyComponent = std::make_unique<PhysicsBodyComponent>(

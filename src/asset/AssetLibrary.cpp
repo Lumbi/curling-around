@@ -38,6 +38,7 @@ void AssetLibrary::load()
     models[ModelKey::field] = modelLoader.load("asset/field.fbx");
     models[ModelKey::rock] = modelLoader.load("asset/rock.fbx");
     models[ModelKey::target] = modelLoader.load("asset/target.fbx");
+    models[ModelKey::frozen] = modelLoader.load("asset/frozen.fbx");
 
     // Load textures
 
@@ -45,6 +46,7 @@ void AssetLibrary::load()
     textures[TextureKey::curlingStoneRed] = textureLoader.load("asset/curling_stone_red.jpg");
     textures[TextureKey::curlingStoneBlue] = textureLoader.load("asset/curling_stone_blue.jpg");
     textures[TextureKey::ice] = textureLoader.load("asset/ice.jpg");
+    textures[TextureKey::rock] = textureLoader.load("asset/rock.jpg");
     textures[TextureKey::target] = textureLoader.load("asset/target.jpg");
 
     // Load materials
@@ -53,6 +55,7 @@ void AssetLibrary::load()
     materials[MaterialKey::defaultCurlingStoneRed] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::curlingStoneRed));
     materials[MaterialKey::defaultCurlingStoneBlue] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::curlingStoneBlue));
     materials[MaterialKey::defaultIce] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::ice));
+    materials[MaterialKey::defaultRock] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::rock));
     materials[MaterialKey::defaultTarget] = std::make_unique<Material>(defaultShader, getTexture(TextureKey::target));
 }
 

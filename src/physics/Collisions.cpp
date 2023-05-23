@@ -3,7 +3,7 @@
 #include "PhysicsBody.hpp"
 #include "math/Vector.hpp"
 
-void handleSphereToSphereCollision(PhysicsBody &first, PhysicsBody &second)
+bool handleSphereToSphereCollision(PhysicsBody &first, PhysicsBody &second)
 {
     float currentDistance = distance(first.position, second.position);
     float minDistance = first.collider.sphere.radius + second.collider.sphere.radius;
@@ -40,5 +40,8 @@ void handleSphereToSphereCollision(PhysicsBody &first, PhysicsBody &second)
         if (second.type == PhysicsBody::Type::dynamic) {
             second.position += penetration;
         }
+        return true;
+    } else {
+        return false;
     }
 }

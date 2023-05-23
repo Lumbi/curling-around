@@ -6,6 +6,11 @@
 
 #include <memory>
 
+enum PhysicsBodyProperties: PhysicsBody::ID {
+    freezing = 1 << 1,
+    frozen = 1 << 2
+};
+
 class PhysicsBody;
 
 /// @brief A component that handles updating and linking a physics body to an actor.
