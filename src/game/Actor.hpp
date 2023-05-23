@@ -64,10 +64,17 @@ class Actor
         /// @brief Add a child actor.
         void addChild(std::unique_ptr<Actor>);
 
+        /// @brief Remove a child actor.
+        void removeChild(Actor *);
+
+        /// @brief Remove this actor from its parent.
+        void removeFromParent();
+
     private:
         Transform transform;
         Actor *parent;
         std::vector<std::unique_ptr<Actor>> children;
+        std::vector<Actor *> childrenToRemove;
         std::vector<std::unique_ptr<Component>> components;
         std::vector<Component *> componentsToRemove;
 };

@@ -41,8 +41,13 @@ void Actor::update()
         child->update();
     }
 
+    for (auto&& childToRemove : childrenToRemove) {
+        std::erase_if(children, [&](auto&& child) { return child.get() == childToRemove; });
+    }
+    childrenToRemove.clear();
+
     for (auto&& componentToRemove: componentsToRemove) {
-        std::erase(componentsToRemove, componentToRemove);
+        std::erase_if(components, [&](auto&& component) { return component.get() == componentToRemove; });
     }
     componentsToRemove.clear();
 }
@@ -67,6 +72,20 @@ void Actor::addChild(std::unique_ptr<Actor> actor)
 {
     actor->parent = this;
     children.push_back(std::move(actor));
+}
+
+void Actor::removeChild(Actor *actor)
+{
+    if (!actor) { return; }
+    if (actor->parent != this) { return; }
+    actor->parent = nullptr;
+    childrenToRemove.push_back(actor);
+}
+
+void Actor::removeFromParent()
+{
+    if (!parent) { return; }
+    parent->removeChild(this);
 }
 
 const std::vector<std::unique_ptr<Component>>& Actor::getComponents() const

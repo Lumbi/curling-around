@@ -172,6 +172,15 @@ void PlayerController::endTurn()
         currentPlayerID = 0;
     }
     shotCount++;
+
+    // Remove stones that are too far
+    for (auto&& child : scene->getRoot()->getChildren()) {
+        if (dynamic_cast<CurlingStone*>(child.get())) {
+            if (distance(child->getWorldPosition(), fieldCenter) > spawnDistance - 100.f) {
+                child->removeFromParent();
+            }
+        }
+    }
 }
 
 void PlayerController::moveCameraBehindStone(bool immediate)
