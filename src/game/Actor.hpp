@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+#include <concepts>
 
 class Component;
 class Renderer;
@@ -44,6 +45,15 @@ class Actor
 
         /// @brief Detach a component from the actor. The address is used to identify the component.
         void detachComponent(Component *);
+
+        template<std::derived_from<Component> T>
+        T * getComponents() {
+            for (auto&& component : components) {
+                T * found = dynamic_cast<T*>(component.get());
+                if (found) { return found; }
+            }
+            return nullptr;
+        }
 
         /// @brief Get the child actors of this actor.
         const std::vector<std::unique_ptr<Actor>>& getChildren() const;

@@ -16,9 +16,6 @@ class CurlingStone: public Actor {
         /// @brief Destroy the curling stone.
         virtual ~CurlingStone();
 
-        /// @brief Get the physics body component of this curling stone.
-        PhysicsBodyComponent * getPhysicsBodyComponent();
-
         /// @brief Get the physics body of the component of this curling stone.
         PhysicsBody * getBody();
 };
