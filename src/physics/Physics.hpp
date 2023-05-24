@@ -33,7 +33,6 @@ class Physics {
         Physics();
 
         std::vector<PhysicsBody *> physicsBodies;
-        std::vector<PhysicsBody *> physicsBodiesToRemove;
         std::unordered_map<PhysicsBody::ID, std::vector<PhysicsBody *>> contacts;
 };
 

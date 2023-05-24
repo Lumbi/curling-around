@@ -22,7 +22,7 @@ void Physics::addPhysicsBody(PhysicsBody *physicsBody)
 void Physics::removePhysicsBody(PhysicsBody *physicsBody)
 {
     if (!physicsBody) { return; }
-    physicsBodiesToRemove.push_back(physicsBody);
+    std::erase(physicsBodies, physicsBody);
 }
 
 void Physics::update()
@@ -61,12 +61,6 @@ void Physics::update()
             }
         }
     }
-
-    // Clean up removed physics bodies
-    for (auto&& physicsBodyToRemove: physicsBodiesToRemove) {
-        std::erase(physicsBodies, physicsBodyToRemove);
-    }
-    physicsBodiesToRemove.clear();
 }
 
 const std::vector<PhysicsBody *> &Physics::getContacts(PhysicsBody::ID id)
