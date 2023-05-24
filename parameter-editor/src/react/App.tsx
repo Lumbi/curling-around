@@ -64,8 +64,12 @@ export const App = () => {
         }
     }
 
-    const appendParameter = () => {
+    const addParameter = () => {
         setParameters([...parameters, { key: '', value: ''}])
+    }
+
+    const deleteParameter = (index: number) => {
+        setParameters(parameters.filter((_, i) => i != index))
     }
 
     return (
@@ -95,9 +99,10 @@ export const App = () => {
                 <ParameterTable
                     parameters={parameters}
                     updateParameter={updateParameter}
+                    deleteParameter={deleteParameter}
                 />
                 <Box display='flex' justifyContent='center'>
-                    <IconButton onClick={appendParameter} disabled={!isAddEnabled}>
+                    <IconButton onClick={addParameter} disabled={!isAddEnabled}>
                         <AddIcon/>
                     </IconButton>
                 </Box>
@@ -113,13 +118,14 @@ export const App = () => {
     )
 }
 
-type ParameterUpdater = {
+type ParameterStore = {
     updateParameter: (index: number, parameter: Parameter) => void
+    deleteParameter: (index: number) => void
 }
 
 type ParameterTableProps = {
     parameters: Parameter[]
-} & ParameterUpdater
+} & ParameterStore
 
 const ParameterTable = (props: ParameterTableProps) => {
     return (
@@ -131,9 +137,9 @@ const ParameterTable = (props: ParameterTableProps) => {
                 props.parameters.map((parameter, index) =>
                     <ParameterRow
                         key={index}
+                        {...props}
                         index={index}
                         parameter={parameter}
-                        updateParameter={props.updateParameter}
                     />
                 )
             }
@@ -145,7 +151,7 @@ const ParameterTable = (props: ParameterTableProps) => {
 type ParameterRowProps = {
     index: number,
     parameter: Parameter
-} & ParameterUpdater
+} & ParameterStore
 
 const ParameterRow = (props: ParameterRowProps) => {
     const isParameterValid = isValid(props.parameter)
@@ -185,7 +191,7 @@ const ParameterRow = (props: ParameterRowProps) => {
                     />
                 </TableCell>
                 <TableCell>
-                    <IconButton>
+                    <IconButton onClick={_ => props.deleteParameter(props.index)}>
                         <DeleteIcon/>
                     </IconButton>
                 </TableCell>
