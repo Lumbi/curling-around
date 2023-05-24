@@ -29,18 +29,18 @@ PlayerController::PlayerController(Scene* scene, Camera *camera)
 
 void PlayerController::update()
 {
-    spawnDistance = Parameter::shared().get(Parameter::Key::Player_CurlingStone_SpawnDistance, spawnDistance);
-    cameraSpeed = Parameter::shared().get(Parameter::Key::Player_Camera_Speed, cameraSpeed);
-    aimSpeed = Parameter::shared().get(Parameter::Key::Player_Aim_Speed, aimSpeed);
-    chargeSpeed = Parameter::shared().get(Parameter::Key::Player_Charge_Speed, chargeSpeed);
-    swingDistance = Parameter::shared().get(Parameter::Key::Player_Swing_Distance, swingDistance);
-    minShotSpeed = Parameter::shared().get(Parameter::Key::Player_Shot_Speed_Min, minShotSpeed);
-    maxShotSpeed = Parameter::shared().get(Parameter::Key::Player_Shot_Speed_Max, maxShotSpeed);
-    waitDelay = Parameter::shared().get(Parameter::Key::Player_EndTurn_WaitDelay, waitDelay);
+    updateParameters();
 
     switch (state) {
         case State::aiming: {
-            if (!curlingStone) spawnStone();
+            if (!curlingStone && !shouldSpawn) {
+                // Deferred spawn to allow removing stones before spawning a new one the next frame
+                removeOutOfBoundsStones();
+                shouldSpawn = true;
+            } if (shouldSpawn) {
+                spawnStone();
+                shouldSpawn = false;
+            }
 
             if (Input::shared().keyboard.isPressed(VIEW_BIRDSEYE_KEY)) {
                 moveCameraBirdseye();
@@ -73,7 +73,6 @@ void PlayerController::update()
             if (!curlingStone) state = State::waiting;
             moveCameraBehindStone();
             if (curlingStone->getBody()->velocity.length() < 10.f) {
-                curlingStone = nullptr;
                 state = State::waiting;
             }
             break;
@@ -91,6 +90,18 @@ void PlayerController::update()
     }
 
     updateCamera();
+}
+
+void PlayerController::updateParameters()
+{
+    spawnDistance = Parameter::shared().get(Parameter::Key::Player_CurlingStone_SpawnDistance, spawnDistance);
+    cameraSpeed = Parameter::shared().get(Parameter::Key::Player_Camera_Speed, cameraSpeed);
+    aimSpeed = Parameter::shared().get(Parameter::Key::Player_Aim_Speed, aimSpeed);
+    chargeSpeed = Parameter::shared().get(Parameter::Key::Player_Charge_Speed, chargeSpeed);
+    swingDistance = Parameter::shared().get(Parameter::Key::Player_Swing_Distance, swingDistance);
+    minShotSpeed = Parameter::shared().get(Parameter::Key::Player_Shot_Speed_Min, minShotSpeed);
+    maxShotSpeed = Parameter::shared().get(Parameter::Key::Player_Shot_Speed_Max, maxShotSpeed);
+    waitDelay = Parameter::shared().get(Parameter::Key::Player_EndTurn_WaitDelay, waitDelay);
 }
 
 void PlayerController::spawnStone()
@@ -172,13 +183,18 @@ void PlayerController::endTurn()
         currentPlayerID = 0;
     }
     shotCount++;
+    curlingStone = nullptr;
+}
 
+void PlayerController::removeOutOfBoundsStones()
+{
     // Remove stones that are too far
     for (auto&& child : scene->getRoot()->getChildren()) {
-        if (dynamic_cast<CurlingStone*>(child.get())) {
-            if (distance(child->getWorldPosition(), fieldCenter) > spawnDistance - 100.f) {
-                child->removeFromParent();
-            }
+        if (!dynamic_cast<CurlingStone*>(child.get())) { continue; } // Ignore non-stone actors
+        if (child.get() == curlingStone) { continue; } // Ignore currently in control stone
+        const float safeAreaSpace = 200.f;
+        if (distance(child->getWorldPosition(), fieldCenter) > (spawnDistance - safeAreaSpace)) {
+            child->removeFromParent();
         }
     }
 }

@@ -28,6 +28,9 @@ class PlayerController {
         void update();
 
     private:
+        /// @brief Update real-time parameters.
+        void updateParameters();
+
         /// @brief Create a curling stone at the current spawn location
         void spawnStone();
 
@@ -42,6 +45,9 @@ class PlayerController {
 
         /// @brief End turn and switch the current player.
         void endTurn();
+
+        /// @brief Remove stones that are too far from the field center.
+        void removeOutOfBoundsStones();
 
         /// @brief Place the camera's target position behind the curling stone, facing the curling stone.
         /// @param immediate If true, immediately jump to the position without animating.
@@ -61,8 +67,11 @@ class PlayerController {
 
         // Positions
         Vector3f fieldCenter = Vector3f::zero;
+
+        // Spawning
         float spawnDistance;
         Vector3f spawnPosition;
+        bool shouldSpawn = false;
 
         // Camera
         Vector3f cameraTargetPosition = Vector3f::zero;
