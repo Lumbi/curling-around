@@ -2,6 +2,8 @@
 
 カーリングを元にしたゲームプロトタイプ
 
+https://github.com/Lumbi/curling-around/assets/1648852/16ee0fd2-f4a3-4133-8c4e-9f764056b982
+
 ## 操作
 
 - 左・右方向キー：回転する
